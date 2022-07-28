@@ -3,8 +3,9 @@ import React from "react"
 
 // additional functional
 // components
-import SignUpPage from "./pages/SignUpPage/SignUpPage"
+import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
+import SignUpPage from "./pages/SignUpPage/SignUpPage"
 // styles
 import './App.scss'
 
@@ -13,6 +14,7 @@ const App: React.FC = () => {
     <div className="app">
       <Sidebar />
       <main>
+        <Header />
         {/* <SignUpPage /> */}
       </main>
     </div>
