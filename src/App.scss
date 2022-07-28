@@ -1,3 +1,11 @@
+@import "./scss/color-vars";
+
 .app {
   height: 100vh;
+  display: flex;
+
+  main {
+    flex: 0 1 81%;
+    background-color: $LTbackground;
+  }
 }
