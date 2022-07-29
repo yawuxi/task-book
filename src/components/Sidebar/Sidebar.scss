@@ -58,3 +58,10 @@
     }
   }
 }
+
+// media queries
+@media (max-width: 998.99px) {
+  .sidebar {
+    display: none;
+  }
+}

@@ -1,0 +1,13 @@
+.progress-chart {
+  &__chart {
+    width: 99%;
+    height: 200px;
+  }
+}
+
+// media queries
+@media (max-height: 800.99px) {
+  .progress-chart__chart {
+    height: 150px;
+  }
+}

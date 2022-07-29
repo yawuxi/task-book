@@ -1,0 +1,29 @@
+@import "../../scss/color-vars";
+
+.today-info {
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  &__item {
+    svg {
+      margin-right: 0.625rem;
+    }
+  }
+
+  &__item-title {
+    font-size: 0.875rem;
+    color: $LTdark;
+    margin-bottom: 0.3125rem;
+  }
+
+  &__value {
+    font-size: 1.5625rem;
+    font-weight: 600;
+    color: $LTdark;
+    display: flex;
+    align-items: center;
+  }
+}

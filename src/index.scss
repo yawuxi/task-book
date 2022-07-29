@@ -4,3 +4,14 @@
 @import "./scss/ui";
 
 // index.scss styles
+@media (max-width: 1285.99px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+@media (max-width: 1055.99px) {
+  html {
+    font-size: 70%;
+  }
+}

@@ -23,6 +23,7 @@ const Header: React.FC = () => {
         <p>Нове завдання</p>
       </button>
       <button className="header__theme"><CurrentTheme theme='light' /></button>
+      <button className="header__navigation"><span></span></button>
       <div className="header__user">
         <p>Гарного дня, username</p>
         <img src={userLogo} alt="user logo" />
