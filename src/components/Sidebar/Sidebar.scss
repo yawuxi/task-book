@@ -59,6 +59,19 @@
   }
 }
 
+.sidebar-active-point {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 27.5%;
+    right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 35px;
+    height: 20px;
+    background-color: $accent;
+  }
+}
 // media queries
 @media (max-width: 998.99px) {
   .sidebar {

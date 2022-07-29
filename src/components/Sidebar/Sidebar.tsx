@@ -7,16 +7,21 @@ import React from "react"
 import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
 
+/**
+ * TODO: sidebar active indicator
+ */
+
 const Sidebar: React.FC = () => {
   return (
     <aside className="sidebar shadow">
+      <div className="sidebar-active-point"></div>
       <div className="sidebar__logo">
         <img src={logotype} alt="logotype" />
       </div>
       <nav className="sidebar__top">
         <h2 className="sidebar__title">Категорії</h2>
         <ul className="sidebar__list">
-          <li className="sidebar__item sidebar__item--active">
+          <li className="sidebar__item">
             <a href="#">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -57,7 +62,7 @@ const Sidebar: React.FC = () => {
         <button className="sidebar__category-add">Додати</button>
       </nav>
       <nav className="sidebar__bottom">
-        <h2 className="sidebar__title">Категорії</h2>
+        <h2 className="sidebar__title">Дані</h2>
         <ul className="sidebar__list">
           <li className="sidebar__item">
             <a href="#">
