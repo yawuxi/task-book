@@ -3,10 +3,14 @@
 .app {
   height: 100vh;
   display: flex;
+}
 
-  main {
-    flex: 0 1 81%;
-    background-color: $LTbackground;
-    padding: 0 4.375rem;
+.main {
+  flex: 0 1 81%;
+  background-color: $LTbackground;
+  padding: 0 4.375rem;
+
+  &__content {
+    display: flex;
   }
 }

@@ -1,0 +1,54 @@
+@import "../../scss/color-vars";
+
+.weekly-results {
+  flex: 0 1 53%;
+  padding: 1.25rem;
+  background-color: $LTbackground;
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $accent;
+    margin-bottom: 1.25rem;
+  }
+
+  &__info-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $LTdark;
+    margin-bottom: 0.625rem;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__circle {
+    border: 1px solid $accent;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    font-size: 2.25rem;
+    font-weight: 600;
+    text-align: center;
+    color: $accent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: $LTdark;
+    }
+  }
+}
