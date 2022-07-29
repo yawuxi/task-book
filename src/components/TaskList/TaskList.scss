@@ -12,19 +12,19 @@
 }
 
 // media queries
-@media (max-height: 1000.99px) {
+@media (max-height: 1000.99px) and (min-width: 768.99px) {
   .task-list__list {
     max-height: 200px;
   }
 }
 
-@media (max-height: 900.99px) {
+@media (max-height: 900.99px) and (min-width: 768.99px) {
   .task-list__list {
-    max-height: 150px;
+    max-height: 135px;
   }
 }
 
-@media (max-height: 800.99px) {
+@media (max-height: 780.99px) and (min-width: 768.99px) {
   .task-list__list {
     max-height: 100px;
   }

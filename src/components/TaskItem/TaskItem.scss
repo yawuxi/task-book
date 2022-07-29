@@ -7,6 +7,7 @@
     border: 1px solid rgba(40, 40, 70, 0.1);
     font-size: 0.875rem;
     color: $LTdark;
+    height: 3.125rem;
 
     display: flex;
     justify-content: space-between;
@@ -21,11 +22,28 @@
     &:not(:last-child) {
       margin-bottom: 0.625rem;
     }
+
+    &:hover {
+      .task-list__item-controls {
+        display: flex;
+      }
+
+      .task-list__checkbox {
+        & + label::before {
+          display: block;
+        }
+      }
+    }
   }
 
   &__item--completed {
     label {
       text-decoration: line-through;
+    }
+
+    .task-list__checkbox + label::before {
+      border-color: $accent;
+      background-image: url("../../images/check.svg");
     }
   }
 
@@ -41,6 +59,7 @@
     }
 
     & + label::before {
+      display: none;
       content: "";
       width: 1.25rem;
       height: 1.25rem;
@@ -53,16 +72,11 @@
       background-size: 65%;
       background-position: 50% 50%;
     }
-
-    &:checked + label::before {
-      border-color: $accent;
-      background-image: url("../../images/check.svg");
-    }
   }
 
   &__item-controls {
+    display: none;
     flex-shrink: 0;
-    display: flex;
     align-items: center;
   }
 

@@ -6,8 +6,8 @@
 }
 
 // media queries
-@media (max-height: 800.99px) {
+@media (min-width: 768.99px) and (max-height: 800.99px) {
   .progress-chart__chart {
-    height: 150px;
+    height: 110px;
   }
 }

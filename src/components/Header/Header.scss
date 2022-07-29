@@ -99,3 +99,23 @@
     display: none;
   }
 }
+
+@media (max-width: 550.99px) {
+  .header {
+    &__new-task {
+      p {
+        display: none;
+      }
+
+      svg {
+        margin-right: 0;
+      }
+    }
+
+    &__user {
+      p {
+        display: none;
+      }
+    }
+  }
+}

@@ -41,3 +41,12 @@
     }
   }
 }
+
+// media queries
+@media (max-width: 425.99px) {
+  .weekly-results {
+    &__info {
+      flex-direction: column;
+    }
+  }
+}

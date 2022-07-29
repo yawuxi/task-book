@@ -36,3 +36,16 @@
     flex: 0 1 100%;
   }
 }
+
+@media (max-width: 768.99px) {
+  .app {
+    height: 100%;
+  }
+  .main {
+    padding: 0 2.1875rem 2.1875rem;
+
+    &__content {
+      flex-direction: column;
+    }
+  }
+}
