@@ -1,17 +1,6 @@
 @import "../../scss/color-vars";
 
 .weekly-results {
-  flex: 0 1 53%;
-  padding: 1.25rem;
-  background-color: $LTbackground;
-
-  &__title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: $accent;
-    margin-bottom: 1.25rem;
-  }
-
   &__info-title {
     font-size: 0.75rem;
     font-weight: 600;

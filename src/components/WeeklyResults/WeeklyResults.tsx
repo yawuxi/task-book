@@ -8,8 +8,8 @@ import './WeeklyResults.scss'
 
 const WeeklyResults: React.FC = () => {
   return (
-    <div className="weekly-results shadow br10">
-      <h3 className="weekly-results__title">Успіхи за неділю</h3>
+    <div className="weekly-results user-component">
+      <h3 className="weekly-results__title h3-title">Успіхи за неділю</h3>
       <ul className="weekly-results__info">
         <li className="weekly-results__item">
           <h4 className="weekly-results__info-title">Створено</h4>

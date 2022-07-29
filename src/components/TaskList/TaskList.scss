@@ -1,0 +1,31 @@
+@import "../../scss/color-vars";
+
+.task-list {
+  &__list {
+    max-height: 250px;
+    overflow-y: auto;
+
+    &:not(:last-child) {
+      margin-bottom: 1.25rem;
+    }
+  }
+}
+
+// media queries
+@media (max-height: 1000.99px) {
+  .task-list__list {
+    max-height: 200px;
+  }
+}
+
+@media (max-height: 900.99px) {
+  .task-list__list {
+    max-height: 150px;
+  }
+}
+
+@media (max-height: 800.99px) {
+  .task-list__list {
+    max-height: 100px;
+  }
+}

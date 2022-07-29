@@ -52,3 +52,12 @@
     }
   }
 }
+
+// media queries
+@media (max-width: 840.99px) {
+  .header__user {
+    p {
+      display: none;
+    }
+  }
+}

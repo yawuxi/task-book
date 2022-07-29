@@ -20,12 +20,11 @@ const Header: React.FC = () => {
           <path d="M10 6.3999V13.5999" stroke="#FAFAFA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M6.40002 10H13.6" stroke="#FAFAFA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-
-        Нове завдання
+        <p>Нове завдання</p>
       </button>
       <button className="header__theme"><CurrentTheme theme='light' /></button>
       <div className="header__user">
-        Гарного дня, username
+        <p>Гарного дня, username</p>
         <img src={userLogo} alt="user logo" />
         <button className="header__menu shadow"></button>
       </div>
