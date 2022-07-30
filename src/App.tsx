@@ -1,6 +1,7 @@
 // react
 import React from "react"
 // additional functional
+import { TaskBookProvider } from "./shared/context"
 // components
 import Sidebar from "./components/Sidebar/Sidebar"
 import MainPage from "./pages/MainPage/MainPage"
@@ -15,12 +16,14 @@ import './App.scss'
 
 const App: React.FC = () => {
   return (
-    <div className="app">
-      <Sidebar />
-      <main className="main">
-        <MainPage />
-      </main>
-    </div>
+    <TaskBookProvider>
+      <div className="app">
+        <Sidebar />
+        <main className="main">
+          <MainPage />
+        </main>
+      </div>
+    </TaskBookProvider>
   )
 }
 
