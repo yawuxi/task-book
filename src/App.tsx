@@ -5,6 +5,7 @@ import { TaskBookProvider } from "./shared/context"
 // components
 import Sidebar from "./components/Sidebar/Sidebar"
 import MainPage from "./pages/MainPage/MainPage"
+import CreateTask from "./components/CreateTask/CreateTask"
 // import SignUpPage from "./pages/SignUpPage/SignUpPage"
 // styles
 import './App.scss'
@@ -20,6 +21,7 @@ const App: React.FC = () => {
       <div className="app">
         <Sidebar />
         <main className="main">
+          <CreateTask />
           <MainPage />
         </main>
       </div>

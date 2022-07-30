@@ -1,0 +1,78 @@
+@import "../../scss/color-vars";
+
+.create-task {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2.1875rem;
+
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    gap: 1.25rem;
+
+    select {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__title {
+    margin-bottom: 0 !important;
+  }
+
+  &__small-title {
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+  }
+
+  &__task-input {
+    width: 100%;
+    margin-bottom: 1.875rem;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.625rem;
+
+    div {
+      display: flex;
+      gap: 0.625rem;
+    }
+  }
+
+  &__cancle {
+    background-color: $delete;
+  }
+
+  &__save-as-template {
+    border: 1px solid $accent;
+    color: $accent !important;
+  }
+
+  &__add {
+    background-color: $accent;
+  }
+}
+
+.create-task-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.875rem;
+  margin-bottom: 2.8125rem;
+}
+
+.create-task--hidden {
+  display: none;
+}

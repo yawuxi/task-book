@@ -21,3 +21,22 @@
   color: $accent;
   margin-bottom: 1.25rem;
 }
+// item-styles
+.modal-field-styles {
+  padding: 0.5rem 0.9375rem;
+  border: 1px solid rgba(40, 40, 70, 0.1);
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  color: #000000;
+
+  &::placeholder {
+    color: #000000;
+  }
+}
+// button styles
+.button {
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.5625rem;
+  font-weight: 600;
+  color: $LTwhite;
+}
