@@ -46,7 +46,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     sidebar: { SIDEBAR_ADD_CATEGORY },
     header: { TOGGLE_MENU },
-    modals: { TOGGLE_ADD_CATEGORY }
+    modals: { TOGGLE_ADD_CATEGORY, TOGGLE_CREATE_TASK, }
   } = ACTION_TYPES
 
   switch (type) {
@@ -60,6 +60,12 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
+    // new task
+    case TOGGLE_CREATE_TASK:
+      return {
+        ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } }
+      }
+
   }
 }
 

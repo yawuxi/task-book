@@ -1,7 +1,10 @@
 // react
-import React from "react"
+import React, { useContext } from "react"
 
 // additional functional
+import { ACTION_TYPES } from "../../shared/actionTypes"
+import { TaskBookContext } from "../../shared/context"
+import { closeModal } from "../SidebarAddCategory/SidebarAddCategory"
 // components
 // styles
 import './CreateTask.scss'
@@ -15,8 +18,15 @@ import './CreateTask.scss'
 */
 
 const CreateTask: React.FC = () => {
+  const { state, dispatch } = useContext(TaskBookContext)
+  const { modals: { createTask: { isOpen } } } = state
+  const { modals: { TOGGLE_CREATE_TASK } } = ACTION_TYPES
+
+  // conditional render
+  const classes = isOpen ? 'create-task' : 'create-task create-task--hidden'
+
   return (
-    <div className="create-task create-task--hidden">
+    <div className={classes} onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
       <div className="create-task__content user-component">
         <header>
           <h3 className="create-task__title h3-title">Добавить новую задачу</h3>

@@ -7,5 +7,6 @@ export const ACTION_TYPES = {
   },
   modals: {
     TOGGLE_ADD_CATEGORY: 'TOGGLE_ADD_CATEGORY',
+    TOGGLE_CREATE_TASK: 'TOGGLE_CREATE_TASK',
   }
 }
