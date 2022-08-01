@@ -22,7 +22,7 @@ interface CategoryItem {
 
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { TOGGLE_ADD_CATEGORY } } = ACTION_TYPES
+  const { modals: { addCategory: { TOGGLE_ADD_CATEGORY } } } = ACTION_TYPES
 
   function setIconByTitle(title: string) {
     switch (title) {

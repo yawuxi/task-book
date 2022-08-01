@@ -20,7 +20,7 @@ export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction
 const SidebarAddCategory: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
   const { modals: { addCategory: { isOpen } } } = state
-  const { sidebar: { SIDEBAR_ADD_CATEGORY }, modals: { TOGGLE_ADD_CATEGORY } } = ACTION_TYPES
+  const { modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY } } } = ACTION_TYPES
 
   // opening SidebarAddCategory modal when isOpen === true and close when isOpen === false
   const classes = isOpen ? 'sidebar-add-category' : 'sidebar-add-category sidebar-add-category--hidden'
@@ -36,14 +36,14 @@ const SidebarAddCategory: React.FC = () => {
             categoryTitle: yup.string().min(2, 'Мінімум 2 символа!').required('Введіть назву категорії!')
           })}
           onSubmit={(values, actions) => {
-            dispatch({ type: SIDEBAR_ADD_CATEGORY, payload: values.categoryTitle })
+            dispatch({ type: ADD_CATEGORY, payload: values.categoryTitle })
             actions.setSubmitting(false);
           }}
         >
           {({ errors, touched }) => (
             <Form>
               <Field id="categoryTitle" name="categoryTitle" placeholder="Назва категорії" />
-              {errors.categoryTitle && touched.categoryTitle ? <div className="sidebar-add-category__error">{errors.categoryTitle}</div> : null}
+              {errors.categoryTitle && touched.categoryTitle ? <div className="form-error">{errors.categoryTitle}</div> : null}
               <button className="br10" type="submit">Submit</button>
             </Form>
           )}

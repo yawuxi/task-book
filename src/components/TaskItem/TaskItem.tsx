@@ -6,6 +6,13 @@ import React from "react"
 // styles
 import './TaskItem.scss'
 
+export interface iTaskItem {
+  task: string,
+  category: string,
+  date: string,
+  priority: string,
+}
+
 const TaskItem: React.FC = () => {
   return (
     <li className="task-list__item br10">

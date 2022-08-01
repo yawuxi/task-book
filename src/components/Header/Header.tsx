@@ -15,18 +15,18 @@ interface ThemeProps {
 }
 
 /**
- * TODO: feature: onCLick header__new-task open CreateTask component
+ * //TODO: feature: onCLick header__new-task open CreateTask component
  * TODO: feature: onClick header__theme change theme to light\dark depends on last theme
  * TODO: feature: onClick header__menu open ToggleMenu component
 */
 
 const Header: React.FC = () => {
   const { dispatch } = useContext(TaskBookContext)
-  const { header: { TOGGLE_MENU }, modals: { TOGGLE_CREATE_TASK } } = ACTION_TYPES
+  const { header: { TOGGLE_MENU }, modals: { createTask: { TOGGLE_CREATE_TASK } } } = ACTION_TYPES
 
   return (
-    <header className="header" onClick={() => dispatch({ type: TOGGLE_CREATE_TASK })}>
-      <button className="header__new-task br10">
+    <header className="header">
+      <button className="header__new-task br10" onClick={() => dispatch({ type: TOGGLE_CREATE_TASK })}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19Z" stroke="#FAFAFA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M10 6.3999V13.5999" stroke="#FAFAFA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

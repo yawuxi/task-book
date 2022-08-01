@@ -1,6 +1,7 @@
 
 import { createContext, useReducer, ReactNode } from "react";
 import { ACTION_TYPES } from "./actionTypes";
+import { iTaskItem } from '../components/TaskItem/TaskItem'
 // import nextId from 'react-id-generator'
 
 interface iInitialState {
@@ -14,6 +15,7 @@ interface iInitialState {
     addCategory: { isOpen: boolean, },
     createTask: { isOpen: boolean },
   },
+  taskList: Array<iTaskItem>
 }
 
 const initialState: iInitialState = {
@@ -31,7 +33,10 @@ const initialState: iInitialState = {
   modals: {
     addCategory: { isOpen: false, },
     createTask: { isOpen: false },
-  }
+  },
+  taskList: [
+    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', },
+  ]
 }
 
 export const TaskBookContext = createContext<any>(null)
@@ -44,28 +49,26 @@ export default interface iAction {
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
   const {
-    sidebar: { SIDEBAR_ADD_CATEGORY },
     header: { TOGGLE_MENU },
-    modals: { TOGGLE_ADD_CATEGORY, TOGGLE_CREATE_TASK, }
+    modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, }, }
   } = ACTION_TYPES
 
   switch (type) {
     default:
       return state
     // sidebar
-    case SIDEBAR_ADD_CATEGORY:
+    case ADD_CATEGORY:
       return { ...state, sidebar: { categories: [...state.sidebar.categories, { title: payload }] } }
     case TOGGLE_ADD_CATEGORY:
       return { ...state, modals: { ...state.modals, addCategory: { isOpen: !state.modals.addCategory.isOpen } } }
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
-    // new task
+    // CreateTask
     case TOGGLE_CREATE_TASK:
-      return {
-        ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } }
-      }
-
+      return { ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } } }
+    case ADD_CATEGORY:
+      return { ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } } }
   }
 }
 
