@@ -1,16 +1,15 @@
 
 import { createContext, useReducer, ReactNode } from "react";
+import { ACTION_TYPES } from "./actionTypes";
 import nextId from 'react-id-generator'
 
 interface iInitialState {
   sidebar: {
     categories: Array<{ title: string }>
+  },
+  modals: {
+    sidebarAddCategory: { isOpen: boolean }
   }
-}
-
-interface iAction {
-  type: string,
-  payload: any
 }
 
 const initialState: iInitialState = {
@@ -21,17 +20,32 @@ const initialState: iInitialState = {
       { title: 'Робота' },
       { title: 'Спорт' },
     ]
+  },
+  modals: {
+    sidebarAddCategory: { isOpen: false, }
   }
 }
 
-export const TaskBookContext = createContext<any>('')
+export const TaskBookContext = createContext<any>(null)
+
+export default interface iAction {
+  type: string,
+  payload?: any
+}
 
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
+  const { sidebar: { SIDEBAR_ADD_CATEGORY }, modals: { OPEN_SIDEBAR_ADD_CATEGORY, CLOSE_SIDEBAR_ADD_CATEGORY } } = ACTION_TYPES
 
   switch (type) {
     default:
       return state
+    case SIDEBAR_ADD_CATEGORY:
+      return { ...state, sidebar: { categories: [...state.sidebar.categories, { title: payload }] } }
+    case OPEN_SIDEBAR_ADD_CATEGORY:
+      return { ...state, modals: { ...state.modals, sidebarAddCategory: { isOpen: true } } }
+    case CLOSE_SIDEBAR_ADD_CATEGORY:
+      return { ...state, modals: { ...state.modals, sidebarAddCategory: { isOpen: false } } }
   }
 }
 

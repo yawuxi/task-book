@@ -2,6 +2,7 @@
 import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
+import { ACTION_TYPES } from "../../shared/actionTypes"
 // components
 // styles
 import './Sidebar.scss'
@@ -11,7 +12,7 @@ import logotype from '../../images/logotype.png'
  * TODO: feature: sidebar active indicator
  * //TODO: feature: category links builds up from context
  * TODO: feature: change function setIconByTitle to GET request from data base
- * TODO: feature: onClick add category add new category to context
+ * //TODO: feature: onClick add category add new category to context
  * TODO: feature: onClick exit button, log out from current account
  */
 
@@ -20,10 +21,18 @@ interface CategoryItem {
 }
 
 const Sidebar: React.FC = () => {
-  const { state } = useContext(TaskBookContext)
+  const { state, dispatch } = useContext(TaskBookContext)
+  const { modals: { OPEN_SIDEBAR_ADD_CATEGORY } } = ACTION_TYPES
 
   function setIconByTitle(title: string) {
     switch (title) {
+      default:
+        return (
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6.75 16.5V9H11.25V16.5" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )
       case 'Дім':
         return (
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +62,6 @@ const Sidebar: React.FC = () => {
             <path d="M9.75 1.5L2.25 10.5H9L8.25 16.5L15.75 7.5H9L9.75 1.5Z" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         )
-      default:
-        break;
     }
   }
 
@@ -78,7 +85,9 @@ const Sidebar: React.FC = () => {
             )
           })}
         </ul>
-        <button className="sidebar__category-add">
+        <button
+          onClick={() => dispatch({ type: OPEN_SIDEBAR_ADD_CATEGORY })}
+          className="sidebar__category-add">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.25 2.25H3.75C2.92157 2.25 2.25 2.92157 2.25 3.75V14.25C2.25 15.0784 2.92157 15.75 3.75 15.75H14.25C15.0784 15.75 15.75 15.0784 15.75 14.25V3.75C15.75 2.92157 15.0784 2.25 14.25 2.25Z" stroke="#29A19C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M9 6V12" stroke="#29A19C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
