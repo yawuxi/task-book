@@ -11,8 +11,9 @@ import CreateTask from "./components/CreateTask/CreateTask"
 import './App.scss'
 
 /**
- * TODO: create context
- * TODO: Sidebar navigation items from context
+ * //TODO: feature: create context
+ * TODO: layout: UserPage
+ * TODO: common: finish all todo`s
  */
 
 const App: React.FC = () => {

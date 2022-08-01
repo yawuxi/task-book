@@ -6,6 +6,10 @@ import React from "react"
 // styles
 import './WeeklyResults.scss'
 
+/**
+ * TODO: feature: dynamic data from context
+*/
+
 const WeeklyResults: React.FC = () => {
   return (
     <div className="weekly-results user-component">

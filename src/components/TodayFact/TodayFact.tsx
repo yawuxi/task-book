@@ -6,6 +6,10 @@ import React from "react"
 // styles
 import './TodayFact.scss'
 
+/**
+ * TODO: feature: get fact from API, update every 24hrs
+*/
+
 const TodayFact: React.FC = () => {
   return (
     <div className="toda-fact user-component">

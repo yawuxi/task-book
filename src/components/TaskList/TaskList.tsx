@@ -7,6 +7,10 @@ import TaskItem from "../TaskItem/TaskItem"
 // styles
 import './TaskList.scss'
 
+/**
+ * TODO: feature: dynamic task-list__items from context
+*/
+
 const TaskList: React.FC = () => {
   return (
     <div className="task-list user-component">

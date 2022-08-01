@@ -6,6 +6,11 @@ import React from "react"
 // styles
 import './TodayInfo.scss'
 
+/**
+ * TODO: feature: working clock, updates every second
+ * TODO: feature: working calendar
+*/
+
 const TodayInfo: React.FC = () => {
   return (
     <div className="today-info user-component">

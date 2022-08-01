@@ -3,7 +3,6 @@ import React from "react"
 
 // additional functional
 import { Line } from 'react-chartjs-2'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,6 +49,10 @@ const data = {
     },
   ],
 };
+
+/**
+ * TODO: feature: dynamic chart, depends of context data
+*/
 
 const ProgressChart: React.FC = () => {
   return (

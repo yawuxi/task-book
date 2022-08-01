@@ -11,6 +11,12 @@ interface ThemeProps {
   theme: string,
 }
 
+/**
+ * TODO: feature: onCLick header__new-task open CreateTask component
+ * TODO: feature: onClick header__theme change theme to light\dark depends on last theme
+ * TODO: feature: onClick header__menu open ToggleMenu component
+*/
+
 const Header: React.FC = () => {
   return (
     <header className="header">

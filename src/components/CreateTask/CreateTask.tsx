@@ -7,7 +7,11 @@ import React from "react"
 import './CreateTask.scss'
 
 /**
- * TODO: if modal window hidden use class - create-task--hidden
+ * TODO: feature: if modal window hidden use class - create-task--hidden
+ * TODO: feature: all select options dynamic from context
+ * TODO: feature: select template
+ * TODO: feature: calendar
+ * TODO: feature: cancle, save as template, add (work with context!)
 */
 
 const CreateTask: React.FC = () => {

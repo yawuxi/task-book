@@ -7,6 +7,10 @@ import React from "react"
 import './SignUpPage.scss'
 import logotype from '../../images/logotype.png'
 
+/**
+ * TODO: feature: working sign up or sign in
+*/
+
 const SignUpPage: React.FC = () => {
   return (
     <div className="sign-up">

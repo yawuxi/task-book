@@ -11,10 +11,11 @@ const TaskItem: React.FC = () => {
     <li className="task-list__item br10">
       {
         /* 
-        TODO: id attribute in input and label will recieve from data object property id
-        TODO: completing task (class - task-list__item--completed)
-        TODO: editing task
-        TODO: removing task
+        TODO: feature: task text from context
+        TODO: feature: id attribute in input and label will recieve from data object property id
+        TODO: feature: completing task (class - task-list__item--completed)
+        TODO: feature: editing task
+        TODO: feature: removing task
         */
       }
       <input className="task-list__checkbox" type="checkbox" name="isTaskCompleted" id="isTaskCompleted" />

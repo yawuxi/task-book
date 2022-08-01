@@ -8,7 +8,10 @@ import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
 
 /**
- * TODO: sidebar active indicator
+ * TODO: feature: sidebar active indicator
+ * TODO: feature: category links builds up from context
+ * TODO: feature: onClick add category add new category to context
+ * TODO: feature: onClick exit button, log out from current account
  */
 
 const Sidebar: React.FC = () => {
