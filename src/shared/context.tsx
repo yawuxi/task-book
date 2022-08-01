@@ -15,7 +15,7 @@ interface iInitialState {
     addCategory: { isOpen: boolean, },
     createTask: { isOpen: boolean },
   },
-  taskList: Array<iTaskItem>
+  taskList: Array<iTaskItem>,
 }
 
 const initialState: iInitialState = {
@@ -35,8 +35,11 @@ const initialState: iInitialState = {
     createTask: { isOpen: false },
   },
   taskList: [
-    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
-  ]
+    { task: 'Зробити блінчики', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
+    { task: 'Купити квіточкі мамі', category: "сім'я", date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
+    { task: 'Купити татові авто', category: 'мрія', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
+    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: true },
+  ],
 }
 
 export const TaskBookContext = createContext<any>(null)
@@ -51,7 +54,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     header: { TOGGLE_MENU },
     modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, },
-    taskIem: { COMPLETE_TASK }
+    taskIem: { COMPLETE_TASK, REMOVE_TASK }
   } = ACTION_TYPES
 
   switch (type) {
@@ -86,7 +89,11 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
           return { ...item, isCompleted: !item.isCompleted }
         })
       }
-
+    case REMOVE_TASK:
+      return {
+        ...state,
+        taskList: state.taskList.filter(item => item.id !== payload)
+      }
   }
 }
 

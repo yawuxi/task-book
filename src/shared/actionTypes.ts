@@ -14,5 +14,6 @@ export const ACTION_TYPES = {
   },
   taskIem: {
     COMPLETE_TASK: 'COMPLETE_TASK',
+    REMOVE_TASK: 'REMOVE_TASK',
   }
 }

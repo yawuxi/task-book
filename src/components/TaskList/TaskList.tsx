@@ -20,12 +20,20 @@ const TaskList: React.FC = () => {
       <h3 className="task-list__title h3-title">Активні задачі</h3>
       <ul className="task-list__list">
         {state.taskList.map((item: iTaskItem) => {
-          return <TaskItem {...item} key={item.id} />
+          if (!item.isCompleted) {
+            return <TaskItem {...item} key={item.id} />
+          }
         })}
       </ul>
       <h3 className="task-list__title h3-title">Виповнені задачі</h3>
-      <ul className="task-list__list"></ul>
-    </div >
+      <ul className="task-list__list">
+        {state.taskList.map((item: iTaskItem) => {
+          if (item.isCompleted) {
+            return <TaskItem {...item} key={item.id} />
+          }
+        })}
+      </ul>
+    </div>
   )
 }
 
