@@ -1,7 +1,9 @@
 // react
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 // additional functional
+import * as dayjs from 'dayjs'
+import 'dayjs/locale/uk'
 // components
 // styles
 import './TodayInfo.scss'
@@ -11,7 +13,27 @@ import './TodayInfo.scss'
  * TODO: feature: working calendar
 */
 
+// function setCurentDate(date: string) {
+//   const day = dayjs.default().format('D')
+
+//   const days = []
+
+//   return ''
+// }
+
 const TodayInfo: React.FC = () => {
+  const [time, setTime] = useState('')
+
+  dayjs.locale('uk')
+
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      setTime(dayjs.default().format('HH:mm:ss'))
+    }, 0);
+
+    return () => clearInterval(timeInterval)
+  }, [])
+
   return (
     <div className="today-info user-component">
       <h3 className="today-info__title h3-title">Такс, такс, такс</h3>
@@ -23,7 +45,7 @@ const TodayInfo: React.FC = () => {
               <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#282846" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M12 6V12L16 14" stroke="#282846" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            12:30:43
+            {time}
           </span>
         </div>
         <div className="today-info__item">
@@ -35,7 +57,7 @@ const TodayInfo: React.FC = () => {
               <path d="M8 2V6" stroke="#282846" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M3 10H21" stroke="#282846" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            29 липня 2022
+            {dayjs.default().format('D MMMM YYYY')}
           </span>
         </div>
       </div>
