@@ -3,8 +3,10 @@ import React from "react"
 // additional functional
 import { TaskBookProvider } from "./shared/context"
 // components
+import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
 import MainPage from "./pages/MainPage/MainPage"
+import UserPage from "./pages/UserPage/UserPage"
 import CreateTask from "./components/CreateTask/CreateTask"
 // import SignUpPage from "./pages/SignUpPage/SignUpPage"
 // styles
@@ -22,8 +24,11 @@ const App: React.FC = () => {
       <div className="app">
         <Sidebar />
         <main className="main">
+          <Header />
+          {/* <MainPage /> */}
+          <UserPage />
+          {/* modal */}
           <CreateTask />
-          <MainPage />
         </main>
       </div>
     </TaskBookProvider>

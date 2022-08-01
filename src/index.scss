@@ -3,6 +3,10 @@
 @import "./scss/fonts";
 @import "./scss/ui";
 
+body {
+  background-color: $LTbackground;
+}
+
 // index.scss styles
 @media (max-width: 1285.99px) {
   html {

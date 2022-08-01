@@ -3,7 +3,6 @@ import React from "react"
 
 // additional functional
 // components
-import Header from "../../components/Header/Header"
 import WeeklyResults from "../../components/WeeklyResults/WeeklyResults"
 import TaskList from "../../components/TaskList/TaskList"
 import TodayInfo from "../../components/TodayInfo/TodayInfo"
@@ -15,7 +14,6 @@ import './MainPage.scss'
 const MainPage: React.FC = () => {
   return (
     <>
-      <Header />
       <div className="main__content">
         <div className="main__left">
           <WeeklyResults />
