@@ -20,7 +20,7 @@ const TaskList: React.FC = () => {
       <h3 className="task-list__title h3-title">Активні задачі</h3>
       <ul className="task-list__list">
         {state.taskList.map((item: iTaskItem) => {
-          return <TaskItem task={item.task} id={item.id} key={item.id} />
+          return <TaskItem {...item} key={item.id} />
         })}
       </ul>
       <h3 className="task-list__title h3-title">Виповнені задачі</h3>

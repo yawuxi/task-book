@@ -11,5 +11,8 @@ export const ACTION_TYPES = {
       TOGGLE_CREATE_TASK: 'TOGGLE_CREATE_TASK',
       ADD_TASK: 'ADD_TASK',
     }
+  },
+  taskIem: {
+    COMPLETE_TASK: 'COMPLETE_TASK',
   }
 }

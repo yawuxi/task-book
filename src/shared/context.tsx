@@ -35,7 +35,7 @@ const initialState: iInitialState = {
     createTask: { isOpen: false },
   },
   taskList: [
-    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId() },
+    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
   ]
 }
 
@@ -50,7 +50,8 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
   const {
     header: { TOGGLE_MENU },
-    modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, }
+    modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, },
+    taskIem: { COMPLETE_TASK }
   } = ACTION_TYPES
 
   switch (type) {
@@ -72,9 +73,20 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
         ...state,
         taskList: [
           ...state.taskList,
-          { task: payload.task, category: payload.category, date: payload.date, id: nextId() }
+          { task: payload.task, category: payload.category, date: payload.date, priority: payload.priority, id: nextId(), isCompleted: false, }
         ]
       }
+    // TaskItem
+    case COMPLETE_TASK:
+      return {
+        ...state,
+        taskList: state.taskList.map(item => {
+          if (item.id !== payload) return item
+
+          return { ...item, isCompleted: !item.isCompleted }
+        })
+      }
+
   }
 }
 
