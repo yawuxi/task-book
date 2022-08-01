@@ -1,7 +1,8 @@
 // react
-import React from "react"
+import React, { useContext } from "react"
 
 // additional functional
+import { TaskBookContext } from "../../shared/context"
 // components
 // styles
 import './ToggleMenu.scss'
@@ -13,8 +14,14 @@ import './ToggleMenu.scss'
 */
 
 const ToggleMenu: React.FC = () => {
+  const { state } = useContext(TaskBookContext)
+  const { header: { toggleMenu } } = state
+
+  // opening ToggleMenu modal when isOpen === true and close when isOpen === false
+  const classes = toggleMenu ? 'toggle-menu user-component' : 'toggle-menu toggle-menu--hidden user-component';
+
   return (
-    <div className="toggle-menu toggle-menu--hidden user-component">
+    <div className={classes}>
       <ul className="toggle-menu__list">
         <li className="toggle-menu__item">
           <a href="#">

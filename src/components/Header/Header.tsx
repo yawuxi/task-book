@@ -1,12 +1,15 @@
 // react
-import React from "react"
+import React, { useContext } from "react"
 
 // additional functional
+import { ACTION_TYPES } from "../../shared/actionTypes"
+import { TaskBookContext } from "../../shared/context"
 // components
 import ToggleMenu from "../ToggleMenu/ToggleMenu"
 // styles
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
+import { closeModal } from "../SidebarAddCategory/SidebarAddCategory"
 
 interface ThemeProps {
   theme: string,
@@ -19,6 +22,9 @@ interface ThemeProps {
 */
 
 const Header: React.FC = () => {
+  const { dispatch } = useContext(TaskBookContext)
+  const { header: { TOGGLE_MENU } } = ACTION_TYPES
+
   return (
     <header className="header">
       <button className="header__new-task br10">
@@ -34,7 +40,9 @@ const Header: React.FC = () => {
       <div className="header__user">
         <p>Гарного дня, username</p>
         <img src={userLogo} alt="user logo" />
-        <button className="header__menu shadow"></button>
+        <button
+          onClick={() => dispatch({ type: TOGGLE_MENU })}
+          className="header__menu shadow"></button>
       </div>
       <ToggleMenu />
     </header>

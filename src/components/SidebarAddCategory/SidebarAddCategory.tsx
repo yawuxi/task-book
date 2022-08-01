@@ -11,7 +11,7 @@ import * as yup from 'yup'
 // styles
 import './SidebarAddCategory.scss'
 
-export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction>, type: string) {
+export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction>, type: string): void {
   if (e.currentTarget === e.target) {
     dispatch({ type })
   }
