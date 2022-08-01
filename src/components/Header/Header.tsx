@@ -9,7 +9,6 @@ import ToggleMenu from "../ToggleMenu/ToggleMenu"
 // styles
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
-import { closeModal } from "../SidebarAddCategory/SidebarAddCategory"
 
 interface ThemeProps {
   theme: string,

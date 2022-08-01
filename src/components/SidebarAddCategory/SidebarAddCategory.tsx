@@ -19,14 +19,14 @@ export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction
 
 const SidebarAddCategory: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { sidebarAddCategory: { isOpen } } } = state
-  const { sidebar: { SIDEBAR_ADD_CATEGORY }, modals: { CLOSE_SIDEBAR_ADD_CATEGORY } } = ACTION_TYPES
+  const { modals: { addCategory: { isOpen } } } = state
+  const { sidebar: { SIDEBAR_ADD_CATEGORY }, modals: { TOGGLE_ADD_CATEGORY } } = ACTION_TYPES
 
   // opening SidebarAddCategory modal when isOpen === true and close when isOpen === false
   const classes = isOpen ? 'sidebar-add-category' : 'sidebar-add-category sidebar-add-category--hidden'
 
   return (
-    <div className={classes} onClick={(e) => closeModal(e, dispatch, CLOSE_SIDEBAR_ADD_CATEGORY)}>
+    <div className={classes} onClick={(e) => closeModal(e, dispatch, TOGGLE_ADD_CATEGORY)}>
       <div className="sidebar-add-category__content user-component">
         <Formik
           initialValues={{

@@ -11,8 +11,9 @@ interface iInitialState {
     toggleMenu: boolean,
   },
   modals: {
-    sidebarAddCategory: { isOpen: boolean, },
-  }
+    addCategory: { isOpen: boolean, },
+    createTask: { isOpen: boolean },
+  },
 }
 
 const initialState: iInitialState = {
@@ -28,7 +29,8 @@ const initialState: iInitialState = {
     toggleMenu: false,
   },
   modals: {
-    sidebarAddCategory: { isOpen: false, }
+    addCategory: { isOpen: false, },
+    createTask: { isOpen: false },
   }
 }
 
@@ -44,7 +46,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     sidebar: { SIDEBAR_ADD_CATEGORY },
     header: { TOGGLE_MENU },
-    modals: { OPEN_SIDEBAR_ADD_CATEGORY, CLOSE_SIDEBAR_ADD_CATEGORY }
+    modals: { TOGGLE_ADD_CATEGORY }
   } = ACTION_TYPES
 
   switch (type) {
@@ -53,10 +55,8 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // sidebar
     case SIDEBAR_ADD_CATEGORY:
       return { ...state, sidebar: { categories: [...state.sidebar.categories, { title: payload }] } }
-    case OPEN_SIDEBAR_ADD_CATEGORY:
-      return { ...state, modals: { ...state.modals, sidebarAddCategory: { isOpen: true } } }
-    case CLOSE_SIDEBAR_ADD_CATEGORY:
-      return { ...state, modals: { ...state.modals, sidebarAddCategory: { isOpen: false } } }
+    case TOGGLE_ADD_CATEGORY:
+      return { ...state, modals: { ...state.modals, addCategory: { isOpen: !state.modals.addCategory.isOpen } } }
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
