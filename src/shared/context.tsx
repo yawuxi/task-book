@@ -1,9 +1,11 @@
 
 import { createContext, useReducer, ReactNode } from "react";
+import nextId from 'react-id-generator'
 
 interface iInitialState {
-  testStr: string,
-  testStr1: string,
+  sidebar: {
+    categories: Array<{ title: string }>
+  }
 }
 
 interface iAction {
@@ -12,8 +14,14 @@ interface iAction {
 }
 
 const initialState: iInitialState = {
-  testStr: '',
-  testStr1: '',
+  sidebar: {
+    categories: [
+      { title: 'Дім' },
+      { title: "Сім'я" },
+      { title: 'Робота' },
+      { title: 'Спорт' },
+    ]
+  }
 }
 
 export const TaskBookContext = createContext<any>('')
@@ -24,10 +32,6 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   switch (type) {
     default:
       return state
-    case 'test':
-      return { ...state, testStr: payload }
-    case 'test1':
-      return { ...state, testStr1: payload }
   }
 }
 

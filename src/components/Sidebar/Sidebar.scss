@@ -45,7 +45,13 @@
   }
 
   &__category-add {
+    display: flex;
+    align-items: center;
     color: $accent;
+
+    svg {
+      margin-right: 0.75rem;
+    }
   }
 
   &__log-out {
@@ -72,6 +78,7 @@
     background-color: $accent;
   }
 }
+
 // media queries
 @media (max-width: 998.99px) {
   .sidebar {
