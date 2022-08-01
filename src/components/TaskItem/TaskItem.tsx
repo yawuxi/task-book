@@ -8,25 +8,27 @@ import './TaskItem.scss'
 
 export interface iTaskItem {
   task: string,
-  category: string,
-  date: string,
-  priority: string,
+  category?: string,
+  date?: string,
+  priority?: string,
+  id: string
 }
 
-const TaskItem: React.FC = () => {
+{
+  /* 
+  //TODO: feature: task text from context
+  //TODO: feature: id attribute in input and label will recieve from data object property id
+  TODO: feature: completing task (class - task-list__item--completed)
+  TODO: feature: editing task
+  TODO: feature: removing task
+  */
+}
+
+const TaskItem: React.FC<iTaskItem> = ({ task, id }) => {
   return (
     <li className="task-list__item br10">
-      {
-        /* 
-        TODO: feature: task text from context
-        TODO: feature: id attribute in input and label will recieve from data object property id
-        TODO: feature: completing task (class - task-list__item--completed)
-        TODO: feature: editing task
-        TODO: feature: removing task
-        */
-      }
-      <input className="task-list__checkbox" type="checkbox" name="isTaskCompleted" id="isTaskCompleted" />
-      <label htmlFor="isTaskCompleted">Приготувати смачну вечерю</label>
+      <input className="task-list__checkbox" type="checkbox" name="isTaskCompleted" id={id} />
+      <label htmlFor={id}>{task}</label>
       <div className="task-list__item-controls">
         <button className="task-list__edit-task">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

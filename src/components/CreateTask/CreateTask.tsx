@@ -93,12 +93,13 @@ const CreateTask: React.FC = () => {
               </ul>
               <footer className="create-task__controls">
                 <button
+                  type="button"
                   onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}
                   className="create-task__cancle button">
                   Відмінити
                 </button>
                 <div>
-                  <button className="create-task__save-as-template button">Зберігти як шаблон</button>
+                  <button type="button" className="create-task__save-as-template button">Зберігти як шаблон</button>
                   <button type="submit" className="create-task__add button">Додати</button>
                 </div>
               </footer>

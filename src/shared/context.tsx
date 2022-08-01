@@ -2,7 +2,7 @@
 import { createContext, useReducer, ReactNode } from "react";
 import { ACTION_TYPES } from "./actionTypes";
 import { iTaskItem } from '../components/TaskItem/TaskItem'
-// import nextId from 'react-id-generator'
+import nextId from 'react-id-generator'
 
 interface iInitialState {
   sidebar: {
@@ -35,7 +35,7 @@ const initialState: iInitialState = {
     createTask: { isOpen: false },
   },
   taskList: [
-    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', },
+    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId() },
   ]
 }
 
@@ -50,7 +50,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
   const {
     header: { TOGGLE_MENU },
-    modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, }, }
+    modals: { addCategory: { TOGGLE_ADD_CATEGORY, ADD_CATEGORY }, createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, }
   } = ACTION_TYPES
 
   switch (type) {
@@ -67,8 +67,14 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // CreateTask
     case TOGGLE_CREATE_TASK:
       return { ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } } }
-    case ADD_CATEGORY:
-      return { ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } } }
+    case ADD_TASK:
+      return {
+        ...state,
+        taskList: [
+          ...state.taskList,
+          { task: payload.task, category: payload.category, date: payload.date, id: nextId() }
+        ]
+      }
   }
 }
 
