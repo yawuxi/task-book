@@ -1,0 +1,30 @@
+@import "../../scss/color-vars";
+
+.toggle-menu {
+  position: absolute;
+  z-index: 100;
+  top: 80%;
+  right: 0;
+  max-width: 180px;
+
+  &__item {
+    a {
+      display: flex;
+      gap: 0.625rem;
+      align-items: center;
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: $LTdark;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1.5625rem;
+    }
+  }
+}
+
+.toggle-menu--hidden {
+  display: none;
+}

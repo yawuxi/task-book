@@ -3,6 +3,7 @@ import React from "react"
 
 // additional functional
 // components
+import ToggleMenu from "../ToggleMenu/ToggleMenu"
 // styles
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
@@ -35,6 +36,7 @@ const Header: React.FC = () => {
         <img src={userLogo} alt="user logo" />
         <button className="header__menu shadow"></button>
       </div>
+      <ToggleMenu />
     </header>
   )
 }
