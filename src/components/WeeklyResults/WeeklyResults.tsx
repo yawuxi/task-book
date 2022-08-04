@@ -7,7 +7,7 @@ import React from "react"
 import './WeeklyResults.scss'
 
 /**
- * TODO: feature: dynamic data from context
+ * TODO: feature: dynamic data from firebase
 */
 
 const WeeklyResults: React.FC = () => {

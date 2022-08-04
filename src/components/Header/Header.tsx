@@ -17,7 +17,8 @@ interface ThemeProps {
 /**
  * //TODO: feature: onCLick header__new-task open CreateTask component
  * TODO: feature: onClick header__theme change theme to light\dark depends on last theme
- * TODO: feature: onClick header__menu open ToggleMenu component
+ * //TODO: feature: onClick header__menu open ToggleMenu component
+ * TODO: burger menu
 */
 
 const Header: React.FC = () => {

@@ -18,7 +18,8 @@ import './CreateTask.scss'
  * //TODO: feature: calendar
  * //TODO: feature: cancle
  * //TODO: feture: add
- * TODO: feture: save as template
+ * TODO: feature: save as template
+ * TODO: feature: user can choose only today date, can not choose yesterdays date
 */
 
 const CreateTask: React.FC = () => {
@@ -100,7 +101,10 @@ const CreateTask: React.FC = () => {
                 </button>
                 <div>
                   <button type="button" className="create-task__save-as-template button">Зберігти як шаблон</button>
-                  <button type="submit" className="create-task__add button">Додати</button>
+                  <button
+                    type="submit"
+                    className="create-task__add button"
+                    onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>Додати</button>
                 </div>
               </footer>
             </Form>

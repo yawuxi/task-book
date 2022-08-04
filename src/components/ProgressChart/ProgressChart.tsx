@@ -1,7 +1,9 @@
 // react
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 // additional functional
+import { TaskBookContext } from "../../shared/context";
+import { iTaskItem } from "../TaskItem/TaskItem";
 import { Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -38,28 +40,36 @@ const options = {
   },
 };
 
-const data = {
-  labels: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'],
-  datasets: [
-    {
-      label: '',
-      data: [4, 2, 10, 1, 0, 5, 1],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
 /**
- * TODO: feature: dynamic chart, depends of context data
+ * TODO: feature: dynamic chart, depends of context data, firebase
 */
 
 const ProgressChart: React.FC = () => {
+  const [data, setDate] = useState<Array<number>>([])
+  const { state } = useContext(TaskBookContext)
+  const { taskList } = state
+
+  useEffect(() => {
+    setDate(state => [...state, taskList.filter((task: iTaskItem) => task.isCompleted).length])
+  }, [taskList])
+
   return (
     <div className="progress-chart user-component">
       <h3 className="progress-chart__title h3-title">Графік успішності</h3>
       <div className="progress-chart__chart">
-        <Line options={options} data={data} />
+        <Line
+          options={options}
+          data={{
+            labels: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'],
+            datasets: [
+              {
+                label: '',
+                data,
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+              },
+            ],
+          }} />
       </div>
     </div>
   )

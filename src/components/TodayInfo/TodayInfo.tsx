@@ -9,8 +9,8 @@ import 'dayjs/locale/uk'
 import './TodayInfo.scss'
 
 /**
- * TODO: feature: working clock, updates every second
- * TODO: feature: working calendar
+ * // TODO: feature: working clock, updates every second
+ * // TODO: feature: working calendar
 */
 
 // function setCurentDate(date: string) {
