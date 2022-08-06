@@ -3,18 +3,10 @@ import React, { useContext } from "react"
 // additional functional
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
+import { iTaskItem } from "../../types/TaskItem"
 // components
 // styles
 import './TaskItem.scss'
-
-export interface iTaskItem {
-  task: string,
-  category?: string,
-  date?: string,
-  priority?: string,
-  id: string
-  isCompleted?: boolean
-}
 
 {
   /* 

@@ -4,15 +4,14 @@ import React, { useContext } from "react"
 // additional functional
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
+import { iThemeProps } from "../../types/ThemeProps"
 // components
 import ToggleMenu from "../ToggleMenu/ToggleMenu"
 // styles
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
 
-interface ThemeProps {
-  theme: string,
-}
+
 
 /**
  * //TODO: feature: onCLick header__new-task open CreateTask component
@@ -49,7 +48,7 @@ const Header: React.FC = () => {
   )
 }
 
-const CurrentTheme: React.FC<ThemeProps> = ({ theme }) => {
+const CurrentTheme: React.FC<iThemeProps> = ({ theme }) => {
   switch (theme) {
     case 'light':
       return (

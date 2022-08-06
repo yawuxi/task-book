@@ -1,7 +1,7 @@
 
 import { createContext, useReducer, ReactNode } from "react";
 import { ACTION_TYPES } from "./actionTypes";
-import { iTaskItem } from '../components/TaskItem/TaskItem'
+import { iTaskItem } from '../types/TaskItem'
 import nextId from 'react-id-generator'
 
 interface iInitialState {

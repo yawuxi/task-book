@@ -1,7 +1,7 @@
 // react
 import React, { useContext } from "react"
 // additional functional
-import { iTaskItem } from "../TaskItem/TaskItem"
+import { iTaskItem } from "../../types/TaskItem"
 import { TaskBookContext } from "../../shared/context"
 // components
 import TaskItem from "../TaskItem/TaskItem"

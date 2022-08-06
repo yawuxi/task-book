@@ -3,6 +3,7 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { ACTION_TYPES } from "../../shared/actionTypes"
+import { iCategoryItem } from "../../types/CategoryItem"
 // components
 // styles
 import './Sidebar.scss'
@@ -15,10 +16,6 @@ import logotype from '../../images/logotype.png'
  * //TODO: feature: onClick add category add new category to context
  * TODO: feature: onClick exit button, log out from current account
  */
-
-interface CategoryItem {
-  title: string
-}
 
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
@@ -74,7 +71,7 @@ const Sidebar: React.FC = () => {
       <nav className="sidebar__top">
         <h2 className="sidebar__title">Категорії</h2>
         <ul className="sidebar__list">
-          {state.sidebar.categories.map((item: CategoryItem) => {
+          {state.sidebar.categories.map((item: iCategoryItem) => {
             return (
               <li key={item.title} className="sidebar__item">
                 <a href="#">

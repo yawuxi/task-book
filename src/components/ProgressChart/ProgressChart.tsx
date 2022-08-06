@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 
 // additional functional
 import { TaskBookContext } from "../../shared/context";
-import { iTaskItem } from "../TaskItem/TaskItem";
+import { iTaskItem } from "../../types/TaskItem";
 import { Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
