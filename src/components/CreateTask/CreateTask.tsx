@@ -1,5 +1,5 @@
 // react
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 // additional functional
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
@@ -19,13 +19,27 @@ import './CreateTask.scss'
  * //TODO: feature: cancle
  * //TODO: feture: add
  * TODO: feature: save as template
- * TODO: feature: user can choose only today date, can not choose yesterdays date
+ * //TODO: feature: user can choose only today date, can not choose yesterdays date
 */
 
+function getMinDate(setStateFn: React.Dispatch<React.SetStateAction<string>>): void {
+  const day = new Date().getDay().toString().length < 2 ? `0${new Date().getDate()}` : new Date().getDate()
+  const month = (new Date().getMonth() + 1).toString().length < 2 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+  const year = new Date().getFullYear().toString()
+  const date = `${year}-${month}-${day}`
+
+  setStateFn(date)
+}
+
 const CreateTask: React.FC = () => {
+  const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
   const { modals: { createTask: { isOpen } } } = state
   const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK } } } = ACTION_TYPES
+
+  useEffect(() => {
+    getMinDate(setMinDate)
+  }, [])
 
   // conditional render
   const classes = isOpen ? 'create-task' : 'create-task create-task--hidden'
@@ -77,7 +91,7 @@ const CreateTask: React.FC = () => {
                 </li>
                 <li className="create-task-info__item">
                   <h4 className="create-task__small-title">Коли</h4>
-                  <Field className="create-task-info__input modal-field-styles" name="date" type="date" placeholder="тут буде календар" />
+                  <Field className="create-task-info__input modal-field-styles" name="date" type="date" min={minDate} placeholder="тут буде календар" />
                   {errors.date && touched.date ? <div className="form-error">{errors.date}</div> : null}
                 </li>
                 <li className="create-task-info__item">
