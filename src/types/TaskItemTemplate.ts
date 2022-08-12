@@ -1,5 +1,5 @@
 export interface iTaskItemTemplate {
-  templateName: string,
+  title: string,
   id: string
   task?: string,
   category?: string,

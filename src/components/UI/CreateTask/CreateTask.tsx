@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import dayjs from "dayjs";
 import { ACTION_TYPES } from "../../../shared/actionTypes"
 import { TaskBookContext } from "../../../shared/context"
+import { iTaskItemTemplate } from "../../../types/TaskItemTemplate";
 import ModalTextWindow, { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // components
 // styles
@@ -13,7 +14,7 @@ import './CreateTask.scss'
 
 /**
  * //TODO: feature: if modal window hidden use class - create-task--hidden
- * TODO: feature: all select options dynamic from context
+ * //TODO: feature: all select options dynamic from context
  * //TODO: modal form validation
  * TODO: feature: select template
  * //TODO: feature: calendar
@@ -35,7 +36,7 @@ function getMinDate(): string {
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { createTask: { isOpen } } } = state
+  const { modals: { createTask: { isOpen } }, taskItemTemplate } = state
   const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, modalTextWindow: { TOGGLE_TEXT_MODAL } }, taskItemTemplate: { ADD_TASK_TEMPLATE } } = ACTION_TYPES
 
   useEffect(() => {
@@ -48,14 +49,6 @@ const CreateTask: React.FC = () => {
   return (
     <div className={classes} onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
       <div className="create-task__content user-component">
-        <header>
-          <h3 className="create-task__title h3-title">Добавить новую задачу</h3>
-          <select className="modal-field-styles" name="template" placeholder="Вибрати шаблон">
-            <option value="iAmFirstTemplate">Шаблон 1</option>
-            <option value="iAmSecondTemplate">Шаблон 2</option>
-            <option value="iAmSecondTemplate">Шаблон 3</option>
-          </select>
-        </header>
         <Formik
           initialValues={{
             task: '',
@@ -78,6 +71,20 @@ const CreateTask: React.FC = () => {
         >
           {({ errors, touched, values }) => (
             <>
+              <header>
+                <h3 className="create-task__title h3-title">Добавить новую задачу</h3>
+                <Field
+                  className="modal-field-styles"
+                  name="template"
+                  placeholder="Вибрати шаблон"
+                  as="select"
+                >
+                  <option>Вибрати шаблон</option>
+                  {taskItemTemplate.map((item: iTaskItemTemplate) => {
+                    return <option key={item.title} value={item.title}>{item.title}</option>
+                  })}
+                </Field>
+              </header>
               <Form>
                 <h4 className="create-task__small-title">Що потрібно зробити</h4>
                 {errors.task && touched.task ? <div className="form-error">{errors.task}</div> : null}
@@ -132,7 +139,12 @@ const CreateTask: React.FC = () => {
                     <button
                       type="submit"
                       className="create-task__add button"
-                      onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
+                      onClick={e => {
+                        if (values.category !== '') {
+                          closeModal(e, dispatch, TOGGLE_CREATE_TASK)
+                        }
+                      }}
+                    >
                       Додати
                     </button>
                   </div>
