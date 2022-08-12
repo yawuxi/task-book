@@ -12,12 +12,18 @@
   justify-content: center;
   align-items: center;
 
+  &__content {
+    width: 300px;
+  }
+
   input {
     margin-bottom: 0.9375rem;
+    width: 100%;
   }
 
   button {
     background-color: $accent;
+    width: 100%;
   }
 }
 

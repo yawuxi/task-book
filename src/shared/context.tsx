@@ -61,6 +61,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       createTask: { TOGGLE_CREATE_TASK, ADD_TASK },
     },
     taskItem: { COMPLETE_TASK, REMOVE_TASK },
+    taskItemTemplate: { ADD_TASK_TEMPLATE }
   } = ACTION_TYPES
 
   switch (type) {
@@ -100,6 +101,13 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
         ...state,
         taskList: state.taskList.filter(item => item.id !== payload)
       }
+    // taskItemTemplate
+    case ADD_TASK_TEMPLATE: {
+      return {
+        ...state,
+        taskItemTemplate: [...state.taskItemTemplate, payload]
+      }
+    }
   }
 }
 

@@ -17,7 +17,7 @@ export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction
   }
 }
 
-const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string }> = ({ submitActionType, placeHolder }) => {
+const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string, additionalData?: object }> = ({ submitActionType, placeHolder, additionalData }) => {
   const { state, dispatch } = useContext(TaskBookContext)
   const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL } } } = ACTION_TYPES
 
@@ -35,7 +35,11 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string 
             categoryTitle: yup.string().min(2, 'Мінімум 2 символа!').required(`${placeHolder}!`)
           })}
           onSubmit={values => {
-            dispatch({ type: submitActionType, payload: values.categoryTitle })
+            if (additionalData !== undefined) {
+              dispatch({ type: submitActionType, payload: { title: values.categoryTitle, additionalData } })
+            } else {
+              dispatch({ type: submitActionType, payload: values.categoryTitle })
+            }
           }}
         >
           {({ errors, touched }) => (

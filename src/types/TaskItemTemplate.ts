@@ -1,9 +1,9 @@
 export interface iTaskItemTemplate {
   templateName: string,
+  id: string
   task?: string,
   category?: string,
   date?: string,
   priority?: string,
-  id: string
   isCompleted?: boolean
 }
