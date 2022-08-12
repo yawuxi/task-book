@@ -20,7 +20,7 @@ import './TaskItem.scss'
 
 const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   const { dispatch } = useContext(TaskBookContext)
-  const { taskIem: { COMPLETE_TASK, REMOVE_TASK } } = ACTION_TYPES
+  const { taskItem: { COMPLETE_TASK, REMOVE_TASK } } = ACTION_TYPES
 
   // conditional render
   const classes = isCompleted ? 'task-list__item task-list__item--completed br10' : 'task-list__item br10'

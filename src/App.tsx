@@ -8,11 +8,11 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import MainPage from "./pages/MainPage/MainPage"
 import UserPage from "./pages/UserPage/UserPage"
 // modal imports
-import CreateTask from "./components/CreateTask/CreateTask"
-import SidebarAddCategory from "./components/SidebarAddCategory/SidebarAddCategory"
+import CreateTask from "./components/UI/CreateTask/CreateTask"
 // import SignUpPage from "./pages/SignUpPage/SignUpPage"
 // styles
 import './App.scss'
+import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
 
 /**
  * //TODO: feature: create context
@@ -32,7 +32,6 @@ const App: React.FC = () => {
           {/* modal */}
           <CreateTask />
         </main>
-        <SidebarAddCategory />
       </div>
     </TaskBookProvider>
   )

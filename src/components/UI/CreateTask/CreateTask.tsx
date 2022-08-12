@@ -3,9 +3,10 @@ import React, { useContext, useEffect, useState } from "react"
 // additional functional
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
-import { ACTION_TYPES } from "../../shared/actionTypes"
-import { TaskBookContext } from "../../shared/context"
-import { closeModal } from "../SidebarAddCategory/SidebarAddCategory"
+import dayjs from "dayjs";
+import { ACTION_TYPES } from "../../../shared/actionTypes"
+import { TaskBookContext } from "../../../shared/context"
+import { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // components
 // styles
 import './CreateTask.scss'
@@ -22,23 +23,23 @@ import './CreateTask.scss'
  * //TODO: feature: user can choose only today date, can not choose yesterdays date
 */
 
-function getMinDate(setStateFn: React.Dispatch<React.SetStateAction<string>>): void {
-  const day = new Date().getDay().toString().length < 2 ? `0${new Date().getDate()}` : new Date().getDate()
-  const month = (new Date().getMonth() + 1).toString().length < 2 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
-  const year = new Date().getFullYear().toString()
+function getMinDate(): string {
+  const day = dayjs().date().toString().length < 2 ? `0${dayjs().date()}` : dayjs().date().toString()
+  const month = (dayjs().month() + 1).toString().length < 2 ? `0${dayjs().month() + 1}` : dayjs().month() + 1
+  const year = dayjs().year()
   const date = `${year}-${month}-${day}`
 
-  setStateFn(date)
+  return date
 }
 
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
   const { modals: { createTask: { isOpen } } } = state
-  const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK } } } = ACTION_TYPES
+  const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK } }, taskItemTemplate: { ADD_TASK_TEMPLATE } } = ACTION_TYPES
 
   useEffect(() => {
-    getMinDate(setMinDate)
+    setMinDate(getMinDate())
   }, [])
 
   // conditional render
@@ -61,6 +62,7 @@ const CreateTask: React.FC = () => {
             category: '',
             date: '',
             priority: '',
+            actionType: '',
           }}
           validationSchema={
             yup.object().shape({
@@ -91,7 +93,12 @@ const CreateTask: React.FC = () => {
                 </li>
                 <li className="create-task-info__item">
                   <h4 className="create-task__small-title">Коли</h4>
-                  <Field className="create-task-info__input modal-field-styles" name="date" type="date" min={minDate} placeholder="тут буде календар" />
+                  <Field
+                    className="create-task-info__input modal-field-styles"
+                    name="date"
+                    type="date"
+                    min={minDate}
+                    placeholder="тут буде календар" />
                   {errors.date && touched.date ? <div className="form-error">{errors.date}</div> : null}
                 </li>
                 <li className="create-task-info__item">
@@ -114,11 +121,17 @@ const CreateTask: React.FC = () => {
                   Відмінити
                 </button>
                 <div>
-                  <button type="button" className="create-task__save-as-template button">Зберігти як шаблон</button>
+                  <button
+                    type="button"
+                    className="create-task__save-as-template button">
+                    Зберігти як шаблон
+                  </button>
                   <button
                     type="submit"
                     className="create-task__add button"
-                    onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>Додати</button>
+                    onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
+                    Додати
+                  </button>
                 </div>
               </footer>
             </Form>
