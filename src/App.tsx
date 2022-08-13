@@ -24,7 +24,6 @@ import { useState } from "react"
 
 const App: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { theme: { SET_THEME } } = ACTION_TYPES
 
   useEffect(() => {
     localStorage.setItem('theme', state.theme)
