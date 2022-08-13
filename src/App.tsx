@@ -23,7 +23,7 @@ import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
 const App: React.FC = () => {
   return (
     <TaskBookProvider>
-      <div className="app">
+      <div className="app" data-theme="">
         <Sidebar />
         <main className="main">
           <Header />

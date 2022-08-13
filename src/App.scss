@@ -8,7 +8,8 @@
 .main {
   position: relative;
   flex: 0 1 81%;
-  background-color: $LTbackground;
+  background-color: var(--background);
+  transition: background-color 0.3s ease-in-out;
   padding: 0 4.375rem;
 
   &__content {

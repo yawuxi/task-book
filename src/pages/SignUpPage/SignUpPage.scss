@@ -3,7 +3,7 @@
 .sign-up {
   height: 100%;
   padding: 1.5625rem;
-  background-color: $white;
+  background-color: var(--white);
 
   &__content {
     height: calc(100% - 54px);
@@ -31,7 +31,7 @@
   &__title {
     font-weight: 600;
     font-size: 1.25rem;
-    color: $accent;
+    color: var(--accent);
   }
 
   &__inputs {
@@ -48,16 +48,16 @@
 
   &__log-in {
     padding: 0.625rem 1.5625rem;
-    background-color: $accent;
+    background-color: var(--accent);
     font-weight: 600;
-    color: $LTwhite;
+    color: var(--white);
   }
 
   &__registration {
     font-size: 0.875rem;
 
     a {
-      color: $accent;
+      color: var(--accent);
       text-decoration: underline;
     }
   }
@@ -67,12 +67,12 @@
     justify-content: center;
     gap: 3.125rem;
     font-size: 0.875rem;
-    color: $LTdark;
+    color: var(--content-text-color);
     margin-top: auto;
 
     a {
       text-decoration: underline;
-      color: $LTdark;
+      color: var(--content-text-color);
     }
   }
 }

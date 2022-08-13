@@ -4,7 +4,8 @@
   position: relative;
   z-index: 100;
   padding: 1.25rem;
-  background-color: $LTwhite;
+  background-color: var(--component-bg);
+  transition: background-color 0.3s ease-in-out;
   flex: 0 1 19%;
   display: flex;
   flex-direction: column;
@@ -20,7 +21,7 @@
   &__title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: $accent;
+    color: var(--accent);
     margin-bottom: 1.25rem;
   }
 
@@ -32,7 +33,8 @@
     a {
       display: flex;
       align-items: center;
-      color: $LTdark;
+      color: var(--content-text-color);
+      transition: color 0.3s ease-in-out;
     }
 
     svg {
@@ -47,10 +49,15 @@
   &__category-add {
     display: flex;
     align-items: center;
-    color: $accent;
+    color: var(--accent);
 
     svg {
       margin-right: 0.75rem;
+
+      path {
+        stroke: var(--accent) !important;
+        transition: stroke 0.3s ease-in-out;
+      }
     }
   }
 
@@ -58,6 +65,8 @@
     display: flex;
     align-items: center;
     margin-top: auto;
+    color: var(--content-text-color);
+    transition: color 0.3s ease-in-out;
 
     svg {
       margin-right: 0.75rem;
@@ -75,7 +84,7 @@
     border-bottom-left-radius: 10px;
     width: 35px;
     height: 20px;
-    background-color: $accent;
+    background-color: var(--accent);
   }
 }
 

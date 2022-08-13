@@ -38,10 +38,24 @@ const options = {
       position: 'top' as const,
     },
   },
+  scales: {
+    y: {
+      grid: {
+        color: '#F0F0F0',
+      }
+    },
+    x: {
+      grid: {
+        color: '#F0F0F0',
+      }
+    }
+  }
 };
 
 /**
  * TODO: feature: dynamic chart, depends of context data, firebase
+ * TODO: change scales.y&&x.grid.color to #F0F0F0 when LIGHT theme, to #F9F9F9 when DARK theme
+ * 
 */
 
 const ProgressChart: React.FC = () => {
@@ -65,11 +79,11 @@ const ProgressChart: React.FC = () => {
               {
                 label: '',
                 data,
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                borderColor: '#29a19c',
               },
             ],
-          }} />
+          }}
+        />
       </div>
     </div>
   )

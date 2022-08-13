@@ -1,15 +1,26 @@
 // * color variables
-// common
-$accent: #29a19c;
-$subscribe: #ecca75;
-$delete: #f05454;
-$white: #ffffff;
-$black: #000000;
-// light theme
-$LTwhite: #ffffff;
-$LTdark: #282846;
-$LTbackground: #fafafa;
-// dark theme
-$DTwhite: #f9f9f9;
-$DTbackground: #222831;
-$DTcomponentBackground: #2c3440;
+:root {
+  --accent: #29a19c;
+  --subscribe: #ecca75;
+  --delete: #f05454;
+  --white: #ffffff;
+  --black: #000000;
+  --background: #fafafa;
+  --component-bg: #ffffff;
+  --content-text-color: #282846;
+  --border-color: rgba(40, 40, 70, 0.1);
+}
+
+[data-theme="dark"] {
+  --white: #f9f9f9;
+  --background: #222831;
+  --component-bg: #2c3440;
+  --content-text-color: #f9f9f9;
+  --border-color: rgba(249, 249, 249, 0.2);
+
+  svg {
+    path {
+      stroke: var(--white);
+    }
+  }
+}

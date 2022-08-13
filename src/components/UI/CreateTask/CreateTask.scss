@@ -52,16 +52,16 @@
   }
 
   &__cancle {
-    background-color: $delete;
+    background-color: var(--delete);
   }
 
   &__save-as-template {
-    border: 1px solid $accent;
-    color: $accent !important;
+    border: 1px solid var(--accent);
+    color: var(--accent) !important;
   }
 
   &__add {
-    background-color: $accent;
+    background-color: var(--accent);
   }
 }
 

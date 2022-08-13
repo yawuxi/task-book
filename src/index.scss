@@ -4,7 +4,7 @@
 @import "./scss/ui";
 
 body {
-  background-color: $LTbackground;
+  background-color: var(--background);
 }
 
 // index.scss styles

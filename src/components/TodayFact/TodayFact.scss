@@ -1,0 +1,6 @@
+.today-fact {
+  &__text {
+    color: var(--content-text-color);
+    transition: color 0.3s ease-in-out;
+  }
+}

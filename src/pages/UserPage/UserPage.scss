@@ -24,7 +24,7 @@
     }
 
     p {
-      color: $accent;
+      color: var(--accent);
       // align-self: center;
       text-decoration: underline;
       font-weight: 300;
@@ -44,7 +44,7 @@
       input {
         width: 100%;
         padding: 0.75rem 0.9375rem;
-        border: 1px solid rgba($LTdark, 0.2);
+        border: 1px solid rgba(var(--dark), 0.2);
         border-radius: 0.4375rem;
 
         &::placeholder {
@@ -55,8 +55,8 @@
 
     button {
       align-self: flex-start;
-      background-color: $accent;
-      color: $white;
+      background-color: var(--accent);
+      color: var(--white);
       padding: 0.625rem 1.5625rem;
       border-radius: 0.5rem;
     }
