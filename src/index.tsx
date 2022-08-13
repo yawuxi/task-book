@@ -1,6 +1,8 @@
 // react
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// additional functional
+import { TaskBookProvider } from './shared/context';
 // components
 import App from './App';
 // styles
@@ -11,6 +13,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <TaskBookProvider>
+      <App />
+    </TaskBookProvider>
   </React.StrictMode>
 );

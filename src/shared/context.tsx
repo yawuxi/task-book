@@ -6,6 +6,7 @@ import { iTaskItemTemplate } from "../types/TaskItemTemplate";
 import nextId from 'react-id-generator'
 
 interface iInitialState {
+  theme: string | null,
   sidebar: {
     categories: Array<{ title: string }>
   },
@@ -21,6 +22,7 @@ interface iInitialState {
 }
 
 const initialState: iInitialState = {
+  theme: localStorage.getItem('theme'),
   sidebar: {
     categories: [
       { title: 'Дім' },
@@ -55,6 +57,7 @@ export default interface iAction {
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
   const {
+    theme: { SET_THEME },
     header: { TOGGLE_MENU },
     modals: {
       modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD },
@@ -67,6 +70,9 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   switch (type) {
     default:
       return state
+    // theme
+    case SET_THEME:
+      return { ...state, theme: payload }
     // sidebar
     case TOGGLE_TEXT_MODAL:
       return { ...state, modals: { ...state.modals, modalTextWindow: { isOpen: !state.modals.modalTextWindow.isOpen } } }

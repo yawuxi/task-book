@@ -1,7 +1,9 @@
 // react
-import React from "react"
+import React, { useEffect, useContext } from "react"
 // additional functional
-import { TaskBookProvider } from "./shared/context"
+import useLocalStorage from "use-local-storage"
+import { TaskBookContext } from "./shared/context"
+import { ACTION_TYPES } from "./shared/actionTypes"
 // components
 import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
@@ -12,7 +14,7 @@ import CreateTask from "./components/UI/CreateTask/CreateTask"
 // import SignUpPage from "./pages/SignUpPage/SignUpPage"
 // styles
 import './App.scss'
-import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
+import { useState } from "react"
 
 /**
  * //TODO: feature: create context
@@ -21,19 +23,24 @@ import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
  */
 
 const App: React.FC = () => {
+  const { state, dispatch } = useContext(TaskBookContext)
+  const { theme: { SET_THEME } } = ACTION_TYPES
+
+  useEffect(() => {
+    localStorage.setItem('theme', state.theme)
+  }, [state.theme])
+
   return (
-    <TaskBookProvider>
-      <div className="app" data-theme="">
-        <Sidebar />
-        <main className="main">
-          <Header />
-          <MainPage />
-          {/* <UserPage /> */}
-          {/* modal */}
-          <CreateTask />
-        </main>
-      </div>
-    </TaskBookProvider>
+    <div className="app" data-theme={state.theme}>
+      <Sidebar />
+      <main className="main">
+        <Header />
+        <MainPage />
+        {/* <UserPage /> */}
+        {/* modal */}
+        <CreateTask />
+      </main>
+    </div>
   )
 }
 

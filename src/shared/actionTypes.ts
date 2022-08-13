@@ -1,4 +1,7 @@
 export const ACTION_TYPES = {
+  theme: {
+    SET_THEME: 'SET_THEME',
+  },
   header: {
     TOGGLE_MENU: 'OPEN_TOGGLE_MENU',
   },
