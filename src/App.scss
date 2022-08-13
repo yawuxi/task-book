@@ -2,7 +2,9 @@
 
 .app {
   height: 100vh;
+  min-height: 700px;
   display: flex;
+  position: relative;
 }
 
 .main {
@@ -43,6 +45,7 @@
   .app {
     height: 100%;
   }
+
   .main {
     padding: 0 2.1875rem 2.1875rem;
 

@@ -22,7 +22,11 @@ import userLogo from '../../images/logotype.png'
 
 const Header: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { theme: { SET_THEME }, header: { TOGGLE_MENU }, modals: { createTask: { TOGGLE_CREATE_TASK } } } = ACTION_TYPES
+  const { theme: { SET_THEME },
+    header: { TOGGLE_MENU },
+    sidebar: { TOGGLE_BURGER_MENU },
+    modals: { createTask: { TOGGLE_CREATE_TASK } }
+  } = ACTION_TYPES
 
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
 
@@ -39,7 +43,7 @@ const Header: React.FC = () => {
       <button className="header__theme" onClick={() => dispatch({ type: SET_THEME, payload: payloadValue })}>
         <CurrentTheme theme={state.theme} />
       </button>
-      <button className="header__navigation"><span></span></button>
+      <button className="header__navigation" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}><span></span></button>
       <div className="header__user">
         <p>Гарного дня, username</p>
         <img src={userLogo} alt="user logo" />

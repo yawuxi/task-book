@@ -8,7 +8,8 @@ import nextId from 'react-id-generator'
 interface iInitialState {
   theme: string | null,
   sidebar: {
-    categories: Array<{ title: string }>
+    categories: Array<{ title: string }>,
+    burgerMenu: boolean,
   },
   header: {
     toggleMenu: boolean,
@@ -29,7 +30,8 @@ const initialState: iInitialState = {
       { title: "Сім'я" },
       { title: 'Робота' },
       { title: 'Спорт' },
-    ]
+    ],
+    burgerMenu: false,
   },
   header: {
     toggleMenu: false,
@@ -59,6 +61,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     theme: { SET_THEME },
     header: { TOGGLE_MENU },
+    sidebar: { TOGGLE_BURGER_MENU },
     modals: {
       modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD },
       createTask: { TOGGLE_CREATE_TASK, ADD_TASK },
@@ -76,8 +79,10 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // sidebar
     case TOGGLE_TEXT_MODAL:
       return { ...state, modals: { ...state.modals, modalTextWindow: { isOpen: !state.modals.modalTextWindow.isOpen } } }
+    case TOGGLE_BURGER_MENU:
+      return { ...state, sidebar: { ...state.sidebar, burgerMenu: !state.sidebar.burgerMenu } }
     case TEXT_MODAL_ADD:
-      return { ...state, sidebar: { categories: [...state.sidebar.categories, { title: payload }] } }
+      return { ...state, sidebar: { ...state.sidebar, categories: [...state.sidebar.categories, { title: payload }] } }
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }

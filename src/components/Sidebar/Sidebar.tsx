@@ -1,5 +1,5 @@
 // react
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { iCategoryItem } from "../../types/CategoryItem"
@@ -20,7 +20,8 @@ import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
 
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD } } } = ACTION_TYPES
+  const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD } }, sidebar: { TOGGLE_BURGER_MENU } } = ACTION_TYPES
+  const { sidebar: { burgerMenu } } = state
 
   function setIconByTitle(title: string) {
     switch (title) {
@@ -63,13 +64,20 @@ const Sidebar: React.FC = () => {
     }
   }
 
+  const isBurgerMenuActive = burgerMenu ? 'sidebar shadow sidebar-burger-active' : 'sidebar shadow'
+
+  useEffect(() => {
+    burgerMenu ? document.body.classList.add('lock') : document.body.classList.remove('lock')
+  }, [burgerMenu])
+
   return (
-    <aside className="sidebar shadow">
+    <aside className={isBurgerMenuActive}>
       <div className="sidebar-active-point"></div>
       <div className="sidebar__logo">
         <img src={logotype} alt="logotype" />
       </div>
       <nav className="sidebar__top">
+        <div className="sidebar__mobile-close button" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}>Закрити меню</div>
         <h2 className="sidebar__title">Категорії</h2>
         <ul className="sidebar__list">
           {state.sidebar.categories.map((item: iCategoryItem) => {

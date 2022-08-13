@@ -5,6 +5,9 @@ export const ACTION_TYPES = {
   header: {
     TOGGLE_MENU: 'OPEN_TOGGLE_MENU',
   },
+  sidebar: {
+    TOGGLE_BURGER_MENU: 'TOGGLE_BURGER_MENU',
+  },
   modals: {
     modalTextWindow: {
       TOGGLE_TEXT_MODAL: 'TOGGLE_MODAL',
