@@ -1,3 +1,4 @@
 export interface iCategoryItem {
-  title: string
+  title: string,
+  path: string,
 }

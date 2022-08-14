@@ -29,7 +29,7 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string,
       <div className="modal-text-window__content user-component">
         <Formik
           initialValues={{
-            categoryTitle: ''
+            categoryTitle: '',
           }}
           validationSchema={yup.object().shape({
             categoryTitle: yup.string().min(2, 'Мінімум 2 символа!').required(`${placeHolder}!`)
@@ -38,7 +38,7 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string,
             if (additionalData !== undefined) {
               dispatch({ type: submitActionType, payload: { title: values.categoryTitle, additionalData } })
             } else {
-              dispatch({ type: submitActionType, payload: values.categoryTitle })
+              dispatch({ type: submitActionType, payload: { title: values.categoryTitle, path: values.categoryTitle } })
             }
           }}
         >

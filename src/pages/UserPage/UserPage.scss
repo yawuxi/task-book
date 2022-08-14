@@ -8,6 +8,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 0.625rem;
+    color: var(--content-text-color);
   }
 
   &__profile-picture {
@@ -25,7 +26,6 @@
 
     p {
       color: var(--accent);
-      // align-self: center;
       text-decoration: underline;
       font-weight: 300;
       font-size: 0.75rem;

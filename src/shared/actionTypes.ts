@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
   },
   sidebar: {
     TOGGLE_BURGER_MENU: 'TOGGLE_BURGER_MENU',
+    ADD_REF_ELEMENT: 'ADD_REF_ELEMENT',
   },
   modals: {
     modalTextWindow: {
@@ -25,4 +26,7 @@ export const ACTION_TYPES = {
   taskItemTemplate: {
     ADD_TASK_TEMPLATE: 'ADD_TASK_TEMPLATE',
   },
+  activePointOffset: {
+    CHANGE_POINT_OFFSET: 'CHANGE_POINT_OFFSET',
+  }
 }

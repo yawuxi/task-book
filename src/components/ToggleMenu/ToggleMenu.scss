@@ -8,7 +8,18 @@
   max-width: 180px;
 
   &__item {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
     a {
+      display: flex;
+      gap: 0.625rem;
+      align-items: center;
+    }
+
+    button {
       display: flex;
       gap: 0.625rem;
       align-items: center;

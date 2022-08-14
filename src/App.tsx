@@ -1,7 +1,12 @@
-// react
+// react:
 import React, { useEffect, useContext } from "react"
 // additional functional
 import { TaskBookContext } from "./shared/context"
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 // components
 import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
@@ -27,16 +32,20 @@ const App: React.FC = () => {
   }, [state.theme])
 
   return (
-    <div className="app" data-theme={state.theme}>
-      <Sidebar />
-      <main className="main">
-        <Header />
-        <MainPage />
-        {/* <UserPage /> */}
-        {/* modal */}
-        <CreateTask />
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className="app" data-theme={state.theme}>
+        <Sidebar />
+        <main className="main">
+          <Header />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/user-page" element={<UserPage />} />
+          </Routes>
+          {/* modal */}
+          <CreateTask />
+        </main>
+      </div>
+    </BrowserRouter>
   )
 }
 

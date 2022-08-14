@@ -1,9 +1,10 @@
 // react
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { iCategoryItem } from "../../types/CategoryItem"
 import { ACTION_TYPES } from "../../shared/actionTypes"
+import { Link } from "react-router-dom"
 // components
 import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
 // styles
@@ -20,9 +21,28 @@ import logotype from '../../images/logotype.png'
 
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD } }, sidebar: { TOGGLE_BURGER_MENU } } = ACTION_TYPES
+
+  const {
+    modals: {
+      modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD }
+    },
+    sidebar: { TOGGLE_BURGER_MENU, ADD_REF_ELEMENT },
+    activePointOffset: { CHANGE_POINT_OFFSET }
+  } = ACTION_TYPES
+
   const { sidebar: { burgerMenu } } = state
 
+  // refs
+  const topNavMenu = useRef<HTMLUListElement | null>(null)
+  const navMenuElement = useRef<HTMLLIElement | null>(null)
+  const sidebarActivePoint = useRef<HTMLLIElement | null>(null)
+
+  // functions
+  function positionActivePoint(e: any) {
+    dispatch({ type: CHANGE_POINT_OFFSET, payload: e.target.offsetTop })
+  }
+
+  // category-icon setting
   function setIconByTitle(title: string) {
     switch (title) {
       default:
@@ -64,6 +84,7 @@ const Sidebar: React.FC = () => {
     }
   }
 
+  // conditional render
   const isBurgerMenuActive = burgerMenu ? 'sidebar shadow sidebar-burger-active' : 'sidebar shadow'
 
   useEffect(() => {
@@ -72,24 +93,24 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside className={isBurgerMenuActive}>
-      <div className="sidebar-active-point"></div>
       <div className="sidebar__logo">
         <img src={logotype} alt="logotype" />
       </div>
       <nav className="sidebar__top">
         <div className="sidebar__mobile-close button" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}>Закрити меню</div>
         <h2 className="sidebar__title">Категорії</h2>
-        <ul className="sidebar__list">
+        <ul className="sidebar__list" ref={topNavMenu} onClick={positionActivePoint}>
           {state.sidebar.categories.map((item: iCategoryItem) => {
             return (
-              <li key={item.title} className="sidebar__item">
-                <a href="#">
+              <li key={item.title} className="sidebar__item" ref={navMenuElement}>
+                <Link to={item.path}>
                   {setIconByTitle(item.title)}
                   {item.title}
-                </a>
+                </Link>
               </li>
             )
           })}
+          <li className="sidebar-active-point" ref={sidebarActivePoint} style={{ top: `${state.activePointOffset}px` }}></li>
         </ul>
         <button className="sidebar__category-add" onClick={() => dispatch({ type: TOGGLE_TEXT_MODAL })}>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +135,7 @@ const Sidebar: React.FC = () => {
             </a>
           </li>
           <li className="sidebar__item">
-            <a href="#">
+            <a href="#" >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.25 4.5L10.125 11.625L6.375 7.875L0.75 13.5" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M12.75 4.5H17.25V9" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

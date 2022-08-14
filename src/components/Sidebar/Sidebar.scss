@@ -32,6 +32,7 @@
   }
 
   &__list {
+    position: relative;
     margin-bottom: 1.875rem;
   }
 
@@ -81,17 +82,15 @@
 }
 
 .sidebar-active-point {
-  &::before {
-    content: "";
-    position: absolute;
-    top: 27.5%;
-    right: 0;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    width: 35px;
-    height: 20px;
-    background-color: var(--accent);
-  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 35px;
+  height: 20px;
+  background-color: var(--accent);
+  transition: top 0.3s ease-in-out;
 }
 
 // media queries

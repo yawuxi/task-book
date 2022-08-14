@@ -7,7 +7,8 @@ import nextId from 'react-id-generator'
 interface iInitialState {
   theme: string | null,
   sidebar: {
-    categories: Array<{ title: string }>,
+    categories: Array<{ title: string, path: string }>,
+    refs: Array<HTMLLIElement>
     burgerMenu: boolean,
   },
   header: {
@@ -25,11 +26,12 @@ const initialState: iInitialState = {
   theme: localStorage.getItem('theme'),
   sidebar: {
     categories: [
-      { title: 'Дім' },
-      { title: "Сім'я" },
-      { title: 'Робота' },
-      { title: 'Спорт' },
+      { title: 'Дім', path: '/' },
+      { title: "Сім'я", path: '/family' },
+      { title: 'Робота', path: '/work' },
+      { title: 'Спорт', path: '/sport' },
     ],
+    refs: [],
     burgerMenu: false,
   },
   header: {
@@ -40,10 +42,38 @@ const initialState: iInitialState = {
     createTask: { isOpen: false, },
   },
   taskList: [
-    { task: 'Зробити блінчики', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
-    { task: 'Купити квіточкі мамі', category: "сім'я", date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
-    { task: 'Купити татові авто', category: 'мрія', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
-    { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: true },
+    {
+      task: 'Зробити блінчики',
+      category: 'їжа',
+      date: '2020-08-01',
+      priority: 'Дуже важливо',
+      id: nextId(),
+      isCompleted: false
+    },
+    {
+      task: 'Купити квіточкі мамі',
+      category: "сім'я",
+      date: '2020-08-01',
+      priority: 'Дуже важливо',
+      id: nextId(),
+      isCompleted: false
+    },
+    {
+      task: 'Купити татові авто',
+      category: 'мрія',
+      date: '2020-08-01',
+      priority: 'Дуже важливо',
+      id: nextId(),
+      isCompleted: false
+    },
+    {
+      task: 'Купити поїсти',
+      category: 'їжа',
+      date: '2020-08-01',
+      priority: 'Дуже важливо',
+      id: nextId(),
+      isCompleted: true
+    },
   ],
   taskItemTemplate: [],
 }
@@ -61,13 +91,22 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     theme: { SET_THEME },
     header: { TOGGLE_MENU },
-    sidebar: { TOGGLE_BURGER_MENU },
+    sidebar: {
+      TOGGLE_BURGER_MENU,
+    },
     modals: {
-      modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD },
-      createTask: { TOGGLE_CREATE_TASK, ADD_TASK },
+      modalTextWindow: {
+        TOGGLE_TEXT_MODAL,
+        TEXT_MODAL_ADD,
+      },
+      createTask: {
+        TOGGLE_CREATE_TASK,
+        ADD_TASK,
+      },
     },
     taskItem: { COMPLETE_TASK, REMOVE_TASK },
     taskItemTemplate: { ADD_TASK_TEMPLATE },
+    activePointOffset: { CHANGE_POINT_OFFSET },
   } = ACTION_TYPES
 
   const {
@@ -88,7 +127,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case TOGGLE_BURGER_MENU:
       return { ...state, sidebar: { ...sidebar, burgerMenu: !sidebar.burgerMenu } }
     case TEXT_MODAL_ADD:
-      return { ...state, sidebar: { ...sidebar, categories: [...sidebar.categories, { title: payload }] } }
+      return { ...state, sidebar: { ...sidebar, categories: [...sidebar.categories, { title: payload.title, path: payload.path }] } }
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
@@ -119,12 +158,14 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
         taskList: taskList.filter(item => item.id !== payload)
       }
     // taskItemTemplate
-    case ADD_TASK_TEMPLATE: {
+    case ADD_TASK_TEMPLATE:
       return {
         ...state,
         taskItemTemplate: [...state.taskItemTemplate, payload]
       }
-    }
+    // activePointOffset
+    case CHANGE_POINT_OFFSET:
+      return { ...state, activePointOffset: payload }
   }
 }
 

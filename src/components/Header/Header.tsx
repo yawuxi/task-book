@@ -1,6 +1,5 @@
 // react
 import React, { useContext } from "react"
-
 // additional functional
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
@@ -11,18 +10,17 @@ import ToggleMenu from "../ToggleMenu/ToggleMenu"
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
 
-
-
 /**
  * //TODO: feature: onCLick header__new-task open CreateTask component
- * TODO: feature: onClick header__theme change theme to light\dark depends on last theme
+ * //TODO: feature: onClick header__theme change theme to light\dark depends on last theme
  * //TODO: feature: onClick header__menu open ToggleMenu component
- * TODO: burger menu
+ * //TODO: burger menu
 */
 
 const Header: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const { theme: { SET_THEME },
+  const {
+    theme: { SET_THEME },
     header: { TOGGLE_MENU },
     sidebar: { TOGGLE_BURGER_MENU },
     modals: { createTask: { TOGGLE_CREATE_TASK } }
@@ -56,7 +54,7 @@ const Header: React.FC = () => {
   )
 }
 
-const CurrentTheme: React.FC<iThemeProps> = ({ theme = 'light' }) => {
+export const CurrentTheme: React.FC<iThemeProps> = ({ theme = 'light' }) => {
   if (theme === 'light') {
     return (
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
