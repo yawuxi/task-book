@@ -24,5 +24,5 @@ export const ACTION_TYPES = {
   },
   taskItemTemplate: {
     ADD_TASK_TEMPLATE: 'ADD_TASK_TEMPLATE',
-  }
+  },
 }

@@ -1,4 +1,3 @@
-
 import { createContext, useReducer, ReactNode, useEffect } from "react";
 import { ACTION_TYPES } from "./actionTypes";
 import { iTaskItem } from '../types/TaskItem'
@@ -46,7 +45,7 @@ const initialState: iInitialState = {
     { task: 'Купити татові авто', category: 'мрія', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: false },
     { task: 'Купити поїсти', category: 'їжа', date: '2020-08-01', priority: 'Дуже важливо', id: nextId(), isCompleted: true },
   ],
-  taskItemTemplate: []
+  taskItemTemplate: [],
 }
 
 export const TaskBookContext = createContext<any>(null)
@@ -58,6 +57,7 @@ export default interface iAction {
 
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
+
   const {
     theme: { SET_THEME },
     header: { TOGGLE_MENU },
@@ -67,8 +67,14 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       createTask: { TOGGLE_CREATE_TASK, ADD_TASK },
     },
     taskItem: { COMPLETE_TASK, REMOVE_TASK },
-    taskItemTemplate: { ADD_TASK_TEMPLATE }
+    taskItemTemplate: { ADD_TASK_TEMPLATE },
   } = ACTION_TYPES
+
+  const {
+    taskList,
+    modals,
+    sidebar,
+  } = state
 
   switch (type) {
     default:
@@ -78,22 +84,22 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       return { ...state, theme: payload }
     // sidebar
     case TOGGLE_TEXT_MODAL:
-      return { ...state, modals: { ...state.modals, modalTextWindow: { isOpen: !state.modals.modalTextWindow.isOpen } } }
+      return { ...state, modals: { ...modals, modalTextWindow: { isOpen: !modals.modalTextWindow.isOpen } } }
     case TOGGLE_BURGER_MENU:
-      return { ...state, sidebar: { ...state.sidebar, burgerMenu: !state.sidebar.burgerMenu } }
+      return { ...state, sidebar: { ...sidebar, burgerMenu: !sidebar.burgerMenu } }
     case TEXT_MODAL_ADD:
-      return { ...state, sidebar: { ...state.sidebar, categories: [...state.sidebar.categories, { title: payload }] } }
+      return { ...state, sidebar: { ...sidebar, categories: [...sidebar.categories, { title: payload }] } }
     // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
     // CreateTask
     case TOGGLE_CREATE_TASK:
-      return { ...state, modals: { ...state.modals, createTask: { isOpen: !state.modals.createTask.isOpen } } }
+      return { ...state, modals: { ...modals, createTask: { isOpen: !modals.createTask.isOpen } } }
     case ADD_TASK:
       return {
         ...state,
         taskList: [
-          ...state.taskList,
+          ...taskList,
           { task: payload.task, category: payload.category, date: payload.date, priority: payload.priority, id: nextId(), isCompleted: false, }
         ]
       }
@@ -101,7 +107,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case COMPLETE_TASK:
       return {
         ...state,
-        taskList: state.taskList.map(item => {
+        taskList: taskList.map(item => {
           if (item.id !== payload) return item
 
           return { ...item, isCompleted: !item.isCompleted }
@@ -110,7 +116,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case REMOVE_TASK:
       return {
         ...state,
-        taskList: state.taskList.filter(item => item.id !== payload)
+        taskList: taskList.filter(item => item.id !== payload)
       }
     // taskItemTemplate
     case ADD_TASK_TEMPLATE: {

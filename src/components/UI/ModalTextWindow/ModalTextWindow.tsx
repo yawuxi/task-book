@@ -2,9 +2,9 @@
 import React, { useContext } from "react"
 
 // additional functional
-import iAction from "../../../shared/context"
-import { ACTION_TYPES } from "../../../shared/actionTypes"
 import { TaskBookContext } from "../../../shared/context"
+import { ACTION_TYPES } from "../../../shared/actionTypes"
+import iAction from "../../../shared/context"
 import { Formik, Form, Field } from "formik"
 import * as yup from 'yup'
 // components
@@ -44,7 +44,12 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string,
         >
           {({ errors, touched }) => (
             <Form>
-              <Field className="modal-field-styles" id="categoryTitle" name="categoryTitle" placeholder={placeHolder} />
+              <Field
+                className="modal-field-styles"
+                id="categoryTitle"
+                name="categoryTitle"
+                placeholder={placeHolder}
+              />
               {errors.categoryTitle && touched.categoryTitle ? <div className="form-error">{errors.categoryTitle}</div> : null}
               <button className="button" type="submit">Додати</button>
             </Form>

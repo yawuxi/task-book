@@ -13,14 +13,6 @@ import './TodayInfo.scss'
  * // TODO: feature: working calendar
 */
 
-// function setCurentDate(date: string) {
-//   const day = dayjs.default().format('D')
-
-//   const days = []
-
-//   return ''
-// }
-
 const TodayInfo: React.FC = () => {
   const [time, setTime] = useState('')
 

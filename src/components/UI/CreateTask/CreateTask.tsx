@@ -1,14 +1,14 @@
 // react
 import React, { useContext, useEffect, useState } from "react"
 // additional functional
+import { TaskBookContext } from "../../../shared/context"
+import { ACTION_TYPES } from "../../../shared/actionTypes"
+import { iTaskItemTemplate } from "../../../types/TaskItemTemplate";
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
 import dayjs from "dayjs";
-import { ACTION_TYPES } from "../../../shared/actionTypes"
-import { TaskBookContext } from "../../../shared/context"
-import { iTaskItemTemplate } from "../../../types/TaskItemTemplate";
-import ModalTextWindow, { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // components
+import ModalTextWindow, { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // styles
 import './CreateTask.scss'
 

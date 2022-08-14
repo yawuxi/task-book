@@ -5,10 +5,10 @@ import { TaskBookContext } from "../../shared/context"
 import { iCategoryItem } from "../../types/CategoryItem"
 import { ACTION_TYPES } from "../../shared/actionTypes"
 // components
+import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
 // styles
 import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
-import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
 
 /**
  * TODO: feature: sidebar active indicator

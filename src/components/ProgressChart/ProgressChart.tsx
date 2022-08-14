@@ -15,7 +15,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-// import faker from 'faker';
 // components
 // styles
 import './ProgressChart.scss'
