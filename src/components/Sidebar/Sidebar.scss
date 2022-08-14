@@ -107,6 +107,15 @@
     align-items: center;
     padding: 3.75rem 0;
     transition: top 0.3s ease-in-out;
+    overflow-y: auto;
+
+    &__top {
+      width: 120px;
+    }
+
+    &__bottom {
+      width: 120px;
+    }
 
     &__mobile-close {
       display: block;
@@ -114,6 +123,10 @@
 
     &__logo {
       display: none;
+    }
+
+    &__log-out {
+      margin-top: 3.125rem;
     }
   }
 
