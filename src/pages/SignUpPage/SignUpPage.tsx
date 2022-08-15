@@ -1,6 +1,5 @@
 // react
 import React from "react"
-
 // additional functional
 // components
 // styles

@@ -12,7 +12,7 @@ import './UserPage.scss'
 import imgTest from '../../images/test-image.png'
 
 /**
- * TODO: feature: opportunity to change profile picture, nickname and email
+ * TODO: feature: ability to change profile picture, nickname and email
 */
 
 const UserPage: React.FC = () => {

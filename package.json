@@ -8,6 +8,7 @@
     "@types/react-dom": "^18.0.6",
     "chart.js": "^3.8.2",
     "dayjs": "^1.11.4",
+    "firebase": "^9.9.2",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",

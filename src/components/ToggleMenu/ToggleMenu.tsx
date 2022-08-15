@@ -11,7 +11,7 @@ import './ToggleMenu.scss'
 
 /**
  * //TODO: feature: onClick account go over to UserPage component
- * TODO: feature: onClick theme button change theme to light\dark depends on last theme
+ * //TODO: feature: onClick theme button change theme to light\dark depends on last theme
  * TODO: feature: onClick exit button, log out from current account
  * // TODO: layout: if toggle-menu hidden use toggle-menu--hidden class
 */

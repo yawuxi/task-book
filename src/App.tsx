@@ -25,8 +25,9 @@ import './App.scss'
  */
 
 const App: React.FC = () => {
-  const { state, dispatch } = useContext(TaskBookContext)
+  const { state } = useContext(TaskBookContext)
 
+  // settings theme to localStorage from state
   useEffect(() => {
     localStorage.setItem('theme', state.theme)
   }, [state.theme])

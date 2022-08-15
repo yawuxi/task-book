@@ -12,7 +12,7 @@ import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
 
 /**
- * TODO: feature: sidebar active indicator
+ * //TODO: feature: sidebar active indicator
  * //TODO: feature: category links builds up from context
  * TODO: feature: change function setIconByTitle to GET request from data base
  * //TODO: feature: onClick add category add new category to context
