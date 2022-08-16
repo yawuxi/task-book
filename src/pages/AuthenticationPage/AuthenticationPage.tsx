@@ -3,13 +3,14 @@ import React, { useState } from "react"
 // additional functional
 import { Formik, Field, Form } from "formik"
 import * as Yup from 'yup'
+import { signInUser, registrationNewUser } from "../../firebase"
 // components
 // styles
 import './AuthenticationPage.scss'
 import logotype from '../../images/logotype.png'
 
 /**
- * TODO: feature: working sign up or sign in
+ * //TODO: feature: working sign up and sign in
 */
 
 const AuthenticationPage: React.FC = () => {
@@ -47,6 +48,7 @@ const AuthenticationPage: React.FC = () => {
                     <button
                       type="submit"
                       className="login-page__log-in br10"
+                      onClick={() => signInUser(values.email, values.password)}
                     >
                       Увійти
                     </button>
@@ -68,6 +70,7 @@ const AuthenticationPage: React.FC = () => {
                     <button
                       type="submit"
                       className="login-page__log-in br10"
+                      onClick={() => registrationNewUser(values.email, values.password)}
                     >
                       Зарєєструватися
                     </button>
