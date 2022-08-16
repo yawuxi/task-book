@@ -36,18 +36,15 @@ function getMinDate(): string {
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { createTask: { isOpen } }, taskItemTemplate } = state
+  const { taskItemTemplate } = state
   const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, modalTextWindow: { TOGGLE_TEXT_MODAL } }, taskItemTemplate: { ADD_TASK_TEMPLATE } } = ACTION_TYPES
 
   useEffect(() => {
     setMinDate(getMinDate())
   }, [])
 
-  // conditional render
-  const classes = isOpen ? 'create-task' : 'create-task create-task--hidden'
-
   return (
-    <div className={classes} onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
+    <div className="create-task" onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}>
       <div className="create-task__content user-component">
         <Formik
           initialValues={{

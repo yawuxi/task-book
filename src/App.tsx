@@ -23,6 +23,9 @@ const App: React.FC = () => {
   const { state } = useContext(TaskBookContext)
   const [user, loading] = useAuthState(auth)
 
+  // destructuring
+  const { modals: { createTask: { isOpen } } } = state
+
   // settings theme to localStorage from state
   useEffect(() => {
     localStorage.setItem('theme', state.theme)
@@ -40,7 +43,7 @@ const App: React.FC = () => {
             <Header />
             <AppRouter />
             {/* modal */}
-            <CreateTask />
+            {isOpen ? <CreateTask /> : null}
           </main>
         </>
       ) : (

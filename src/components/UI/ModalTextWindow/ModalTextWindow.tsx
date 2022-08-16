@@ -11,8 +11,8 @@ import * as yup from 'yup'
 // styles
 import './ModalTextWindow.scss'
 
-export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction>, type: string): void {
-  if (e.currentTarget === e.target) {
+export function closeModal(e: React.MouseEvent, dispatch: React.Dispatch<iAction>, type: string, value?: string): void {
+  if (e.currentTarget === e.target && value !== '') {
     dispatch({ type })
   }
 }
@@ -42,7 +42,7 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string,
             }
           }}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, values }) => (
             <Form>
               <Field
                 className="modal-field-styles"
@@ -51,7 +51,9 @@ const ModalTextWindow: React.FC<{ submitActionType: string, placeHolder: string,
                 placeholder={placeHolder}
               />
               {errors.categoryTitle && touched.categoryTitle ? <div className="form-error">{errors.categoryTitle}</div> : null}
-              <button className="button" type="submit">Додати</button>
+              <button className="button" type="submit" onClick={e => closeModal(e, dispatch, TOGGLE_TEXT_MODAL, values.categoryTitle)}>
+                Додати
+              </button>
             </Form>
           )}
         </Formik>
