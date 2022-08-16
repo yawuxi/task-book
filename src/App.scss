@@ -9,6 +9,7 @@
 
 .main {
   position: relative;
+  z-index: 10;
   flex: 0 1 81%;
   background-color: var(--background);
   transition: background-color 0.3s ease-in-out;

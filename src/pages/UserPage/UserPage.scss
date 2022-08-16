@@ -44,11 +44,16 @@
       input {
         width: 100%;
         padding: 0.75rem 0.9375rem;
-        border: 1px solid rgba(var(--dark), 0.2);
+        border: 1px solid var(--border-color);
+        background-color: var(--background);
         border-radius: 0.4375rem;
+        transition-property: border, background-color;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-in-out;
 
         &::placeholder {
-          color: #000000;
+          color: var(--content-text-color);
+          transition: color 0.3s ease-in-out;
         }
       }
     }

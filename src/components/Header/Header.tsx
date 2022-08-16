@@ -4,6 +4,8 @@ import React, { useContext } from "react"
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
 import { iThemeProps } from "../../types/ThemeProps"
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from "../../firebase"
 // components
 import ToggleMenu from "../ToggleMenu/ToggleMenu"
 // styles
@@ -26,7 +28,13 @@ const Header: React.FC = () => {
     modals: { createTask: { TOGGLE_CREATE_TASK } }
   } = ACTION_TYPES
 
+  const [user] = useAuthState(auth)
+
+  // changing theme dark/light
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
+
+  // username
+  const profileUserName = user?.displayName === null ? user?.email : user?.displayName
 
   return (
     <header className="header">
@@ -43,7 +51,7 @@ const Header: React.FC = () => {
       </button>
       <button className="header__navigation" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}><span></span></button>
       <div className="header__user">
-        <p>Гарного дня, username</p>
+        <p>Гарного дня, {profileUserName}</p>
         <img src={userLogo} alt="user logo" />
         <button
           onClick={() => dispatch({ type: TOGGLE_MENU })}

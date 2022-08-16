@@ -54,7 +54,7 @@ const options = {
 /**
  * TODO: feature: dynamic chart, depends of context data, firebase
  * TODO: change scales.y&&x.grid.color to #F0F0F0 when LIGHT theme, to #F9F9F9 when DARK theme
- * 
+ * TODO: Wrap into React.memo, memoizate this component
 */
 
 const ProgressChart: React.FC = () => {

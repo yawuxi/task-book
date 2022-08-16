@@ -8,6 +8,7 @@ import './TodayFact.scss'
 
 /**
  * TODO: feature: get fact from API, update every 24hrs
+ * TODO: Wrap into React.memo, memoizate this component
 */
 
 const TodayFact: React.FC = () => {
