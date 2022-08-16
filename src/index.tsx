@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // additional functional
 import { TaskBookProvider } from './shared/context';
+import { BrowserRouter } from "react-router-dom";
 // components
 import App from './App';
 // styles
@@ -13,8 +14,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <TaskBookProvider>
-      <App />
-    </TaskBookProvider>
+    <BrowserRouter>
+      <TaskBookProvider>
+        <App />
+      </TaskBookProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
