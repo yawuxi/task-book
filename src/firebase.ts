@@ -39,6 +39,6 @@ export function signInUser(email: string, password: string) {
 }
 
 // sign out method
-export function singOutUser() {
+export function signOutUser() {
   signOut(auth)
 }
