@@ -5,9 +5,13 @@ import { TaskBookContext } from "../../shared/context"
 import { iCategoryItem } from "../../types/CategoryItem"
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { Link } from "react-router-dom"
-import { signOutUser } from "../../firebase"
+import { doc } from "firebase/firestore"
+import { signOutUser, firestoreDB, auth } from "../../firebase"
+import { useDocumentData } from "react-firebase-hooks/firestore"
+import { useAuthState } from "react-firebase-hooks/auth"
 // components
 import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
+import Loading from "../UI/Loading/Loading"
 // styles
 import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
@@ -22,12 +26,14 @@ import logotype from '../../images/logotype.png'
 
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
+  const [user] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   const {
     modals: {
-      modalTextWindow: { TOGGLE_TEXT_MODAL, TEXT_MODAL_ADD }
+      modalTextWindow: { TOGGLE_TEXT_MODAL }
     },
-    sidebar: { TOGGLE_BURGER_MENU, ADD_REF_ELEMENT },
+    sidebar: { TOGGLE_BURGER_MENU },
     activePointOffset: { CHANGE_POINT_OFFSET }
   } = ACTION_TYPES
 
@@ -38,7 +44,7 @@ const Sidebar: React.FC = () => {
   const navMenuElement = useRef<HTMLLIElement | null>(null)
   const sidebarActivePoint = useRef<HTMLLIElement | null>(null)
 
-  // functions
+  // active point logic
   function positionActivePoint(e: any) {
     if (e.target !== e.currentTarget) {
       dispatch({ type: CHANGE_POINT_OFFSET, payload: e.target.offsetTop })
@@ -90,6 +96,7 @@ const Sidebar: React.FC = () => {
   // conditional render
   const isBurgerMenuActive = burgerMenu ? 'sidebar shadow sidebar-burger-active' : 'sidebar shadow'
 
+  // when burger menu open - scroll disabled
   useEffect(() => {
     burgerMenu ? document.body.classList.add('lock') : document.body.classList.remove('lock')
   }, [burgerMenu])
@@ -103,16 +110,21 @@ const Sidebar: React.FC = () => {
         <div className="sidebar__mobile-close button" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}>Закрити меню</div>
         <h2 className="sidebar__title">Категорії</h2>
         <ul className="sidebar__list" ref={topNavMenu} onClick={positionActivePoint}>
-          {state.sidebar.categories.map((item: iCategoryItem) => {
-            return (
-              <li key={item.title} className="sidebar__item" ref={navMenuElement}>
-                <Link to={item.path}>
-                  {setIconByTitle(item.title)}
-                  {item.title}
-                </Link>
-              </li>
-            )
-          })}
+          {
+            userDataLoading ? <Loading />
+              :
+              userData?.sidebarCategories.map((item: iCategoryItem) => {
+                return (
+                  <li key={item.title} className="sidebar__item" ref={navMenuElement}>
+                    <Link to={item.path}>
+                      {setIconByTitle(item.title)}
+                      {item.title}
+                    </Link>
+                  </li>
+                )
+              })
+
+          }
           <li className="sidebar-active-point" ref={sidebarActivePoint} style={{ top: `${state.activePointOffset}px` }}></li>
         </ul>
         <button className="sidebar__category-add" onClick={() => dispatch({ type: TOGGLE_TEXT_MODAL })}>
@@ -156,7 +168,7 @@ const Sidebar: React.FC = () => {
         </svg>
         Вийти
       </button>
-      <ModalTextWindow submitActionType={TEXT_MODAL_ADD} placeHolder='Введіть назву категорії' />
+      <ModalTextWindow placeHolder='Введіть назву категорії' additionalData={{ where: 'sidebarCategories', }} />
     </aside>
   )
 }

@@ -5,9 +5,9 @@ import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
 import { iThemeProps } from "../../types/ThemeProps"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { auth, firestoreDB } from "../../firebase"
-import { collection } from "firebase/firestore"
+import { doc } from "firebase/firestore"
 // components
 import ToggleMenu from "../ToggleMenu/ToggleMenu"
 import Loading from "../UI/Loading/Loading"
@@ -24,8 +24,8 @@ import userLogo from '../../images/logotype.png'
 
 const Header: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
-  const [userData, userDataLoading, userDataError] = useCollectionData(collection(firestoreDB, 'users'))
   const [user] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   // action types destructuring
   const {
@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
 
   // username
-  const username = userData?.[0].displayName === '' || userData?.[0].displayName === undefined ? user?.email : userData?.[0].displayName
+  const username = userData?.displayName === '' || userData?.displayName === undefined ? user?.email : userData?.displayName
 
   return (
     <header className="header">
