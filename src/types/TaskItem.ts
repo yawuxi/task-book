@@ -4,5 +4,5 @@ export interface iTaskItem {
   date?: string,
   priority?: string,
   id: string
-  isCompleted?: boolean
+  isCompleted: boolean
 }

@@ -24,6 +24,7 @@ import './CreateTask.scss'
  * //TODO: feature: user can choose only today date, can not choose yesterdays date
 */
 
+// setting minimal date to date input
 function getMinDate(): string {
   const day = dayjs().date().toString().length < 2 ? `0${dayjs().date()}` : dayjs().date().toString()
   const month = (dayjs().month() + 1).toString().length < 2 ? `0${dayjs().month() + 1}` : dayjs().month() + 1
@@ -37,7 +38,13 @@ const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
   const { taskItemTemplate } = state
-  const { modals: { createTask: { TOGGLE_CREATE_TASK, ADD_TASK }, modalTextWindow: { TOGGLE_TEXT_MODAL } }, taskItemTemplate: { ADD_TASK_TEMPLATE } } = ACTION_TYPES
+  const {
+    modals: {
+      createTask: { TOGGLE_CREATE_TASK },
+      modalTextWindow: { TOGGLE_TEXT_MODAL }
+    },
+    taskItemTemplate: { ADD_TASK_TEMPLATE }
+  } = ACTION_TYPES
 
   useEffect(() => {
     setMinDate(getMinDate())
@@ -62,9 +69,7 @@ const CreateTask: React.FC = () => {
               priority: yup.string().required('Вкажіть приіорітет!'),
             })
           }
-          onSubmit={values => {
-            dispatch({ type: ADD_TASK, payload: values })
-          }}
+          onSubmit={() => { }}
         >
           {({ errors, touched, values }) => (
             <>
@@ -136,11 +141,13 @@ const CreateTask: React.FC = () => {
                     <button
                       type="submit"
                       className="create-task__add button"
-                      onClick={e => {
-                        if (values.category !== '') {
-                          closeModal(e, dispatch, TOGGLE_CREATE_TASK)
-                        }
-                      }}
+                      onClick={e => closeModal(
+                        e,
+                        dispatch,
+                        TOGGLE_CREATE_TASK,
+                        values.category
+                      )
+                      }
                     >
                       Додати
                     </button>

@@ -2,7 +2,6 @@ import { createContext, useReducer, ReactNode, useEffect } from "react";
 import { ACTION_TYPES } from "./actionTypes";
 import { iTaskItem } from '../types/TaskItem'
 import { iTaskItemTemplate } from "../types/TaskItemTemplate";
-import nextId from 'react-id-generator'
 
 interface iInitialState {
   theme: string | null,
@@ -42,38 +41,14 @@ const initialState: iInitialState = {
     createTask: { isOpen: false, },
   },
   taskList: [
-    {
-      task: 'Зробити блінчики',
-      category: 'їжа',
-      date: '2020-08-01',
-      priority: 'Дуже важливо',
-      id: nextId(),
-      isCompleted: false
-    },
-    {
-      task: 'Купити квіточкі мамі',
-      category: "сім'я",
-      date: '2020-08-01',
-      priority: 'Дуже важливо',
-      id: nextId(),
-      isCompleted: false
-    },
-    {
-      task: 'Купити татові авто',
-      category: 'мрія',
-      date: '2020-08-01',
-      priority: 'Дуже важливо',
-      id: nextId(),
-      isCompleted: false
-    },
-    {
-      task: 'Купити поїсти',
-      category: 'їжа',
-      date: '2020-08-01',
-      priority: 'Дуже важливо',
-      id: nextId(),
-      isCompleted: true
-    },
+    // {
+    //   task: 'Зробити блінчики',
+    //   category: 'їжа',
+    //   date: '2020-08-01',
+    //   priority: 'Дуже важливо',
+    //   id: nextId(),
+    //   isCompleted: false
+    // },
   ],
   taskItemTemplate: [],
 }
@@ -99,10 +74,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
         TOGGLE_TEXT_MODAL,
         TEXT_MODAL_ADD,
       },
-      createTask: {
-        TOGGLE_CREATE_TASK,
-        ADD_TASK,
-      },
+      createTask: { TOGGLE_CREATE_TASK, },
     },
     taskItem: { COMPLETE_TASK, REMOVE_TASK },
     taskItemTemplate: { ADD_TASK_TEMPLATE },
@@ -134,14 +106,6 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // CreateTask
     case TOGGLE_CREATE_TASK:
       return { ...state, modals: { ...modals, createTask: { isOpen: !modals.createTask.isOpen } } }
-    case ADD_TASK:
-      return {
-        ...state,
-        taskList: [
-          ...taskList,
-          { task: payload.task, category: payload.category, date: payload.date, priority: payload.priority, id: nextId(), isCompleted: false, }
-        ]
-      }
     // TaskItem
     case COMPLETE_TASK:
       return {

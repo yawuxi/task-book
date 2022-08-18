@@ -11,6 +11,7 @@ import logotype from '../../images/logotype.png'
 
 /**
  * //TODO: feature: working sign up and sign in
+ * TODO: feature: when user registrating create independet database for this user
 */
 
 const AuthenticationPage: React.FC = () => {

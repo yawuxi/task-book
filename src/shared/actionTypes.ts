@@ -16,7 +16,6 @@ export const ACTION_TYPES = {
     },
     createTask: {
       TOGGLE_CREATE_TASK: 'TOGGLE_CREATE_TASK',
-      ADD_TASK: 'ADD_TASK',
     }
   },
   taskItem: {

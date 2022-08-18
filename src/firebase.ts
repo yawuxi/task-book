@@ -4,8 +4,8 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
 } from 'firebase/auth'
+import { getFirestore } from "firebase/firestore";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -18,15 +18,7 @@ firebase.initializeApp({
 })
 
 export const auth = getAuth()
-
-onAuthStateChanged(auth, user => {
-  if (user) {
-    console.log('user logged!');
-    console.log(user);
-  } else {
-    console.log('user logged out!');
-  }
-})
+export const firestoreDB = getFirestore()
 
 // registration method
 export function registrationNewUser(email: string, password: string) {

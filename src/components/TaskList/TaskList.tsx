@@ -10,6 +10,7 @@ import './TaskList.scss'
 
 /**
  * //TODO: feature: dynamic task-list__items from context
+ * TODO: feature: display task item from user data base
 */
 
 const TaskList: React.FC = () => {
