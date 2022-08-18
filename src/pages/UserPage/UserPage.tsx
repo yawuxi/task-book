@@ -8,9 +8,9 @@ import TodayInfo from "../../components/TodayInfo/TodayInfo"
 import TodayFact from "../../components/TodayFact/TodayFact"
 import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { auth, firestoreDB } from "../../firebase"
-import { updateDoc, doc, collection } from "firebase/firestore"
+import { updateDoc, doc } from "firebase/firestore"
 // import
 // styles
 import './UserPage.scss'
@@ -21,11 +21,11 @@ import imgTest from '../../images/test-image.png'
 */
 
 const UserPage: React.FC = () => {
-  const [userData, userDataLoading, userDataError] = useCollectionData(collection(firestoreDB, 'users'))
   const [user] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   // username
-  const username = userData?.[0].displayName === '' || userData?.[0].displayName === undefined ? user?.email : userData?.[0].displayName
+  const username = userData?.displayName === '' || userData?.displayName === undefined ? user?.email : userData?.displayName
 
   return (
     <div className="main__content">
@@ -81,7 +81,7 @@ const UserPage: React.FC = () => {
       <div className="main__right">
         <TodayInfo />
         <TodayFact />
-        <ProgressChart />
+        {/* <ProgressChart /> */}
       </div>
     </div>
   )

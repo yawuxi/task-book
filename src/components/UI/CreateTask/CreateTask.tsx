@@ -7,6 +7,10 @@ import { iTaskItemTemplate } from "../../../types/TaskItemTemplate";
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
 import dayjs from "dayjs";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import { firestoreDB, auth } from "../../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { uuidv4 } from "@firebase/util";
 // components
 import ModalTextWindow, { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // styles
@@ -37,13 +41,15 @@ function getMinDate(): string {
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
+  const [user] = useAuthState(auth)
+
+  // destructuring
   const { taskItemTemplates } = state
   const {
     modals: {
       createTask: { TOGGLE_CREATE_TASK },
       modalTextWindow: { TOGGLE_TEXT_MODAL }
     },
-    taskItemTemplate: { ADD_TASK_TEMPLATE }
   } = ACTION_TYPES
 
   useEffect(() => {
@@ -69,7 +75,20 @@ const CreateTask: React.FC = () => {
               priority: yup.string().required('Вкажіть приіорітет!'),
             })
           }
-          onSubmit={() => { }}
+          onSubmit={
+            (values) => {
+              updateDoc(doc(firestoreDB, 'users', user!.uid), {
+                tasksList: arrayUnion({
+                  task: values.task,
+                  category: values.category,
+                  date: values.date,
+                  priority: values.priority,
+                  id: uuidv4(),
+                  isCompleted: false,
+                })
+              })
+            }
+          }
         >
           {({ errors, touched, values }) => (
             <>
@@ -82,9 +101,6 @@ const CreateTask: React.FC = () => {
                   as="select"
                 >
                   <option>Вибрати шаблон</option>
-                  {taskItemTemplates.map((item: iTaskItemTemplate) => {
-                    return <option key={item.title} value={item.title}>{item.title}</option>
-                  })}
                 </Field>
               </header>
               <Form>
@@ -139,22 +155,22 @@ const CreateTask: React.FC = () => {
                       Зберігти як шаблон
                     </button>
                     <button
+                      // onClick={e => closeModal(
+                      //   e,
+                      //   dispatch,
+                      //   TOGGLE_CREATE_TASK,
+                      //   values.category
+                      // )
+                      // }
                       type="submit"
                       className="create-task__add button"
-                      onClick={e => closeModal(
-                        e,
-                        dispatch,
-                        TOGGLE_CREATE_TASK,
-                        values.category
-                      )
-                      }
                     >
                       Додати
                     </button>
                   </div>
                 </footer>
               </Form>
-              <ModalTextWindow submitActionType={ADD_TASK_TEMPLATE} placeHolder="Вкажіть назву шаблону" additionalData={values} />
+              <ModalTextWindow placeHolder="Вкажіть назву шаблону" additionalData={values} />
             </>
           )}
         </Formik>

@@ -28,7 +28,9 @@ export async function registrationNewUser(email: string, password: string) {
       setDoc(doc(firestoreDB, 'users', user.uid), {
         displayName: '',
         profilePicture: '',
-        sidebarCategories: [],
+        sidebarCategories: [
+          { title: 'Дім', path: '/' },
+        ],
         createTaskCategories: [],
         createTaskPriorities: [],
         taskItemTemplates: [],

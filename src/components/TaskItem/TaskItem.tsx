@@ -1,7 +1,6 @@
 // react
 import React, { useContext } from "react"
 // additional functional
-import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
 import { iTaskItem } from "../../types/TaskItem"
 // components
@@ -20,7 +19,6 @@ import './TaskItem.scss'
 
 const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   const { dispatch } = useContext(TaskBookContext)
-  const { taskItem: { COMPLETE_TASK, REMOVE_TASK } } = ACTION_TYPES
 
   // conditional render
   const classes = isCompleted ? 'task-list__item task-list__item--completed br10' : 'task-list__item br10'
@@ -28,7 +26,7 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   return (
     <li className={classes}>
       <input className="task-list__checkbox" type="checkbox" name="isTaskCompleted" id={id} />
-      <label htmlFor={id} onClick={() => dispatch({ type: COMPLETE_TASK, payload: id })}>{task}</label>
+      <label htmlFor={id}>{task}</label>
       <div className="task-list__item-controls">
         <button className="task-list__edit-task">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +35,6 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
           </svg>
         </button>
         <button
-          onClick={() => dispatch({ type: REMOVE_TASK, payload: id })}
           className="task-list__remove-task">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M1.6875 4.5C1.6875 4.18934 1.93934 3.9375 2.25 3.9375H15.75C16.0607 3.9375 16.3125 4.18934 16.3125 4.5C16.3125 4.81066 16.0607 5.0625 15.75 5.0625H2.25C1.93934 5.0625 1.6875 4.81066 1.6875 4.5Z" fill="#F05454" />
