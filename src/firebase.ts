@@ -1,5 +1,3 @@
-import React from 'react';
-import { iAction } from './types/Action';
 import * as firebase from 'firebase/app'
 import {
   getAuth,
@@ -7,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { getFirestore, setDoc, doc, onSnapshot } from "firebase/firestore";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 // import { onSnapshot } from "firebase/firestore";
 
 firebase.initializeApp({
@@ -44,14 +42,14 @@ export async function signInUser(email: string, password: string) {
   await signInWithEmailAndPassword(auth, email, password)
 }
 
-// updating context from firebase in realtime
-export function getDataFromFirestoreDB(user: any, dispatch: React.Dispatch<iAction>, type: string) {
-  onSnapshot(doc(firestoreDB, 'users', user.uid), (doc) => {
-    dispatch({ type, payload: doc.data() })
-  })
-}
-
 // sign out method
 export function signOutUser() {
   signOut(auth)
 }
+
+//! updating context from firebase in realtime (old), now using hook in every component
+// export function getDataFromFirestoreDB(user: any, dispatch: React.Dispatch<iAction>, type: string) {
+//   onSnapshot(doc(firestoreDB, 'users', user.uid), (doc) => {
+//     dispatch({ type, payload: doc.data() })
+//   })
+// }

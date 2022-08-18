@@ -1,14 +1,16 @@
 // react
-import React, { useContext } from "react"
-
+import React from "react"
 // additional functional
+import { Formik, Form, Field } from "formik"
+import * as Yup from 'yup'
 // components
 import TodayInfo from "../../components/TodayInfo/TodayInfo"
 import TodayFact from "../../components/TodayFact/TodayFact"
 import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from "../../firebase"
-import { TaskBookContext } from "../../shared/context"
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { auth, firestoreDB } from "../../firebase"
+import { updateDoc, doc, collection } from "firebase/firestore"
 // import
 // styles
 import './UserPage.scss'
@@ -19,11 +21,11 @@ import imgTest from '../../images/test-image.png'
 */
 
 const UserPage: React.FC = () => {
-  const { state } = useContext(TaskBookContext)
+  const [userData, userDataLoading, userDataError] = useCollectionData(collection(firestoreDB, 'users'))
   const [user] = useAuthState(auth)
 
   // username
-  const profileUserName = state.displayName === "" || undefined ? user?.email : state.displayName
+  const username = userData?.[0].displayName === '' || userData?.[0].displayName === undefined ? user?.email : userData?.[0].displayName
 
   return (
     <div className="main__content">
@@ -33,17 +35,47 @@ const UserPage: React.FC = () => {
             <img src={imgTest} alt="profile" />
             <p>змінити фото</p>
           </div>
-          <div className="user-page__user-data">
-            <label>
-              <h3 className="user-page__title">Ваш нікнейм:</h3>
-              <input type="text" placeholder={profileUserName} />
-            </label>
-            <label>
-              <h3 className="user-page__title">Ваш пошта:</h3>
-              <input type="text" placeholder="тут має бути поточний email" />
-            </label>
-            <button>Зберігти зміни</button>
-          </div>
+          <Formik
+            initialValues={{
+              name: '',
+              email: '',
+            }}
+            validationSchema={
+              Yup.object().shape({
+                name: Yup.string().min(3, "Мінімальна довжина імені 3 символи!"),
+                email: Yup.string().email('Введіть правильний email'),
+              })
+            }
+            onSubmit={values => {
+              const { email, name } = values
+              if (email === '' && name === '') {
+                alert('Введіть дані')
+              }
+
+              // update username in firestore
+              if (email === '' && name !== '') {
+                updateDoc(doc(firestoreDB, 'users', user!.uid), {
+                  displayName: values.name
+                })
+              }
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form className="user-page__user-data">
+                <label>
+                  <h3 className="user-page__title">Ваш нікнейм:</h3>
+                  <Field name="name" type="text" placeholder={username} />
+                  {errors.name && touched.name ? <div className="form-error">{errors.name}</div> : null}
+                </label>
+                <label>
+                  <h3 className="user-page__title">Ваш пошта:</h3>
+                  <Field name="email" type="text" placeholder="тут має бути поточний email" />
+                  {errors.email && touched.email ? <div className="form-error">{errors.email}</div> : null}
+                </label>
+                <button type="submit" disabled={userDataLoading}>Зберігти зміни</button>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
       <div className="main__right">

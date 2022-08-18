@@ -3,9 +3,14 @@ import React, { useEffect, useContext } from "react"
 // additional functional
 import { TaskBookContext } from "./shared/context"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from "./firebase"
-import { ACTION_TYPES } from "./shared/actionTypes"
-import { getDataFromFirestoreDB } from './firebase'
+// import { useCollectionData } from 'react-firebase-hooks/firestore'
+import {
+  auth,
+  // firestoreDB
+} from "./firebase"
+// import { collection } from "firebase/firestore";
+// import { ACTION_TYPES } from "./shared/actionTypes"
+// import { getDataFromFirestoreDB } from './firebase'
 // components
 import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
@@ -22,10 +27,12 @@ import './App.scss'
  */
 
 const App: React.FC = () => {
-  const { state, dispatch } = useContext(TaskBookContext)
+  const {
+    state,
+    // dispatch
+  } = useContext(TaskBookContext)
   const [user, loading] = useAuthState(auth)
-  const { LOAD_DATA_FROM_FIREBASE } = ACTION_TYPES
-
+  // const { LOAD_DATA_FROM_FIREBASE } = ACTION_TYPES
   // destructuring
   const { modals: { createTask: { isOpen } } } = state
 
@@ -35,12 +42,11 @@ const App: React.FC = () => {
   }, [state.theme])
 
   // updating context from firebase in realtime
-  useEffect(() => {
-    if (user) {
-      getDataFromFirestoreDB(user, dispatch, LOAD_DATA_FROM_FIREBASE)
-    }
-  }, [user])
-
+  // useEffect(() => {
+  //   if (user) {
+  //     getDataFromFirestoreDB(user, dispatch, LOAD_DATA_FROM_FIREBASE)
+  //   }
+  // }, [user])
   // when authentication loading styles
   const authenticationLoadingAppStyles = loading ? { height: '100vh' } : {}
 

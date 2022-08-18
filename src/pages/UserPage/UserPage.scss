@@ -52,7 +52,7 @@
         transition-timing-function: ease-in-out;
 
         &::placeholder {
-          color: var(--content-text-color);
+          color: var(--gray);
           transition: color 0.3s ease-in-out;
         }
       }
@@ -64,6 +64,10 @@
       color: var(--white);
       padding: 0.625rem 1.5625rem;
       border-radius: 0.5rem;
+
+      &:disabled {
+        background-color: var(--gray);
+      }
     }
   }
 }

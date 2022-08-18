@@ -5,9 +5,12 @@ import { ACTION_TYPES } from "../../shared/actionTypes"
 import { TaskBookContext } from "../../shared/context"
 import { iThemeProps } from "../../types/ThemeProps"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from "../../firebase"
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { auth, firestoreDB } from "../../firebase"
+import { collection } from "firebase/firestore"
 // components
 import ToggleMenu from "../ToggleMenu/ToggleMenu"
+import Loading from "../UI/Loading/Loading"
 // styles
 import './Header.scss'
 import userLogo from '../../images/logotype.png'
@@ -21,6 +24,10 @@ import userLogo from '../../images/logotype.png'
 
 const Header: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
+  const [userData, userDataLoading, userDataError] = useCollectionData(collection(firestoreDB, 'users'))
+  const [user] = useAuthState(auth)
+
+  // action types destructuring
   const {
     theme: { SET_THEME },
     header: { TOGGLE_MENU },
@@ -28,13 +35,12 @@ const Header: React.FC = () => {
     modals: { createTask: { TOGGLE_CREATE_TASK } }
   } = ACTION_TYPES
 
-  const [user] = useAuthState(auth)
 
   // changing theme dark/light
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
 
   // username
-  const profileUserName = state.displayName === "" || undefined ? user?.email : state.displayName
+  const username = userData?.[0].displayName === '' || userData?.[0].displayName === undefined ? user?.email : userData?.[0].displayName
 
   return (
     <header className="header">
@@ -51,14 +57,14 @@ const Header: React.FC = () => {
       </button>
       <button className="header__navigation" onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}><span></span></button>
       <div className="header__user">
-        <p>Гарного дня, {profileUserName}</p>
+        {userDataLoading ? <Loading styles={{ maxHeight: '32px' }} /> : <p>Гарного дня, {username}</p>}
         <img src={userLogo} alt="user logo" />
         <button
           onClick={() => dispatch({ type: TOGGLE_MENU })}
           className="header__menu shadow"></button>
       </div>
       <ToggleMenu />
-    </header>
+    </header >
   )
 }
 
