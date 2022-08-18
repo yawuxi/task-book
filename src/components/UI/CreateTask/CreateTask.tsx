@@ -37,7 +37,7 @@ function getMinDate(): string {
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { state, dispatch } = useContext(TaskBookContext)
-  const { taskItemTemplate } = state
+  const { taskItemTemplates } = state
   const {
     modals: {
       createTask: { TOGGLE_CREATE_TASK },
@@ -82,7 +82,7 @@ const CreateTask: React.FC = () => {
                   as="select"
                 >
                   <option>Вибрати шаблон</option>
-                  {taskItemTemplate.map((item: iTaskItemTemplate) => {
+                  {taskItemTemplates.map((item: iTaskItemTemplate) => {
                     return <option key={item.title} value={item.title}>{item.title}</option>
                   })}
                 </Field>

@@ -58,13 +58,12 @@ const options = {
 */
 
 const ProgressChart: React.FC = () => {
-  const [data, setDate] = useState<Array<number>>([])
+  const [data, setData] = useState<Array<number>>([])
   const { state } = useContext(TaskBookContext)
-  const { taskList } = state
 
   useEffect(() => {
-    setDate(state => [...state, taskList.filter((task: iTaskItem) => task.isCompleted).length])
-  }, [taskList])
+    setData(prev => [...prev, state.tasksList.filter((task: iTaskItem) => task.isCompleted).length])
+  }, [state.tasksList])
 
   return (
     <div className="progress-chart user-component">

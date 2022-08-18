@@ -1,9 +1,11 @@
 // react:
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 // additional functional
 import { TaskBookContext } from "./shared/context"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from "./firebase"
+import { ACTION_TYPES } from "./shared/actionTypes"
+import { getDataFromFirestoreDB } from './firebase'
 // components
 import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
@@ -20,8 +22,15 @@ import './App.scss'
  */
 
 const App: React.FC = () => {
-  const { state } = useContext(TaskBookContext)
+  const { state, dispatch } = useContext(TaskBookContext)
   const [user, loading] = useAuthState(auth)
+  const { LOAD_DATA_FROM_FIREBASE } = ACTION_TYPES
+
+  useEffect(() => {
+    if (user) {
+      getDataFromFirestoreDB(user).then(userData => dispatch({ type: LOAD_DATA_FROM_FIREBASE, payload: userData }))
+    }
+  }, [user])
 
   // destructuring
   const { modals: { createTask: { isOpen } } } = state

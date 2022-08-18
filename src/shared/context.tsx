@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode, useEffect } from "react";
+import { createContext, useReducer, ReactNode } from "react";
 import { ACTION_TYPES } from "./actionTypes";
 import { iInitialState } from "../types/InitialState";
 import { iAction } from "../types/Action";
@@ -6,7 +6,7 @@ import { iAction } from "../types/Action";
 const initialState: iInitialState = {
   displayName: '',
   theme: localStorage.getItem('theme'),
-  taskList: [
+  tasksList: [
     // {
     //   task: 'Зробити блінчики',
     //   category: 'їжа',
@@ -43,6 +43,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
 
   const {
+    LOAD_DATA_FROM_FIREBASE,
     theme: { SET_THEME },
     header: { TOGGLE_MENU },
     sidebar: {
@@ -61,7 +62,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   } = ACTION_TYPES
 
   const {
-    taskList,
+    tasksList,
     modals,
     sidebar,
   } = state
@@ -69,6 +70,19 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   switch (type) {
     default:
       return state
+    // load data from firebase
+    // case LOAD_DATA_FROM_FIREBASE:
+    //   console.log(payload);
+    //   return { ...state }
+    case LOAD_DATA_FROM_FIREBASE:
+      return {
+        ...state,
+        displayName: payload.displayName,
+        tasksList: [...payload.tasksList],
+        taskItemTemplates: [...payload.taskItemTemplates],
+        createTaskPriorities: [...payload.createTaskPriorities],
+        createTaskCategories: [...payload.createTaskCategories],
+      }
     // theme
     case SET_THEME:
       return { ...state, theme: payload }
@@ -89,7 +103,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case COMPLETE_TASK:
       return {
         ...state,
-        taskList: taskList.map(item => {
+        tasksList: tasksList.map(item => {
           if (item.id !== payload) return item
 
           return { ...item, isCompleted: !item.isCompleted }
@@ -98,7 +112,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case REMOVE_TASK:
       return {
         ...state,
-        taskList: taskList.filter(item => item.id !== payload)
+        tasksList: tasksList.filter(item => item.id !== payload)
       }
     // taskItemTemplate
     case ADD_TASK_TEMPLATE:

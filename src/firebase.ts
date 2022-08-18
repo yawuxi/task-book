@@ -39,10 +39,9 @@ export async function registrationNewUser(email: string, password: string) {
 // login method
 export async function signInUser(email: string, password: string) {
   await signInWithEmailAndPassword(auth, email, password)
-    .then(getDataFromFirestoreDB)
 }
 
-export async function getDataFromFirestoreDB({ user }: { user: any }) {
+export async function getDataFromFirestoreDB(user: any) {
   const docRef = doc(firestoreDB, 'users', user.uid)
   const docSnap = await getDoc(docRef)
   return docSnap.data();

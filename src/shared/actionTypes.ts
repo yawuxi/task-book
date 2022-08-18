@@ -1,4 +1,5 @@
 export const ACTION_TYPES = {
+  LOAD_DATA_FROM_FIREBASE: 'LOAD_DATA_FROM_FIREBASE',
   theme: {
     SET_THEME: 'SET_THEME',
   },
