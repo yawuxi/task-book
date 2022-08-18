@@ -4,7 +4,7 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../../shared/context"
 import { ACTION_TYPES } from "../../../shared/actionTypes"
-import iAction from "../../../shared/context"
+import { iAction } from "../../../types/Action"
 import { Formik, Form, Field } from "formik"
 import * as yup from 'yup'
 // components

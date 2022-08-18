@@ -1,45 +1,11 @@
 import { createContext, useReducer, ReactNode, useEffect } from "react";
 import { ACTION_TYPES } from "./actionTypes";
-import { iTaskItem } from '../types/TaskItem'
-import { iTaskItemTemplate } from "../types/TaskItemTemplate";
-
-interface iInitialState {
-  theme: string | null,
-  sidebar: {
-    categories: Array<{ title: string, path: string }>,
-    refs: Array<HTMLLIElement>
-    burgerMenu: boolean,
-  },
-  header: {
-    toggleMenu: boolean,
-  },
-  modals: {
-    modalTextWindow: { isOpen: boolean, },
-    createTask: { isOpen: boolean },
-  },
-  taskList: Array<iTaskItem>,
-  taskItemTemplate: Array<iTaskItemTemplate>,
-}
+import { iInitialState } from "../types/InitialState";
+import { iAction } from "../types/Action";
 
 const initialState: iInitialState = {
+  displayName: '',
   theme: localStorage.getItem('theme'),
-  sidebar: {
-    categories: [
-      { title: 'Дім', path: '/' },
-      { title: "Сім'я", path: '/family' },
-      { title: 'Робота', path: '/work' },
-      { title: 'Спорт', path: '/sport' },
-    ],
-    refs: [],
-    burgerMenu: false,
-  },
-  header: {
-    toggleMenu: false,
-  },
-  modals: {
-    modalTextWindow: { isOpen: false, },
-    createTask: { isOpen: false, },
-  },
   taskList: [
     // {
     //   task: 'Зробити блінчики',
@@ -50,15 +16,28 @@ const initialState: iInitialState = {
     //   isCompleted: false
     // },
   ],
-  taskItemTemplate: [],
+  taskItemTemplates: [],
+  createTaskPriorities: [],
+  createTaskCategories: [],
+  sidebar: {
+    categories: [
+      { title: 'Дім', path: '/' },
+      { title: "Сім'я", path: '/family' },
+      { title: 'Робота', path: '/work' },
+      { title: 'Спорт', path: '/sport' },
+    ],
+    burgerMenu: false,
+  },
+  header: {
+    toggleMenu: false,
+  },
+  modals: {
+    modalTextWindow: { isOpen: false, },
+    createTask: { isOpen: false, },
+  },
 }
 
 export const TaskBookContext = createContext<any>(null)
-
-export default interface iAction {
-  type: string,
-  payload?: any
-}
 
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const { type, payload } = action
@@ -125,7 +104,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     case ADD_TASK_TEMPLATE:
       return {
         ...state,
-        taskItemTemplate: [...state.taskItemTemplate, payload]
+        taskItemTemplates: [...state.taskItemTemplates, payload]
       }
     // activePointOffset
     case CHANGE_POINT_OFFSET:
@@ -135,10 +114,6 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
 
 export const TaskBookProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(TaskBookReducer, initialState)
-
-  useEffect(() => {
-    console.log(state);
-  }, [state])
 
   return (
     <TaskBookContext.Provider value={{ state, dispatch }}>

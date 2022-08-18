@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore/lite";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -21,13 +21,31 @@ export const auth = getAuth()
 export const firestoreDB = getFirestore()
 
 // registration method
-export function registrationNewUser(email: string, password: string) {
-  createUserWithEmailAndPassword(auth, email, password)
+export async function registrationNewUser(email: string, password: string) {
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then(({ user }) => {
+      setDoc(doc(firestoreDB, 'users', user.uid), {
+        displayName: '',
+        profilePicture: '',
+        sidebarCategories: [],
+        createTaskCategories: [],
+        createTaskPriorities: [],
+        taskItemTemplates: [],
+        tasksList: [],
+      })
+    })
 }
 
 // login method
-export function signInUser(email: string, password: string) {
-  signInWithEmailAndPassword(auth, email, password)
+export async function signInUser(email: string, password: string) {
+  await signInWithEmailAndPassword(auth, email, password)
+    .then(getDataFromFirestoreDB)
+}
+
+export async function getDataFromFirestoreDB({ user }: { user: any }) {
+  const docRef = doc(firestoreDB, 'users', user.uid)
+  const docSnap = await getDoc(docRef)
+  return docSnap.data();
 }
 
 // sign out method
