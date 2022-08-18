@@ -1,5 +1,5 @@
 // react:
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useContext } from "react"
 // additional functional
 import { TaskBookContext } from "./shared/context"
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -26,12 +26,6 @@ const App: React.FC = () => {
   const [user, loading] = useAuthState(auth)
   const { LOAD_DATA_FROM_FIREBASE } = ACTION_TYPES
 
-  useEffect(() => {
-    if (user) {
-      getDataFromFirestoreDB(user).then(userData => dispatch({ type: LOAD_DATA_FROM_FIREBASE, payload: userData }))
-    }
-  }, [user])
-
   // destructuring
   const { modals: { createTask: { isOpen } } } = state
 
@@ -39,6 +33,13 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('theme', state.theme)
   }, [state.theme])
+
+  // updating context from firebase in realtime
+  useEffect(() => {
+    if (user) {
+      getDataFromFirestoreDB(user, dispatch, LOAD_DATA_FROM_FIREBASE)
+    }
+  }, [user])
 
   // when authentication loading styles
   const authenticationLoadingAppStyles = loading ? { height: '100vh' } : {}

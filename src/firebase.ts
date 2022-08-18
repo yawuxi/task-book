@@ -1,3 +1,5 @@
+import React from 'react';
+import { iAction } from './types/Action';
 import * as firebase from 'firebase/app'
 import {
   getAuth,
@@ -5,7 +7,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore/lite";
+import { getFirestore, setDoc, doc, onSnapshot } from "firebase/firestore";
+// import { onSnapshot } from "firebase/firestore";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -41,10 +44,11 @@ export async function signInUser(email: string, password: string) {
   await signInWithEmailAndPassword(auth, email, password)
 }
 
-export async function getDataFromFirestoreDB(user: any) {
-  const docRef = doc(firestoreDB, 'users', user.uid)
-  const docSnap = await getDoc(docRef)
-  return docSnap.data();
+// updating context from firebase in realtime
+export function getDataFromFirestoreDB(user: any, dispatch: React.Dispatch<iAction>, type: string) {
+  onSnapshot(doc(firestoreDB, 'users', user.uid), (doc) => {
+    dispatch({ type, payload: doc.data() })
+  })
 }
 
 // sign out method

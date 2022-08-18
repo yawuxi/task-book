@@ -34,7 +34,7 @@ const Header: React.FC = () => {
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
 
   // username
-  const profileUserName = user?.displayName === null ? user?.email : user?.displayName
+  const profileUserName = state.displayName === "" || undefined ? user?.email : state.displayName
 
   return (
     <header className="header">
