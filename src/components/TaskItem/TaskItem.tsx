@@ -34,7 +34,8 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   function onComplete(e: React.MouseEvent<HTMLLIElement>) {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id ? { ...item, isCompleted: !item.isCompleted } : item)
+      tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id ? { ...item, isCompleted: !item.isCompleted } : item),
+      tasksFinished: increment(1),
     })
   }
 
@@ -48,9 +49,9 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   }
 
   // editing task
-  function onEdit(e: React.MouseEvent<HTMLButtonElement>, data?: object) {
+  function onEdit(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation()
-    dispatch({ type: TOGGLE_TEXT_MODAL, payload: { placeholder: 'Нова назва задачі' } })
+    dispatch({ type: TOGGLE_TEXT_MODAL, payload: { placeholder: 'Нова назва задачі', submitFrom: 'editingTask', id } })
   }
 
   // conditional render

@@ -9,6 +9,8 @@ import * as yup from 'yup'
 import { updateDoc, doc, arrayUnion } from "firebase/firestore"
 import { firestoreDB, auth } from "../../../firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { useDocumentData } from "react-firebase-hooks/firestore"
+import { iTaskItem } from "../../../types/TaskItem"
 // components
 // styles
 import './ModalTextWindow.scss'
@@ -29,6 +31,7 @@ const ModalTextWindow: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
   const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL } } } = ACTION_TYPES
   const [user] = useAuthState(auth)
+  const [userData] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   // destructuring
   const { modals: { modalTextWindow: { additionalData } } } = state
@@ -48,21 +51,24 @@ const ModalTextWindow: React.FC = () => {
               default:
                 break;
               case 'sidebar':
-                console.log('sidebar');
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   sidebarCategories: arrayUnion({ path: `/${values.term}`, title: values.term })
                 })
                 break;
               case 'createTask':
-                console.log('createTask');
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   taskItemTemplates: arrayUnion({ templateName: values.term })
+                })
+                break;
+              case 'editingTask':
+                updateDoc(doc(firestoreDB, 'users', user!.uid), {
+                  tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === additionalData.id ? { ...item, task: values.term } : item)
                 })
                 break;
             }
           }}
         >
-          {({ errors, touched, values }) => (
+          {({ errors, touched }) => (
             <Form>
               <Field
                 className="modal-field-styles"
