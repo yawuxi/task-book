@@ -10,7 +10,8 @@ import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { auth, firestoreDB } from "../../firebase"
-import { updateDoc, doc } from "firebase/firestore"
+import { updateDoc, setDoc, doc, getDoc } from "firebase/firestore"
+import { uuidv4 } from "@firebase/util"
 // import
 // styles
 import './UserPage.scss'
@@ -23,6 +24,131 @@ import imgTest from '../../images/test-image.png'
 const UserPage: React.FC = () => {
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+
+  // reset firestore database
+  function onFirestoreReset() {
+    getDoc(doc(firestoreDB, 'users', user!.uid))
+      .then(data => {
+        if (data.exists()) {
+          updateDoc(doc(firestoreDB, 'users', user!.uid), {
+            displayName: '',
+            profilePicture: '',
+            sidebarCategories: [
+              { title: 'Дім', path: '/' },
+            ],
+            createTaskCategories: [],
+            createTaskPriorities: [],
+            taskItemTemplates: [],
+            tasksList: [],
+            tasksCreated: 0,
+            tasksFinished: 0,
+            tasksRemoved: 0,
+          })
+        } else {
+          setDoc(doc(firestoreDB, 'users', user!.uid), {
+            displayName: '',
+            profilePicture: '',
+            sidebarCategories: [
+              { title: 'Дім', path: '/' },
+            ],
+            createTaskCategories: [],
+            createTaskPriorities: [],
+            taskItemTemplates: [],
+            tasksList: [],
+            tasksCreated: 0,
+            tasksFinished: 0,
+            tasksRemoved: 0,
+          })
+        }
+      })
+  }
+
+  function onFirestoreFakeData() {
+    getDoc(doc(firestoreDB, 'users', user!.uid))
+      .then(data => {
+        if (data.exists()) {
+          updateDoc(doc(firestoreDB, 'users', user!.uid), {
+            displayName: '',
+            profilePicture: '',
+            sidebarCategories: [
+              { title: 'Дім', path: '/' },
+            ],
+            createTaskCategories: [],
+            createTaskPriorities: [],
+            taskItemTemplates: [],
+            tasksList: [
+              {
+                task: 'testTask1',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+              {
+                task: 'testTask2',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+              {
+                task: 'testTask3',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+            ],
+            tasksCreated: 3,
+            tasksFinished: 0,
+            tasksRemoved: 0,
+          })
+        } else {
+          setDoc(doc(firestoreDB, 'users', user!.uid), {
+            displayName: '',
+            profilePicture: '',
+            sidebarCategories: [
+              { title: 'Дім', path: '/' },
+            ],
+            createTaskCategories: [],
+            createTaskPriorities: [],
+            taskItemTemplates: [],
+            tasksList: [
+              {
+                task: 'testTask1',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+              {
+                task: 'testTask2',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+              {
+                task: 'testTask3',
+                id: uuidv4(),
+                category: 'Спорт',
+                date: '2022-03-18',
+                isComleted: false,
+                priority: 'Ну таке',
+              },
+            ],
+            tasksCreated: 0,
+            tasksFinished: 0,
+            tasksRemoved: 0,
+          })
+        }
+      })
+  }
 
   // username
   const username = userData?.displayName === '' || userData?.displayName === undefined ? user?.email : userData?.displayName
@@ -77,6 +203,8 @@ const UserPage: React.FC = () => {
             )}
           </Formik>
         </div>
+        <button onClick={onFirestoreReset}>Скинути вашу базу даних</button>
+        <button onClick={onFirestoreFakeData}>Завантажити фейкові дані у вашу базу даних</button>
       </div>
       <div className="main__right">
         <TodayInfo />
