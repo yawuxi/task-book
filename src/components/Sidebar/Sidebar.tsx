@@ -10,7 +10,6 @@ import { signOutUser, firestoreDB, auth } from "../../firebase"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 // components
-import ModalTextWindow from "../UI/ModalTextWindow/ModalTextWindow"
 import Loading from "../UI/Loading/Loading"
 // styles
 import './Sidebar.scss'
@@ -27,8 +26,9 @@ import logotype from '../../images/logotype.png'
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
-  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const [userData, userDataLoading] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
+  // desctructuring
   const {
     modals: {
       modalTextWindow: { TOGGLE_TEXT_MODAL }
@@ -123,11 +123,19 @@ const Sidebar: React.FC = () => {
                   </li>
                 )
               })
-
           }
           <li className="sidebar-active-point" ref={sidebarActivePoint} style={{ top: `${state.activePointOffset}px` }}></li>
         </ul>
-        <button className="sidebar__category-add" onClick={() => dispatch({ type: TOGGLE_TEXT_MODAL })}>
+        <button
+          type="button"
+          className="sidebar__category-add"
+          onClick={() => dispatch({
+            type: TOGGLE_TEXT_MODAL,
+            payload: {
+              placeholder: 'Додати категорію',
+              submitFrom: 'sidebar',
+            }
+          })}>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.25 2.25H3.75C2.92157 2.25 2.25 2.92157 2.25 3.75V14.25C2.25 15.0784 2.92157 15.75 3.75 15.75H14.25C15.0784 15.75 15.75 15.0784 15.75 14.25V3.75C15.75 2.92157 15.0784 2.25 14.25 2.25Z" stroke="#29A19C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M9 6V12" stroke="#29A19C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -168,7 +176,6 @@ const Sidebar: React.FC = () => {
         </svg>
         Вийти
       </button>
-      <ModalTextWindow placeHolder='Введіть назву категорії' additionalData={{ where: 'sidebarCategories', }} />
     </aside>
   )
 }

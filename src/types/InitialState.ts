@@ -7,7 +7,10 @@ export interface iInitialState {
     toggleMenu: boolean,
   },
   modals: {
-    modalTextWindow: { isOpen: boolean, },
+    modalTextWindow: {
+      isOpen: boolean,
+      additionalData: object,
+    },
     createTask: { isOpen: boolean },
   },
 }

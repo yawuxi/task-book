@@ -12,7 +12,10 @@ const initialState: iInitialState = {
     toggleMenu: false,
   },
   modals: {
-    modalTextWindow: { isOpen: false, },
+    modalTextWindow: {
+      isOpen: false,
+      additionalData: {},
+    },
     createTask: { isOpen: false, },
   },
 }
@@ -40,6 +43,10 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
   const {
     modals,
     sidebar,
+    modals: {
+      modalTextWindow,
+      createTask,
+    }
   } = state
 
   switch (type) {
@@ -48,17 +55,24 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // theme
     case SET_THEME:
       return { ...state, theme: payload }
-    // sidebar
+    // modals
     case TOGGLE_TEXT_MODAL:
-      return { ...state, modals: { ...modals, modalTextWindow: { isOpen: !modals.modalTextWindow.isOpen } } }
+      return {
+        ...state, modals: {
+          ...modals,
+          modalTextWindow: {
+            isOpen: !modalTextWindow.isOpen,
+            additionalData: payload
+          }
+        }
+      }
+    case TOGGLE_CREATE_TASK:
+      return { ...state, modals: { ...modals, createTask: { isOpen: !createTask.isOpen } } }
+    // menus
     case TOGGLE_BURGER_MENU:
       return { ...state, sidebar: { ...sidebar, burgerMenu: !sidebar.burgerMenu } }
-    // header
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
-    // CreateTask
-    case TOGGLE_CREATE_TASK:
-      return { ...state, modals: { ...modals, createTask: { isOpen: !modals.createTask.isOpen } } }
     // activePointOffset
     case CHANGE_POINT_OFFSET:
       return { ...state, activePointOffset: payload }

@@ -12,7 +12,7 @@ import { firestoreDB, auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { uuidv4 } from "@firebase/util";
 // components
-import ModalTextWindow, { closeModal } from "../ModalTextWindow/ModalTextWindow"
+import { closeModal } from "../ModalTextWindow/ModalTextWindow"
 // styles
 import './CreateTask.scss'
 
@@ -40,11 +40,10 @@ function getMinDate(): string {
 
 const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
-  const { state, dispatch } = useContext(TaskBookContext)
+  const { dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
 
   // destructuring
-  const { taskItemTemplates } = state
   const {
     modals: {
       createTask: { TOGGLE_CREATE_TASK },
@@ -91,7 +90,7 @@ const CreateTask: React.FC = () => {
             }
           }
         >
-          {({ errors, touched, values }) => (
+          {({ errors, touched }) => (
             <>
               <header>
                 <h3 className="create-task__title h3-title">Добавить новую задачу</h3>
@@ -151,7 +150,13 @@ const CreateTask: React.FC = () => {
                     <button
                       type="button"
                       className="create-task__save-as-template button"
-                      onClick={() => dispatch({ type: TOGGLE_TEXT_MODAL })}
+                      onClick={() => dispatch({
+                        type: TOGGLE_TEXT_MODAL,
+                        payload: {
+                          placeholder: 'Вкажіть назву шаблону',
+                          submitFrom: 'createTask',
+                        }
+                      })}
                     >
                       Зберігти як шаблон
                     </button>
@@ -171,7 +176,6 @@ const CreateTask: React.FC = () => {
                   </div>
                 </footer>
               </Form>
-              <ModalTextWindow placeHolder="Вкажіть назву шаблону" additionalData={values} />
             </>
           )}
         </Formik>
