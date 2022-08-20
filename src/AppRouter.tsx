@@ -6,8 +6,8 @@ import { LOGIN_ROUTE, MAIN_PAGE_ROUTE } from "./utils/consts"
 import { publicRoutes, privateRoutes } from "./utils/routes"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from "./firebase"
-import Loading from "./components/UI/Loading/Loading"
 //components
+import Loading from "./components/UI/Loading/Loading"
 
 const AppRouter: React.FC = () => {
   const [user, loading] = useAuthState(auth)

@@ -50,11 +50,11 @@ const ModalTextWindow: React.FC = () => {
             switch (additionalData.submitFrom) {
               default:
                 break;
-              case 'sidebar':
-                updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                  sidebarCategories: arrayUnion({ path: `/${values.term}`, title: values.term })
-                })
-                break;
+              // case 'sidebar':
+              //   updateDoc(doc(firestoreDB, 'users', user!.uid), {
+              //     sidebarCategories: arrayUnion({ path: `/${values.term}`, title: values.term })
+              //   })
+              //   break;
               case 'createTask':
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   taskItemTemplates: arrayUnion({ templateName: values.term })

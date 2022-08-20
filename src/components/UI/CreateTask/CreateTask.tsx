@@ -1,9 +1,8 @@
 // react
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState, useRef } from "react"
 // additional functional
 import { TaskBookContext } from "../../../shared/context"
 import { ACTION_TYPES } from "../../../shared/actionTypes"
-import { iTaskItemTemplate } from "../../../types/TaskItemTemplate";
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
 import dayjs from "dayjs";
@@ -51,6 +50,7 @@ const CreateTask: React.FC = () => {
     },
   } = ACTION_TYPES
 
+  // effects
   useEffect(() => {
     setMinDate(getMinDate())
   }, [])
@@ -161,13 +161,6 @@ const CreateTask: React.FC = () => {
                       Зберігти як шаблон
                     </button>
                     <button
-                      // onClick={e => closeModal(
-                      //   e,
-                      //   dispatch,
-                      //   TOGGLE_CREATE_TASK,
-                      //   values.category
-                      // )
-                      // }
                       type="submit"
                       className="create-task__add button"
                     >
