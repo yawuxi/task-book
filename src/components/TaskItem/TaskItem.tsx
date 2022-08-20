@@ -17,7 +17,7 @@ import './TaskItem.scss'
   //TODO: feature: task text from firebase
   //TODO: feature: id attribute in input and label will recieve from data object property id
   //TODO: feature: completing task (class - task-list__item--completed)
-  TODO: feature: editing task
+  //TODO: feature: editing task
   //TODO: feature: removing task
   */
 }

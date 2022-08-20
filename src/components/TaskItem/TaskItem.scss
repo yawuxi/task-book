@@ -84,5 +84,19 @@
 
   &__edit-task {
     margin-right: 0.625rem;
+    svg {
+      path {
+        stroke: none !important;
+        fill: var(--gray);
+      }
+    }
+  }
+
+  &__remove-task {
+    svg {
+      path {
+        stroke: none !important;
+      }
+    }
   }
 }
