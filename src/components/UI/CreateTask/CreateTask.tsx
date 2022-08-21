@@ -1,5 +1,5 @@
 // react
-import React, { useContext, useEffect, useState, useRef } from "react"
+import React, { useContext, useEffect, useState } from "react"
 // additional functional
 import { TaskBookContext } from "../../../shared/context"
 import { ACTION_TYPES } from "../../../shared/actionTypes"
@@ -28,7 +28,7 @@ import './CreateTask.scss'
 */
 
 // setting minimal date to date input
-function getMinDate(): string {
+function getCurrentDate(): string {
   const day = dayjs().date().toString().length < 2 ? `0${dayjs().date()}` : dayjs().date().toString()
   const month = (dayjs().month() + 1).toString().length < 2 ? `0${dayjs().month() + 1}` : dayjs().month() + 1
   const year = dayjs().year()
@@ -52,7 +52,7 @@ const CreateTask: React.FC = () => {
 
   // effects
   useEffect(() => {
-    setMinDate(getMinDate())
+    setMinDate(getCurrentDate())
   }, [])
 
   return (
@@ -80,7 +80,8 @@ const CreateTask: React.FC = () => {
                 tasksList: arrayUnion({
                   task: values.task,
                   category: values.category,
-                  date: values.date,
+                  dateFinish: values.date,
+                  dateCreated: dayjs().format('YYYY-MM-DD'),
                   priority: values.priority,
                   id: uuidv4(),
                   isCompleted: false,

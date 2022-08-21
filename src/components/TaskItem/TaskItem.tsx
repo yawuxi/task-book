@@ -7,20 +7,18 @@ import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
-import { doc, updateDoc, increment, getDoc } from 'firebase/firestore'
+import { doc, updateDoc, increment } from 'firebase/firestore'
 // components
 // styles
 import './TaskItem.scss'
 
-{
-  /* 
-  //TODO: feature: task text from firebase
-  //TODO: feature: id attribute in input and label will recieve from data object property id
-  //TODO: feature: completing task (class - task-list__item--completed)
-  //TODO: feature: editing task
-  //TODO: feature: removing task
-  */
-}
+/* 
+//TODO: feature: task text from firebase
+//TODO: feature: id attribute in input and label will recieve from data object property id
+//TODO: feature: completing task (class - task-list__item--completed)
+//TODO: feature: editing task
+//TODO: feature: removing task
+*/
 
 const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   const { dispatch } = useContext(TaskBookContext)
@@ -37,7 +35,7 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
       tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id ? { ...item, isCompleted: !item.isCompleted } : item),
     })
 
-    userData?.tasksList.map((item: iTaskItem) => {
+    userData?.tasksList.forEach((item: iTaskItem) => {
       if (item.id === id) {
         if (item.isCompleted) {
           updateDoc(doc(firestoreDB, 'users', user!.uid), {

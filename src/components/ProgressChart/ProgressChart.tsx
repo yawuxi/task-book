@@ -1,8 +1,6 @@
 // react
-import React, { useContext, useEffect, useState } from "react"
-
+import React, { useEffect, useState } from "react"
 // additional functional
-import { TaskBookContext } from "../../shared/context";
 import { iTaskItem } from "../../types/TaskItem";
 import { Line } from 'react-chartjs-2'
 import {
@@ -15,10 +13,16 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { auth, firestoreDB } from "../../firebase";
+import { doc } from "firebase/firestore";
+import dayjs from "dayjs";
 // components
 // styles
 import './ProgressChart.scss'
 
+// chart components registration
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,6 +33,7 @@ ChartJS.register(
   Legend
 );
 
+// settings for chart
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -59,11 +64,8 @@ const options = {
 
 const ProgressChart: React.FC = () => {
   const [data, setData] = useState<Array<number>>([])
-  const { state } = useContext(TaskBookContext)
-
-  useEffect(() => {
-    setData(prev => [...prev, state.tasksList.filter((task: iTaskItem) => task.isCompleted).length])
-  }, [state.tasksList])
+  const [user] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   return (
     <div className="progress-chart user-component">

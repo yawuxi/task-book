@@ -1,6 +1,5 @@
 // react
 import React from "react"
-
 // additional functional
 // components
 import WeeklyResults from "../../components/WeeklyResults/WeeklyResults"
@@ -22,7 +21,7 @@ const MainPage: React.FC = () => {
         <div className="main__right">
           <TodayInfo />
           <TodayFact />
-          {/* <ProgressChart /> */}
+          <ProgressChart />
         </div>
       </div>
     </>
