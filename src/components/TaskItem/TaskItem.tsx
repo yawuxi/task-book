@@ -7,7 +7,7 @@ import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
-import { doc, updateDoc, increment } from 'firebase/firestore'
+import { doc, updateDoc, increment, getDoc } from 'firebase/firestore'
 // components
 // styles
 import './TaskItem.scss'
@@ -35,7 +35,20 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
       tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id ? { ...item, isCompleted: !item.isCompleted } : item),
-      tasksFinished: increment(1),
+    })
+
+    userData?.tasksList.map((item: iTaskItem) => {
+      if (item.id === id) {
+        if (item.isCompleted) {
+          updateDoc(doc(firestoreDB, 'users', user!.uid), {
+            tasksFinished: increment(-1)
+          })
+        } else {
+          updateDoc(doc(firestoreDB, 'users', user!.uid), {
+            tasksFinished: increment(1)
+          })
+        }
+      }
     })
   }
 
@@ -44,7 +57,6 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
       tasksList: userData?.tasksList.filter((item: iTaskItem) => item.id !== id),
-      tasksRemoved: increment(1),
     })
   }
 
