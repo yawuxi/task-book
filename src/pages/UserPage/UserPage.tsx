@@ -40,7 +40,6 @@ const UserPage: React.FC = () => {
             createTaskPriorities: [],
             taskItemTemplates: [],
             tasksList: [],
-            tasksCreated: 0,
             tasksFinished: 0,
             tasksRemoved: 0,
           })
@@ -55,7 +54,6 @@ const UserPage: React.FC = () => {
             createTaskPriorities: [],
             taskItemTemplates: [],
             tasksList: [],
-            tasksCreated: 0,
             tasksFinished: 0,
             tasksRemoved: 0,
           })
@@ -108,7 +106,6 @@ const UserPage: React.FC = () => {
                 priority: 'Ну таке',
               },
             ],
-            tasksCreated: 3,
             tasksFinished: 0,
             tasksRemoved: 0,
           })
@@ -148,7 +145,6 @@ const UserPage: React.FC = () => {
                 priority: 'Ну таке',
               },
             ],
-            tasksCreated: 0,
             tasksFinished: 0,
             tasksRemoved: 0,
           })

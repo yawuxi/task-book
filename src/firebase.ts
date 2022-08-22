@@ -35,7 +35,6 @@ export async function registrationNewUser(email: string, password: string) {
         createTaskPriorities: [],
         taskItemTemplates: [],
         tasksList: [],
-        tasksCreated: 0,
         tasksFinished: 0,
         tasksRemoved: 0,
       })

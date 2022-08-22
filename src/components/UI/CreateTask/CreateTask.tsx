@@ -6,7 +6,7 @@ import { ACTION_TYPES } from "../../../shared/actionTypes"
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
 import dayjs from "dayjs";
-import { updateDoc, doc, arrayUnion, increment } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore";
 import { firestoreDB, auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { uuidv4 } from "@firebase/util";
@@ -87,7 +87,6 @@ const CreateTask: React.FC = () => {
                   id: uuidv4(),
                   isCompleted: false,
                 }),
-                tasksCreated: increment(1),
               })
             }
           }

@@ -1,10 +1,12 @@
 // react
-import React from "react"
+import React, { useEffect } from "react"
 // additional functional
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
-import { doc } from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore"
 import { auth, firestoreDB } from "../../firebase"
+import { WEEK_DAYS } from "../../utils/consts"
+import dayjs from "dayjs"
 // components
 import Loading from "../UI/Loading/Loading"
 // styles
@@ -17,6 +19,16 @@ import './WeeklyResults.scss'
 const WeeklyResults: React.FC = () => {
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const currentDayInDigit = dayjs().day()
+
+  useEffect(() => {
+    if (WEEK_DAYS[currentDayInDigit - 1] === 'ПН') {
+      updateDoc(doc(firestoreDB, 'users', user!.uid), {
+        tasksFinished: 0,
+        tasksCompleted: 0,
+      })
+    }
+  }, [currentDayInDigit])
 
   return (
     <div className="weekly-results user-component">
@@ -28,7 +40,7 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.tasksCreated
+                userData?.tasksList.length
             }
             <span>задач</span>
           </div>
