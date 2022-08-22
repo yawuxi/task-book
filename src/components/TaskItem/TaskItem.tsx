@@ -8,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
 import { doc, updateDoc, increment } from 'firebase/firestore'
+import dayjs from "dayjs"
 // components
 // styles
 import './TaskItem.scss'
@@ -32,18 +33,26 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   function onComplete(e: React.MouseEvent<HTMLLIElement>) {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id ? { ...item, isCompleted: !item.isCompleted } : item),
+      tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id
+        ?
+        { ...item, isCompleted: !item.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
+        :
+        item
+      ),
     })
 
     userData?.tasksList.forEach((item: iTaskItem) => {
+      const currentDay = dayjs().format('YYYY-MM-DD')
+      const diff = dayjs(item.dateCreated).diff(currentDay, 'days')
+
       if (item.id === id) {
-        if (item.isCompleted) {
+        if (diff <= 7 && item.isCompleted) {
           updateDoc(doc(firestoreDB, 'users', user!.uid), {
-            tasksFinished: increment(-1)
+            tasksFinished: increment(-1),
           })
         } else {
           updateDoc(doc(firestoreDB, 'users', user!.uid), {
-            tasksFinished: increment(1)
+            tasksFinished: increment(1),
           })
         }
       }

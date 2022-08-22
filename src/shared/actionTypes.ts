@@ -18,5 +18,8 @@ export const ACTION_TYPES = {
   },
   activePointOffset: {
     CHANGE_POINT_OFFSET: 'CHANGE_POINT_OFFSET',
-  }
+  },
+  weeklyResults: {
+    UPDATE_WEEKLY_RESULTS: 'UPDATE_WEEKLY_RESULTS',
+  },
 }

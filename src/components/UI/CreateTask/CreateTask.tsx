@@ -10,8 +10,8 @@ import { updateDoc, doc, arrayUnion, increment } from "firebase/firestore";
 import { firestoreDB, auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { uuidv4 } from "@firebase/util";
-// components
 import { closeModal } from "../ModalTextWindow/ModalTextWindow"
+// components
 // styles
 import './CreateTask.scss'
 
@@ -80,8 +80,9 @@ const CreateTask: React.FC = () => {
                 tasksList: arrayUnion({
                   task: values.task,
                   category: values.category,
-                  dateFinish: values.date,
+                  dateWillFinish: values.date,
                   dateCreated: dayjs().format('YYYY-MM-DD'),
+                  dateFinished: '',
                   priority: values.priority,
                   id: uuidv4(),
                   isCompleted: false,

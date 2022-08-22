@@ -18,16 +18,26 @@ const initialState: iInitialState = {
     },
     createTask: { isOpen: false, },
   },
+  weeklyResults: {
+    'ПН': 0,
+    'ВТ': 0,
+    'СР': 0,
+    'ЧТ': 0,
+    'ПТ': 0,
+    'СБ': 0,
+    'НД': 0,
+  },
 }
 
 export const TaskBookContext = createContext<any>(null)
 
 const TaskBookReducer = (state: iInitialState, action: iAction) => {
+  // destructuring
   const { type, payload } = action
 
   const {
-    theme: { SET_THEME },
-    header: { TOGGLE_MENU },
+    theme: { SET_THEME, },
+    header: { TOGGLE_MENU, },
     sidebar: {
       TOGGLE_BURGER_MENU,
     },
@@ -37,7 +47,8 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       },
       createTask: { TOGGLE_CREATE_TASK, },
     },
-    activePointOffset: { CHANGE_POINT_OFFSET },
+    activePointOffset: { CHANGE_POINT_OFFSET, },
+    weeklyResults: { UPDATE_WEEKLY_RESULTS, },
   } = ACTION_TYPES
 
   const {
@@ -73,9 +84,13 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       return { ...state, sidebar: { ...sidebar, burgerMenu: !sidebar.burgerMenu } }
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
-    // activePointOffset
+    // active point offset
     case CHANGE_POINT_OFFSET:
       return { ...state, activePointOffset: payload }
+    // weekly results
+    case UPDATE_WEEKLY_RESULTS:
+      const calcDayName = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'][payload.day - 1]
+      return { ...state, weeklyResults: { ...state.weeklyResults, [calcDayName]: payload.value } }
   }
 }
 
