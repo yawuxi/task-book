@@ -1,29 +1,46 @@
 // react
-import React from "react"
+import React, { useState } from "react"
 // additional functional
 import { Formik, Form, Field } from "formik"
 import * as Yup from 'yup'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { useUploadFile, useDownloadURL } from 'react-firebase-hooks/storage';
+import { auth, firestoreDB, storage } from "../../firebase"
+import { updateDoc, setDoc, doc, getDoc } from "firebase/firestore"
+import { ref } from "firebase/storage"
+import { uuidv4 } from "@firebase/util"
 // components
 import TodayInfo from "../../components/TodayInfo/TodayInfo"
 import TodayFact from "../../components/TodayFact/TodayFact"
 import ProgressChart from "../../components/ProgressChart/ProgressChart"
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
-import { auth, firestoreDB } from "../../firebase"
-import { updateDoc, setDoc, doc, getDoc } from "firebase/firestore"
-import { uuidv4 } from "@firebase/util"
-// import
+import Loading from "../../components/UI/Loading/Loading"
 // styles
 import './UserPage.scss'
-import imgTest from '../../images/test-image.png'
+import imgTest from '../../images/logotype.png'
 
 /**
  * TODO: feature: ability to change profile picture, nickname and email
 */
 
 const UserPage: React.FC = () => {
+  const [profilePicture, setProfilePicture] = useState<any>(null)
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const [
+    uploadProfilePictrue,
+    profilePictrueUploading,
+    profilePictrueSnapshot,
+    profilePictrueError,
+  ] = useUploadFile();
+  const [
+    profilePictureLink,
+    profilePictureLoading,
+    profilePictureDownloadError,
+  ] = useDownloadURL(ref(storage, `user-images/${user?.uid}/user-profile-picture`));
+
+  // images user directory ref
+  const imageRef = ref(storage, `user-images/${user?.uid}/user-profile-picture`)
 
   // reset firestore database
   function onFirestoreReset() {
@@ -61,6 +78,7 @@ const UserPage: React.FC = () => {
       })
   }
 
+  // load firestore fake data
   function onFirestoreFakeData() {
     getDoc(doc(firestoreDB, 'users', user!.uid))
       .then(data => {
@@ -152,6 +170,15 @@ const UserPage: React.FC = () => {
       })
   }
 
+  // load profile pictrue in firebase storage
+  async function onProfilePictureUpload() {
+    if (profilePicture) {
+      await uploadProfilePictrue(imageRef, profilePicture, {
+        contentType: 'image/png',
+      })
+    }
+  }
+
   // username
   const username = userData?.displayName === '' || userData?.displayName === undefined ? user?.email : userData?.displayName
 
@@ -160,8 +187,18 @@ const UserPage: React.FC = () => {
       <div className="main__left">
         <div className="user-page user-component">
           <div className="user-page__profile-picture">
-            <img src={imgTest} alt="profile" />
-            <p>змінити фото</p>
+            {
+              profilePictureDownloadError ? <img src={imgTest} alt="profile" />
+                :
+                profilePictureLoading || profilePictrueUploading
+                  ?
+                  <Loading styles={{ width: '100px', height: '100px' }} />
+                  :
+                  <img src={profilePictureLink} alt="profile" />
+            }
+            <input type="file" id="user-page-upload-picture" hidden onChange={e => setProfilePicture(e.target.files![0])} />
+            <label htmlFor="user-page-upload-picture">Змінити фото</label>
+            <button onClick={onProfilePictureUpload}>Завантажити!</button>
           </div>
           <Formik
             initialValues={{
@@ -211,7 +248,7 @@ const UserPage: React.FC = () => {
       <div className="main__right">
         <TodayInfo />
         <TodayFact />
-        {/* <ProgressChart /> */}
+        <ProgressChart />
       </div>
     </div>
   )

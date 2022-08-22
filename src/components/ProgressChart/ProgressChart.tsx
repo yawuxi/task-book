@@ -89,7 +89,6 @@ const ProgressChart: React.FC = () => {
     })
   }, [userData?.tasksList])
 
-  console.log(state.weeklyResults);
   return (
     <div className="progress-chart user-component">
       <h3 className="progress-chart__title h3-title">Графік успішності</h3>

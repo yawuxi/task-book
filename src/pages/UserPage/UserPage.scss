@@ -24,7 +24,8 @@
       object-fit: cover;
     }
 
-    p {
+    label {
+      cursor: pointer;
       color: var(--accent);
       text-decoration: underline;
       font-weight: 300;

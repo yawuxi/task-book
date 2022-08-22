@@ -64,6 +64,8 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
       tasksList: userData?.tasksList.filter((item: iTaskItem) => item.id !== id),
+      tasksFinished: increment(-1),
+      tasksRemoved: increment(1),
     })
   }
 

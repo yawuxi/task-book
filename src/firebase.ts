@@ -6,9 +6,10 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { getFirestore, setDoc, doc } from "firebase/firestore";
-// import { onSnapshot } from "firebase/firestore";
+import { getStorage } from 'firebase/storage'
 
-firebase.initializeApp({
+// firebase initialize
+const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -18,8 +19,10 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 })
 
+// firebase authentication, firestore, storage
 export const auth = getAuth()
 export const firestoreDB = getFirestore()
+export const storage = getStorage(app)
 
 // registration method
 export async function registrationNewUser(email: string, password: string) {
