@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useRef } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
-import { iPage } from "../../types/Category"
+import { Category } from "../../types/Category"
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { Link } from "react-router-dom"
 import { doc } from "firebase/firestore"
@@ -113,7 +113,7 @@ const Sidebar: React.FC = () => {
           {
             userDataLoading ? <Loading />
               :
-              userData?.pages.map((category: iPage) => {
+              userData?.pages.map((category: Category) => {
                 return (
                   <li key={category.title} className="sidebar__item" ref={navMenuElement}>
                     <Link to={category.path}>

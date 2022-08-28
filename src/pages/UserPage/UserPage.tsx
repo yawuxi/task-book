@@ -135,7 +135,6 @@ const UserPage: React.FC = () => {
                     priority: 'Ну таке',
                   },
                 ],
-                tasksFinished: 0,
                 tasksRemoved: 0,
               }
             ],
@@ -183,7 +182,6 @@ const UserPage: React.FC = () => {
                     priority: 'Ну таке',
                   },
                 ],
-                tasksFinished: 0,
                 tasksRemoved: 0,
               }
             ],

@@ -12,7 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { closeModal } from "../ModalTextWindow/ModalTextWindow"
 import { uuidv4 } from "@firebase/util";
-import { iPage } from "../../../types/Category";
+import { Category } from "../../../types/Category";
 // components
 // styles
 import './CreateTask.scss'
@@ -81,7 +81,7 @@ const CreateTask: React.FC = () => {
           onSubmit={
             (values) => {
               updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                pages: userData?.pages.map((item: iPage) => {
+                pages: userData?.pages.map((item: Category) => {
                   if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
                     return {
                       ...item,

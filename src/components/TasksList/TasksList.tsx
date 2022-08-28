@@ -6,7 +6,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { firestoreDB, auth } from "../../firebase"
 import { doc } from "firebase/firestore"
-import { iPage } from "../../types/Category"
+import { Category } from "../../types/Category"
 // components
 import TaskItem from "../TaskItem/TaskItem"
 import Loading from "../UI/Loading/Loading"
@@ -33,7 +33,7 @@ const TasksList: React.FC = () => {
           This function iterates over the tasksList array only if the current pathname,
            equals the path inside the item object.
           */
-          userData?.pages.map((category: iPage) => {
+          userData?.pages.map((category: Category) => {
             if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
               return category.tasksList.map((task: iTaskItem) => {
                 if (!task.isCompleted) {
@@ -53,7 +53,7 @@ const TasksList: React.FC = () => {
           This function iterates over the tasksList array only if the current pathname,
           equals the path inside the item object.
           */
-          userData?.pages.map((category: iPage) => {
+          userData?.pages.map((category: Category) => {
             if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
               return category.tasksList.map((task: iTaskItem) => {
                 if (task.isCompleted) {

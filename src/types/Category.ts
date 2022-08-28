@@ -1,6 +1,6 @@
 import { iTaskItem } from "./TaskItem";
 
-export interface iPage {
+export interface Category {
   title: string,
   path: string,
   createTaskCategories: Array<string>,

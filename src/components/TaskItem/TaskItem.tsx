@@ -3,12 +3,12 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { ACTION_TYPES } from "../../shared/actionTypes"
-import { iPage } from "../../types/Category"
+import { Category } from "../../types/Category"
 import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, increment, updateDoc } from 'firebase/firestore'
 import dayjs from "dayjs"
 // components
 // styles
@@ -35,7 +35,7 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
     e.stopPropagation()
 
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      pages: userData?.pages.map((category: iPage) => {
+      pages: userData?.pages.map((category: Category) => {
         if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
           return {
             ...category,
@@ -61,12 +61,13 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   function onRemove(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      pages: userData?.pages.map((category: iPage) => {
+      pages: userData?.pages.map((category: Category) => {
         if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
           return {
             ...category,
 
             tasksList: category.tasksList.filter((task: iTaskItem) => task.id !== id),
+            tasksRemoved: category.tasksRemoved + 1
           }
         } else {
           return category

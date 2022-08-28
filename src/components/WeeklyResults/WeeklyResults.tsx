@@ -4,6 +4,7 @@ import React, { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { doc, updateDoc } from "firebase/firestore"
+import { Category } from "../../types/Category"
 import { auth, firestoreDB } from "../../firebase"
 import { WEEK_DAYS } from "../../utils/consts"
 import dayjs from "dayjs"
@@ -11,6 +12,7 @@ import dayjs from "dayjs"
 import Loading from "../UI/Loading/Loading"
 // styles
 import './WeeklyResults.scss'
+import { iTaskItem } from "../../types/TaskItem"
 
 /**
  * //TODO: feature: dynamic data from firebase
@@ -40,7 +42,7 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.tasksList.length
+                userData?.pages.map((item: Category) => item.tasksList.length)
             }
             <span>задач</span>
           </div>
@@ -51,7 +53,7 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.tasksFinished
+                userData?.pages.map((item: Category) => item.tasksList.filter((item: iTaskItem) => item.isCompleted).length)
             }
             <span>задач</span>
           </div>
@@ -62,7 +64,7 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.tasksRemoved
+                userData?.pages.map((item: Category) => item.tasksRemoved)
             }
             <span>задач</span>
           </div>
