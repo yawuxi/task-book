@@ -6,14 +6,17 @@ import { ACTION_TYPES } from "../../../shared/actionTypes"
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup'
 import dayjs from "dayjs";
-import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import { firestoreDB, auth } from "../../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { uuidv4 } from "@firebase/util";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { closeModal } from "../ModalTextWindow/ModalTextWindow"
+import { uuidv4 } from "@firebase/util";
+import { iPage } from "../../../types/Page";
 // components
 // styles
 import './CreateTask.scss'
+import { iTaskItem } from "../../../types/TaskItem";
 
 /**
  * //TODO: feature: if modal window hidden use class - create-task--hidden
@@ -41,6 +44,7 @@ const CreateTask: React.FC = () => {
   const [minDate, setMinDate] = useState('')
   const { dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
 
   // destructuring
   const {
@@ -77,16 +81,29 @@ const CreateTask: React.FC = () => {
           onSubmit={
             (values) => {
               updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                tasksList: arrayUnion({
-                  task: values.task,
-                  category: values.category,
-                  dateWillFinish: values.date,
-                  dateCreated: dayjs().format('YYYY-MM-DD'),
-                  dateFinished: '',
-                  priority: values.priority,
-                  id: uuidv4(),
-                  isCompleted: false,
-                }),
+                pages: userData?.pages.map((item: iPage) => {
+                  if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+                    return {
+                      ...item,
+                      tasksList: [
+                        ...item.tasksList,
+                        {
+                          task: values.task,
+                          id: uuidv4(),
+                          category: values.category,
+                          dateWillFinish: values.date,
+                          dateCreated: dayjs().format('YYYY-MM-DD'),
+                          dateFinished: '',
+                          isComleted: false,
+                          priority: values.priority,
+                        }
+                      ]
+                    }
+                  } else {
+                    return item
+                  }
+                }
+                ),
               })
             }
           }

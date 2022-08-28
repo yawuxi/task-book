@@ -29,6 +29,10 @@ const TasksList: React.FC = () => {
         {userDataLoading ?
           <Loading />
           :
+          /**
+          This function iterates over the tasksList array only if the current pathname,
+           equals the path inside the item object.
+          */
           userData?.pages.map((item: iPage) => {
             if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
               return item.tasksList.map((item: iTaskItem) => {
@@ -45,6 +49,10 @@ const TasksList: React.FC = () => {
         {userDataLoading ?
           <Loading />
           :
+          /**
+          This function iterates over the tasksList array only if the current pathname,
+          equals the path inside the item object.
+          */
           userData?.pages.map((item: iPage) => {
             if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
               return item.tasksList.map((item: iTaskItem) => {
