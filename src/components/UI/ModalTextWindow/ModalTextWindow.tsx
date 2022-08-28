@@ -61,7 +61,6 @@ const ModalTextWindow: React.FC = () => {
                     createTaskPriorities: [],
                     taskItemTemplates: [],
                     tasksList: [],
-                    tasksFinished: 0,
                     tasksRemoved: 0,
                   })
                 })

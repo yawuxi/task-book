@@ -21,16 +21,16 @@ import { iTaskItem } from "../../types/TaskItem"
 const WeeklyResults: React.FC = () => {
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
-  const currentDayInDigit = dayjs().day()
+  // const currentDayInDigit = dayjs().day()
 
-  useEffect(() => {
-    if (WEEK_DAYS[currentDayInDigit - 1] === 'ПН') {
-      updateDoc(doc(firestoreDB, 'users', user!.uid), {
-        tasksFinished: 0,
-        tasksCompleted: 0,
-      })
-    }
-  }, [currentDayInDigit])
+  // useEffect(() => {
+  //   if (WEEK_DAYS[currentDayInDigit - 1] === 'ПН') {
+  //     updateDoc(doc(firestoreDB, 'users', user!.uid), {
+  //       tasksFinished: 0,
+  //       tasksCompleted: 0,
+  //     })
+  //   }
+  // }, [currentDayInDigit])
 
   return (
     <div className="weekly-results user-component">
@@ -42,7 +42,11 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.pages.map((item: Category) => item.tasksList.length)
+                userData?.pages.map((category: Category) => {
+                  if (category.path === window.location.pathname || `/${category.path}` === window.location.pathname) {
+                    return category.tasksList.length
+                  }
+                })
             }
             <span>задач</span>
           </div>
@@ -53,7 +57,11 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.pages.map((item: Category) => item.tasksList.filter((item: iTaskItem) => item.isCompleted).length)
+                userData?.pages.map((category: Category) => {
+                  if (category.path === window.location.pathname || `/${category.path}` === window.location.pathname) {
+                    return category.tasksList.filter((task: iTaskItem) => task.isCompleted).length
+                  }
+                })
             }
             <span>задач</span>
           </div>
@@ -64,7 +72,11 @@ const WeeklyResults: React.FC = () => {
             {
               userDataLoading ? <Loading />
                 :
-                userData?.pages.map((item: Category) => item.tasksRemoved)
+                userData?.pages.map((category: Category) => {
+                  if (category.path === window.location.pathname || `/${category.path}` === window.location.pathname) {
+                    return category.tasksRemoved
+                  }
+                })
             }
             <span>задач</span>
           </div>

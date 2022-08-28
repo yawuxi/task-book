@@ -89,7 +89,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       return { ...state, activePointOffset: payload }
     // weekly results
     case UPDATE_WEEKLY_RESULTS:
-      const calcDayName = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'][payload.day - 1]
+      const calcDayName = ['НД', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ',][payload.day]
       return { ...state, weeklyResults: { ...state.weeklyResults, [calcDayName]: payload.value } }
   }
 }
