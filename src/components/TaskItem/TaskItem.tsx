@@ -3,6 +3,7 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { ACTION_TYPES } from "../../shared/actionTypes"
+import { iPage } from "../../types/Page"
 import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
@@ -32,30 +33,28 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   // completing task
   function onComplete(e: React.MouseEvent<HTMLLIElement>) {
     e.stopPropagation()
+    const currentDay = dayjs().format('YYYY-MM-DD')
+
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === id
-        ?
-        { ...item, isCompleted: !item.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
-        :
-        item
-      ),
-    })
+      pages: userData?.pages.map((item: iPage) => {
+        if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+          return {
+            ...item,
 
-    userData?.tasksList.forEach((item: iTaskItem) => {
-      const currentDay = dayjs().format('YYYY-MM-DD')
-      const diff = dayjs(item.dateCreated).diff(currentDay, 'days')
+            tasksList: item.tasksList.map((item: iTaskItem) => {
 
-      if (item.id === id) {
-        if (diff <= 7 && item.isCompleted) {
-          updateDoc(doc(firestoreDB, 'users', user!.uid), {
-            tasksFinished: increment(-1),
-          })
+              if (item.id === id) {
+                return { ...item, isCompleted: !item.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
+              } else {
+                return item
+              }
+
+            }),
+          }
         } else {
-          updateDoc(doc(firestoreDB, 'users', user!.uid), {
-            tasksFinished: increment(1),
-          })
+          return item
         }
-      }
+      })
     })
   }
 
