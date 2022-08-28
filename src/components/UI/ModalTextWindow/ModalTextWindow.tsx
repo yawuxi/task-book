@@ -11,6 +11,7 @@ import { firestoreDB, auth } from "../../../firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { iTaskItem } from "../../../types/TaskItem"
+import { uuidv4 } from "@firebase/util"
 // components
 // styles
 import './ModalTextWindow.scss'
@@ -50,11 +51,20 @@ const ModalTextWindow: React.FC = () => {
             switch (additionalData.submitFrom) {
               default:
                 break;
-              // case 'sidebar':
-              //   updateDoc(doc(firestoreDB, 'users', user!.uid), {
-              //     sidebarCategories: arrayUnion({ path: `/${values.term}`, title: values.term })
-              //   })
-              //   break;
+              case 'sidebar':
+                updateDoc(doc(firestoreDB, 'users', user!.uid), {
+                  pages: arrayUnion({
+                    title: values.term,
+                    path: uuidv4(),
+                    createTaskCategories: [],
+                    createTaskPriorities: [],
+                    taskItemTemplates: [],
+                    tasksList: [],
+                    tasksFinished: 0,
+                    tasksRemoved: 0,
+                  })
+                })
+                break;
               case 'createTask':
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   taskItemTemplates: arrayUnion({ templateName: values.term })

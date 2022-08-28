@@ -6,6 +6,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { firestoreDB, auth } from "../../firebase"
 import { doc } from "firebase/firestore"
+import { iPage } from "../../types/Page"
 // components
 import TaskItem from "../TaskItem/TaskItem"
 import Loading from "../UI/Loading/Loading"
@@ -28,9 +29,13 @@ const TasksList: React.FC = () => {
         {userDataLoading ?
           <Loading />
           :
-          userData?.tasksList.map((item: iTaskItem) => {
-            if (!item.isCompleted) {
-              return <TaskItem {...item} key={item.id} />
+          userData?.pages.map((item: iPage) => {
+            if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+              return item.tasksList.map((item: iTaskItem) => {
+                if (!item.isCompleted) {
+                  return <TaskItem {...item} key={item.id} />
+                }
+              })
             }
           })
         }
@@ -40,9 +45,13 @@ const TasksList: React.FC = () => {
         {userDataLoading ?
           <Loading />
           :
-          userData?.tasksList.map((item: iTaskItem) => {
-            if (item.isCompleted) {
-              return <TaskItem {...item} key={item.id} />
+          userData?.pages.map((item: iPage) => {
+            if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+              return item.tasksList.map((item: iTaskItem) => {
+                if (item.isCompleted) {
+                  return <TaskItem {...item} key={item.id} />
+                }
+              })
             }
           })
         }

@@ -1,40 +1,40 @@
-//react
-import React from "react"
 //additional functional
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { LOGIN_ROUTE, MAIN_PAGE_ROUTE } from "./utils/consts"
-import { publicRoutes, privateRoutes } from "./utils/routes"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from "./firebase"
+import { useDocumentData } from "react-firebase-hooks/firestore"
+import { auth, firestoreDB } from "./firebase"
+import { doc } from "firebase/firestore"
+import { iPage } from "./types/Page"
+import { AUTHENTICATION_ROUTE, MAIN_PAGE_ROUTE } from "./utils/consts"
+import { Navigate, Route, Routes } from "react-router-dom"
 //components
+import MainPage from "./pages/MainPage/MainPage"
 import Loading from "./components/UI/Loading/Loading"
+import AuthenticationPage from "./pages/AuthenticationPage/AuthenticationPage"
 
 const AppRouter: React.FC = () => {
   const [user, loading] = useAuthState(auth)
+  const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user ? user!.uid : 'null'))
 
   if (loading) {
     return <Loading />
   }
 
-  if (!user) {
+  if (user) {
     return (
       <Routes>
-        {publicRoutes.map(item => {
-          return <Route key={item.path} path={item.path} element={<item.element />} />
+        {userData?.pages.map((item: iPage) => {
+          return <Route key={item.path} path={item.path} element={<MainPage />} />
         })}
-        <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
+        {userData && <Route path="*" element={<Navigate to={MAIN_PAGE_ROUTE} />} />}
       </Routes>
     )
   } else {
     return (
       <Routes>
-        {privateRoutes.map(item => {
-          return <Route key={item.path} path={item.path} element={<item.element />} />
-        })}
-        <Route path="*" element={<Navigate to={MAIN_PAGE_ROUTE} />} />
+        <Route path={AUTHENTICATION_ROUTE} element={<AuthenticationPage />} />
+        <Route path="*" element={<Navigate to={AUTHENTICATION_ROUTE} />} />
       </Routes>
     )
   }
 }
-
 export default AppRouter

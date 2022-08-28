@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useRef } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
-import { iCategoryItem } from "../../types/CategoryItem"
+import { iPage } from "../../types/Page"
 import { ACTION_TYPES } from "../../shared/actionTypes"
 import { Link } from "react-router-dom"
 import { doc } from "firebase/firestore"
@@ -113,7 +113,7 @@ const Sidebar: React.FC = () => {
           {
             userDataLoading ? <Loading />
               :
-              userData?.sidebarCategories.map((item: iCategoryItem) => {
+              userData?.pages.map((item: iPage) => {
                 return (
                   <li key={item.title} className="sidebar__item" ref={navMenuElement}>
                     <Link to={item.path}>
@@ -126,7 +126,7 @@ const Sidebar: React.FC = () => {
           }
           <li className="sidebar-active-point" ref={sidebarActivePoint} style={{ top: `${state.activePointOffset}px` }}></li>
         </ul>
-        {/* <button
+        <button
           type="button"
           className="sidebar__category-add"
           onClick={() => dispatch({
@@ -142,7 +142,7 @@ const Sidebar: React.FC = () => {
             <path d="M6 9H12" stroke="#29A19C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Додати
-        </button> */}
+        </button>
       </nav>
       <nav className="sidebar__bottom">
         <h2 className="sidebar__title">Дані</h2>

@@ -15,7 +15,7 @@ const MainPage: React.FC = () => {
     <>
       <div className="main__content">
         <div className="main__left">
-          <WeeklyResults />
+          {/* <WeeklyResults /> */}
           <TaskList />
         </div>
         <div className="main__right">

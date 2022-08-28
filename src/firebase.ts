@@ -31,15 +31,18 @@ export async function registrationNewUser(email: string, password: string) {
       setDoc(doc(firestoreDB, 'users', user.uid), {
         displayName: '',
         profilePicture: '',
-        sidebarCategories: [
-          { title: 'Дім', path: '/' },
+        pages: [
+          {
+            title: 'Дім',
+            path: '/',
+            createTaskCategories: [],
+            createTaskPriorities: [],
+            taskItemTemplates: [],
+            tasksList: [],
+            tasksFinished: 0,
+            tasksRemoved: 0,
+          }
         ],
-        createTaskCategories: [],
-        createTaskPriorities: [],
-        taskItemTemplates: [],
-        tasksList: [],
-        tasksFinished: 0,
-        tasksRemoved: 0,
       })
     })
 }
@@ -53,10 +56,3 @@ export async function signInUser(email: string, password: string) {
 export function signOutUser() {
   signOut(auth)
 }
-
-//! updating context from firebase in realtime (old), now using hook in every component
-// export function getDataFromFirestoreDB(user: any, dispatch: React.Dispatch<iAction>, type: string) {
-//   onSnapshot(doc(firestoreDB, 'users', user.uid), (doc) => {
-//     dispatch({ type, payload: doc.data() })
-//   })
-// }

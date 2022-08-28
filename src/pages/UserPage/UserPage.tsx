@@ -54,29 +54,35 @@ const UserPage: React.FC = () => {
           updateDoc(doc(firestoreDB, 'users', user!.uid), {
             displayName: '',
             profilePicture: '',
-            sidebarCategories: [
-              { title: 'Дім', path: '/' },
+            pages: [
+              {
+                title: 'Дім',
+                path: '/',
+                createTaskCategories: [],
+                createTaskPriorities: [],
+                taskItemTemplates: [],
+                tasksList: [],
+                tasksFinished: 0,
+                tasksRemoved: 0,
+              }
             ],
-            createTaskCategories: [],
-            createTaskPriorities: [],
-            taskItemTemplates: [],
-            tasksList: [],
-            tasksFinished: 0,
-            tasksRemoved: 0,
           })
         } else {
           setDoc(doc(firestoreDB, 'users', user!.uid), {
             displayName: '',
             profilePicture: '',
-            sidebarCategories: [
-              { title: 'Дім', path: '/' },
+            pages: [
+              {
+                title: 'Дім',
+                path: '/',
+                createTaskCategories: [],
+                createTaskPriorities: [],
+                taskItemTemplates: [],
+                tasksList: [],
+                tasksFinished: 0,
+                tasksRemoved: 0,
+              }
             ],
-            createTaskCategories: [],
-            createTaskPriorities: [],
-            taskItemTemplates: [],
-            tasksList: [],
-            tasksFinished: 0,
-            tasksRemoved: 0,
           })
         }
       })
@@ -90,85 +96,97 @@ const UserPage: React.FC = () => {
           updateDoc(doc(firestoreDB, 'users', user!.uid), {
             displayName: '',
             profilePicture: '',
-            sidebarCategories: [
-              { title: 'Дім', path: '/' },
+            pages: [
+              {
+                title: 'Дім',
+                path: '/',
+                createTaskCategories: [],
+                createTaskPriorities: [],
+                taskItemTemplates: [],
+                tasksList: [
+                  {
+                    task: 'testTask1',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                  {
+                    task: 'testTask2',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                  {
+                    task: 'testTask3',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                ],
+                tasksFinished: 0,
+                tasksRemoved: 0,
+              }
             ],
-            createTaskCategories: [],
-            createTaskPriorities: [],
-            taskItemTemplates: [],
-            tasksList: [
-              {
-                task: 'testTask1',
-                id: uuidv4(),
-                category: 'Спорт',
-                dateWillFinish: '2022-03-18',
-                dateCreated: '2022-08-21',
-                dateFinished: '',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-              {
-                task: 'testTask2',
-                id: uuidv4(),
-                category: 'Спорт',
-                dateWillFinish: '2022-03-18',
-                dateCreated: '2022-08-21',
-                dateFinished: '',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-              {
-                task: 'testTask3',
-                id: uuidv4(),
-                category: 'Спорт',
-                dateWillFinish: '2022-03-18',
-                dateCreated: '2022-08-21',
-                dateFinished: '',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-            ],
-            tasksFinished: 0,
-            tasksRemoved: 0,
           })
         } else {
           setDoc(doc(firestoreDB, 'users', user!.uid), {
             displayName: '',
             profilePicture: '',
-            sidebarCategories: [
-              { title: 'Дім', path: '/' },
+            pages: [
+              {
+                title: 'Дім',
+                path: '/',
+                createTaskCategories: [],
+                createTaskPriorities: [],
+                taskItemTemplates: [],
+                tasksList: [
+                  {
+                    task: 'testTask1',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                  {
+                    task: 'testTask2',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                  {
+                    task: 'testTask3',
+                    id: uuidv4(),
+                    category: 'Спорт',
+                    dateWillFinish: '2022-03-18',
+                    dateCreated: '2022-08-21',
+                    dateFinished: '',
+                    isComleted: false,
+                    priority: 'Ну таке',
+                  },
+                ],
+                tasksFinished: 0,
+                tasksRemoved: 0,
+              }
             ],
-            createTaskCategories: [],
-            createTaskPriorities: [],
-            taskItemTemplates: [],
-            tasksList: [
-              {
-                task: 'testTask1',
-                id: uuidv4(),
-                category: 'Спорт',
-                date: '2022-03-18',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-              {
-                task: 'testTask2',
-                id: uuidv4(),
-                category: 'Спорт',
-                date: '2022-03-18',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-              {
-                task: 'testTask3',
-                id: uuidv4(),
-                category: 'Спорт',
-                date: '2022-03-18',
-                isComleted: false,
-                priority: 'Ну таке',
-              },
-            ],
-            tasksFinished: 0,
-            tasksRemoved: 0,
           })
         }
       })
