@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface iRoutes {
+export interface iRoute {
   path: string,
   element: React.FC,
 }
