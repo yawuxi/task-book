@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "./firebase"
 import { doc } from "firebase/firestore"
-import { iPage } from "./types/Page"
+import { iPage } from "./types/Category"
 import { AUTHENTICATION_ROUTE, MAIN_PAGE_ROUTE, USER_PAGE_ROUTE } from "./utils/consts"
 import { Navigate, Route, Routes } from "react-router-dom"
 //components

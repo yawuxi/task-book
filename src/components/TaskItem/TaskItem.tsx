@@ -3,12 +3,12 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../shared/context"
 import { ACTION_TYPES } from "../../shared/actionTypes"
-import { iPage } from "../../types/Page"
+import { iPage } from "../../types/Category"
 import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
-import { doc, updateDoc, increment } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import dayjs from "dayjs"
 // components
 // styles
@@ -33,26 +33,25 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   // completing task
   function onComplete(e: React.MouseEvent<HTMLLIElement>) {
     e.stopPropagation()
-    const currentDay = dayjs().format('YYYY-MM-DD')
 
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      pages: userData?.pages.map((item: iPage) => {
-        if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+      pages: userData?.pages.map((category: iPage) => {
+        if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
           return {
-            ...item,
+            ...category,
 
-            tasksList: item.tasksList.map((item: iTaskItem) => {
+            tasksList: category.tasksList.map((task: iTaskItem) => {
 
-              if (item.id === id) {
-                return { ...item, isCompleted: !item.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
+              if (task.id === id) {
+                return { ...task, isCompleted: !task.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
               } else {
-                return item
+                return task
               }
 
             }),
           }
         } else {
-          return item
+          return category
         }
       })
     })
@@ -62,9 +61,17 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   function onRemove(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation()
     updateDoc(doc(firestoreDB, 'users', user!.uid), {
-      tasksList: userData?.tasksList.filter((item: iTaskItem) => item.id !== id),
-      tasksFinished: increment(-1),
-      tasksRemoved: increment(1),
+      pages: userData?.pages.map((category: iPage) => {
+        if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+          return {
+            ...category,
+
+            tasksList: category.tasksList.filter((task: iTaskItem) => task.id !== id),
+          }
+        } else {
+          return category
+        }
+      })
     })
   }
 

@@ -12,7 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { closeModal } from "../ModalTextWindow/ModalTextWindow"
 import { uuidv4 } from "@firebase/util";
-import { iPage } from "../../../types/Page";
+import { iPage } from "../../../types/Category";
 // components
 // styles
 import './CreateTask.scss'

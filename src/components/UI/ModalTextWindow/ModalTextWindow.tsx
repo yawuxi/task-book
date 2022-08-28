@@ -4,6 +4,7 @@ import React, { useContext } from "react"
 import { TaskBookContext } from "../../../shared/context"
 import { ACTION_TYPES } from "../../../shared/actionTypes"
 import { iAction } from "../../../types/Action"
+import { iPage } from "../../../types/Category"
 import { Formik, Form, Field } from "formik"
 import * as yup from 'yup'
 import { updateDoc, doc, arrayUnion } from "firebase/firestore"
@@ -72,7 +73,16 @@ const ModalTextWindow: React.FC = () => {
                 break;
               case 'editingTask':
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                  tasksList: userData?.tasksList.map((item: iTaskItem) => item.id === additionalData.id ? { ...item, task: values.term } : item)
+                  pages: userData?.pages.map((category: iPage) => {
+                    if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+                      return {
+                        ...category,
+                        tasksList: category.tasksList.map((task: iTaskItem) => task.id === additionalData.id ? { ...task, task: values.term } : task),
+                      }
+                    } else {
+                      return category
+                    }
+                  })
                 })
                 break;
             }

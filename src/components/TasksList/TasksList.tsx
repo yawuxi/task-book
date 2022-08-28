@@ -6,7 +6,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { firestoreDB, auth } from "../../firebase"
 import { doc } from "firebase/firestore"
-import { iPage } from "../../types/Page"
+import { iPage } from "../../types/Category"
 // components
 import TaskItem from "../TaskItem/TaskItem"
 import Loading from "../UI/Loading/Loading"
@@ -33,11 +33,11 @@ const TasksList: React.FC = () => {
           This function iterates over the tasksList array only if the current pathname,
            equals the path inside the item object.
           */
-          userData?.pages.map((item: iPage) => {
-            if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
-              return item.tasksList.map((item: iTaskItem) => {
-                if (!item.isCompleted) {
-                  return <TaskItem {...item} key={item.id} />
+          userData?.pages.map((category: iPage) => {
+            if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+              return category.tasksList.map((task: iTaskItem) => {
+                if (!task.isCompleted) {
+                  return <TaskItem {...task} key={task.id} />
                 }
               })
             }
@@ -53,11 +53,11 @@ const TasksList: React.FC = () => {
           This function iterates over the tasksList array only if the current pathname,
           equals the path inside the item object.
           */
-          userData?.pages.map((item: iPage) => {
-            if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
-              return item.tasksList.map((item: iTaskItem) => {
-                if (item.isCompleted) {
-                  return <TaskItem {...item} key={item.id} />
+          userData?.pages.map((category: iPage) => {
+            if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+              return category.tasksList.map((task: iTaskItem) => {
+                if (task.isCompleted) {
+                  return <TaskItem {...task} key={task.id} />
                 }
               })
             }
