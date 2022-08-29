@@ -8,12 +8,6 @@ import 'dayjs/locale/uk'
 // styles
 import './TodayInfo.scss'
 
-/**
- * // TODO: feature: working clock, updates every second
- * // TODO: feature: working calendar
- * TODO: Wrap into React.memo, memoizate this component
-*/
-
 const TodayInfo: React.FC = () => {
   const [time, setTime] = useState('')
 

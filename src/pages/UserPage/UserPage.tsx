@@ -18,10 +18,6 @@ import Loading from "../../components/UI/Loading/Loading"
 // styles
 import './UserPage.scss'
 
-/**
- * TODO: feature: ability to change profile picture, nickname and email
-*/
-
 const UserPage: React.FC = () => {
   const [profilePicture, setProfilePicture] = useState<any>(null)
   const [user] = useAuthState(auth)
@@ -62,7 +58,6 @@ const UserPage: React.FC = () => {
                 createTaskPriorities: [],
                 taskItemTemplates: [],
                 tasksList: [],
-                tasksFinished: 0,
                 tasksRemoved: 0,
               }
             ],
@@ -79,7 +74,6 @@ const UserPage: React.FC = () => {
                 createTaskPriorities: [],
                 taskItemTemplates: [],
                 tasksList: [],
-                tasksFinished: 0,
                 tasksRemoved: 0,
               }
             ],
@@ -136,6 +130,15 @@ const UserPage: React.FC = () => {
                   },
                 ],
                 tasksRemoved: 0,
+                weeklyResults: {
+                  'ПН': 0,
+                  'ВТ': 0,
+                  'СР': 0,
+                  'ЧТ': 0,
+                  'ПТ': 0,
+                  'СБ': 0,
+                  'НД': 0,
+                },
               }
             ],
           })
@@ -183,6 +186,15 @@ const UserPage: React.FC = () => {
                   },
                 ],
                 tasksRemoved: 0,
+                weeklyResults: {
+                  'ПН': 0,
+                  'ВТ': 0,
+                  'СР': 0,
+                  'ЧТ': 0,
+                  'ПТ': 0,
+                  'СБ': 0,
+                  'НД': 0,
+                },
               }
             ],
           })

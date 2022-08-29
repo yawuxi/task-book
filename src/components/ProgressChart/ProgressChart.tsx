@@ -15,6 +15,7 @@ import {
 import { TaskBookContext } from "../../shared/context";
 import { ACTION_TYPES } from "../../shared/actionTypes";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Category } from "../../types/Category";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { auth, firestoreDB } from "../../firebase";
 import { doc } from "firebase/firestore";
@@ -49,27 +50,6 @@ const options = {
   },
 };
 
-/**
- * TODO: feature: dynamic chart, depends of context data, firebase
- * TODO: change scales.y&&x.grid.color to #F0F0F0 when LIGHT theme, to #F9F9F9 when DARK theme
- * TODO: Wrap into React.memo, memoizate this component
-*/
-
-function getWeeklyCompletedTasksValue(data: any) {
-  let arr = []
-
-  for (let i = 0; i < data?.length; i++) {
-    const currentDay = dayjs().format('YYYY-MM-DD')
-    const diff = dayjs(data[i].dateCreated).diff(currentDay, 'days')
-
-    if (diff <= 7 && data[i].isCompleted && data[i].dateFinished === currentDay) {
-      arr.push(data[i])
-    }
-  }
-
-  return arr.length
-}
-
 const ProgressChart: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
@@ -78,16 +58,6 @@ const ProgressChart: React.FC = () => {
 
   // destructuring
   const { weeklyResults: { UPDATE_WEEKLY_RESULTS } } = ACTION_TYPES
-
-  useEffect(() => {
-    dispatch({
-      type: UPDATE_WEEKLY_RESULTS,
-      payload: {
-        day: currentDayInDigit,
-        value: getWeeklyCompletedTasksValue(userData?.tasksList)
-      }
-    })
-  }, [userData?.tasksList])
 
   return (
     <div className="progress-chart user-component">

@@ -16,19 +16,6 @@ import { Category } from "../../../types/Category";
 // components
 // styles
 import './CreateTask.scss'
-import { iTaskItem } from "../../../types/TaskItem";
-
-/**
- * //TODO: feature: if modal window hidden use class - create-task--hidden
- * //TODO: feature: all select options dynamic from context
- * //TODO: modal form validation
- * TODO: feature: select template
- * //TODO: feature: calendar
- * //TODO: feature: cancle
- * //TODO: feture: add
- * //TODO: feature: save as template
- * //TODO: feature: user can choose only today date, can not choose yesterdays date
-*/
 
 // setting minimal date to date input
 function getCurrentDate(): string {

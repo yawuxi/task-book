@@ -15,12 +15,6 @@ import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
 // styles
 import './App.scss'
 
-/**
- * //TODO: feature: create context
- * //TODO: layout: UserPage
- * TODO: common: finish all todo`s
- */
-
 const App: React.FC = () => {
   const {
     state,

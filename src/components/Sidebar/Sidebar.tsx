@@ -15,14 +15,6 @@ import Loading from "../UI/Loading/Loading"
 import './Sidebar.scss'
 import logotype from '../../images/logotype.png'
 
-/**
- * //TODO: feature: sidebar active indicator
- * //TODO: feature: category links builds up from context
- * TODO: feature: change function setIconByTitle to GET request from data base
- * //TODO: feature: onClick add category add new category to context
- * //TODO: feature: onClick exit button, log out from current account
- */
-
 const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)

@@ -8,19 +8,11 @@ import { iTaskItem } from "../../types/TaskItem"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
-import { doc, increment, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import dayjs from "dayjs"
 // components
 // styles
 import './TaskItem.scss'
-
-/* 
-//TODO: feature: task text from firebase
-//TODO: feature: id attribute in input and label will recieve from data object property id
-//TODO: feature: completing task (class - task-list__item--completed)
-//TODO: feature: editing task
-//TODO: feature: removing task
-*/
 
 const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
   const { dispatch } = useContext(TaskBookContext)

@@ -13,11 +13,6 @@ import Loading from "../UI/Loading/Loading"
 // styles
 import './TasksList.scss'
 
-/**
- * //TODO: feature: dynamic task-list__items from context
- * //TODO: feature: display task item from user data base
-*/
-
 const TasksList: React.FC = () => {
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
