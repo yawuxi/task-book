@@ -9,5 +9,5 @@ export interface Category {
   tasksList: Array<iTaskItem>,
   tasksFinished: number,
   tasksRemoved: number,
-  weeklyResults: object,
+  weeklyResults: Array<number>,
 }

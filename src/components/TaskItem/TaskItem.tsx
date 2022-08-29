@@ -34,8 +34,11 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
 
             tasksList: category.tasksList.map((task: iTaskItem) => {
 
-              if (task.id === id) {
+              // completing tasks, also clearing dateFinished when uncompleting task
+              if (task.id === id && !task.isCompleted) {
                 return { ...task, isCompleted: !task.isCompleted, dateFinished: dayjs().format('YYYY-MM-DD') }
+              } else if (task.id === id && task.isCompleted) {
+                return { ...task, isCompleted: !task.isCompleted, dateFinished: '' }
               } else {
                 return task
               }

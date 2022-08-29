@@ -13,13 +13,4 @@ export interface iInitialState {
     },
     createTask: { isOpen: boolean },
   },
-  weeklyResults: {
-    'ПН': number,
-    'ВТ': number,
-    'СР': number,
-    'ЧТ': number,
-    'ПТ': number,
-    'СБ': number,
-    'НД': number,
-  }
 }

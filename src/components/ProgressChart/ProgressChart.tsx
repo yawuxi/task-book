@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useContext } from "react"
+import React, { useState } from "react"
 // additional functional
 import { Line } from 'react-chartjs-2'
 import {
@@ -12,14 +12,13 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { TaskBookContext } from "../../shared/context";
-import { ACTION_TYPES } from "../../shared/actionTypes";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Category } from "../../types/Category";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { auth, firestoreDB } from "../../firebase";
 import { doc } from "firebase/firestore";
 import { WEEK_DAYS } from "../../utils/consts";
+import { Category } from "../../types/Category";
+import { iTaskItem } from "../../types/TaskItem";
 import dayjs from "dayjs";
 // components
 // styles
@@ -50,14 +49,30 @@ const options = {
   },
 };
 
+const calcDateDiff = (dateCreated: string, dateFinished: string) => {
+  const propCreated = dayjs(dateCreated)
+  const propFinished = dayjs(dateFinished)
+
+  return propFinished.diff(propCreated, 'day')
+}
+
 const ProgressChart: React.FC = () => {
-  const { state, dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
-  const currentDayInDigit = dayjs().day()
 
-  // destructuring
-  const { weeklyResults: { UPDATE_WEEKLY_RESULTS } } = ACTION_TYPES
+  let chartData: Array<number> = [0, 0, 0, 0, 0, 0, 0];
+
+  userData?.pages.map((category: Category) => {
+    if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+      category.tasksList.map((item: iTaskItem) => {
+        console.log(calcDateDiff(item.dateCreated, item.dateFinished));
+
+        if (calcDateDiff(item.dateCreated, item.dateFinished) < 7) {
+          chartData[calcDateDiff(item.dateCreated, item.dateFinished)] += 1
+        }
+      })
+    }
+  })
 
   return (
     <div className="progress-chart user-component">
@@ -70,7 +85,7 @@ const ProgressChart: React.FC = () => {
             datasets: [
               {
                 label: 'Виповнені задач',
-                data: state.weeklyResults,
+                data: chartData,
                 borderColor: '#29a19c',
               },
             ],

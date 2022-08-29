@@ -18,15 +18,6 @@ const initialState: iInitialState = {
     },
     createTask: { isOpen: false, },
   },
-  weeklyResults: {
-    'ПН': 0,
-    'ВТ': 0,
-    'СР': 0,
-    'ЧТ': 0,
-    'ПТ': 0,
-    'СБ': 0,
-    'НД': 0,
-  },
 }
 
 export const TaskBookContext = createContext<any>(null)
@@ -48,7 +39,6 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       createTask: { TOGGLE_CREATE_TASK, },
     },
     activePointOffset: { CHANGE_POINT_OFFSET, },
-    weeklyResults: { UPDATE_WEEKLY_RESULTS, },
   } = ACTION_TYPES
 
   const {
@@ -87,10 +77,6 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // active point offset
     case CHANGE_POINT_OFFSET:
       return { ...state, activePointOffset: payload }
-    // weekly results
-    case UPDATE_WEEKLY_RESULTS:
-      const calcDayName = ['НД', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ',][payload.day]
-      return { ...state, weeklyResults: { ...state.weeklyResults, [calcDayName]: payload.value } }
   }
 }
 
