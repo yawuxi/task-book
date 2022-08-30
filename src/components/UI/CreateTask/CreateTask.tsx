@@ -95,18 +95,10 @@ const CreateTask: React.FC = () => {
             }
           }
         >
-          {({ errors, touched }) => (
+          {({ values, errors, touched, handleSubmit }) => (
             <>
               <header>
                 <h3 className="create-task__title h3-title">Добавить новую задачу</h3>
-                <Field
-                  className="modal-field-styles"
-                  name="template"
-                  placeholder="Вибрати шаблон"
-                  as="select"
-                >
-                  <option>Вибрати шаблон</option>
-                </Field>
               </header>
               <Form>
                 <h4 className="create-task__small-title">Що потрібно зробити</h4>
@@ -153,20 +145,8 @@ const CreateTask: React.FC = () => {
                   </button>
                   <div>
                     <button
+                      onClick={(e) => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_CREATE_TASK, values.task) }}
                       type="button"
-                      className="create-task__save-as-template button"
-                      onClick={() => dispatch({
-                        type: TOGGLE_TEXT_MODAL,
-                        payload: {
-                          placeholder: 'Вкажіть назву шаблону',
-                          submitFrom: 'createTask',
-                        }
-                      })}
-                    >
-                      Зберігти як шаблон
-                    </button>
-                    <button
-                      type="submit"
                       className="create-task__add button"
                     >
                       Додати
