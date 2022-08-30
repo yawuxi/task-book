@@ -1,17 +1,24 @@
 // react
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 // additional functional
+import { TaskBookContext } from "../../shared/context"
 import { Formik, Field, Form } from "formik"
 import * as Yup from 'yup'
-import { signInUser, registrationNewUser } from "../../firebase"
 // components
 // styles
 import './AuthenticationPage.scss'
 import logotype from '../../images/logotype.png'
+import { ACTION_TYPES } from "../../shared/actionTypes"
 
 const AuthenticationPage: React.FC = () => {
+  const { state, dispatch } = useContext(TaskBookContext)
   const [registration, setRegistration] = useState(false)
 
+  // destructuring
+  const { userMethods: { signIn, signUp } } = state
+  const { errors: { SET_ERROR } } = ACTION_TYPES
+
+  console.log(state.errors);
   return (
     <div className="login-page">
       <img src={logotype} alt="logotype" />
@@ -28,9 +35,15 @@ const AuthenticationPage: React.FC = () => {
                 password: Yup.string().min(6, 'Мінімум 6 символів для паролю!').required('Вкажіть ваш пароль!')
               })
             }
-            onSubmit={() => { }}
+            onSubmit={(values, action) => {
+              if (state.errors) {
+                setTimeout(() => {
+                  action.setSubmitting(false)
+                }, 1500);
+              }
+            }}
           >
-            {({ errors, touched, values }) => (
+            {({ errors, touched, values, isSubmitting }) => (
               (!registration) ?
                 (
                   <Form className="login-page__form shadow br10">
@@ -44,19 +57,25 @@ const AuthenticationPage: React.FC = () => {
                     <button
                       type="submit"
                       className="login-page__log-in br10"
-                      onClick={() => signInUser(values.email, values.password)}
+                      disabled={isSubmitting}
+                      onClick={() => { return signIn(values.email, values.password), dispatch({ type: SET_ERROR, payload: '' }) }}
                     >
                       Увійти
                     </button>
                     <div className="login-page__registration">
                       Ще не маєш акаунту?
                       <span> </span>
-                      <button onClick={(e) => { return e.preventDefault(), setRegistration(true) }}>Рєєстрація</button>
+                      <button
+                        onClick={() => setRegistration(true)}
+                        type="button"
+                      >
+                        Рєєстрація
+                      </button>
                     </div>
                   </Form>
                 ) : (
                   <Form className="login-page__form shadow br10">
-                    <h3 className="login-page__title">Рєєстрація акаунту</h3>
+                    <h3 className="login-page__title">Рєєстрація акаунту {isSubmitting}</h3>
                     <div className="login-page__inputs">
                       <Field name="email" type="email" className="login-page__input" placeholder="Електронна пошта" />
                       {errors.email && touched.email ? <div className="form-error">{errors.email}</div> : null}
@@ -66,13 +85,19 @@ const AuthenticationPage: React.FC = () => {
                     <button
                       type="submit"
                       className="login-page__log-in br10"
-                      onClick={() => registrationNewUser(values.email, values.password)}
+                      onClick={() => { return signUp(values.email, values.password), dispatch({ type: SET_ERROR, payload: '' }) }}
+                      disabled={isSubmitting}
                     >
                       Зарєєструватися
                     </button>
                     <div className="login-page__registration">
                       Вже маєш акаунту?<span> </span>
-                      <button onClick={(e) => { return e.preventDefault(), setRegistration(false) }}>Увійти</button>
+                      <button
+                        onClick={() => setRegistration(false)}
+                        type="button"
+                      >
+                        Увійти
+                      </button>
                     </div>
                   </Form>
                 )

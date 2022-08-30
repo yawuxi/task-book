@@ -6,6 +6,12 @@
   padding: 1.5625rem;
   background-color: var(--white);
 
+  button {
+    &:disabled {
+      background-color: var(--gray);
+    }
+  }
+
   &__content {
     height: calc(100% - 54px);
     display: flex;

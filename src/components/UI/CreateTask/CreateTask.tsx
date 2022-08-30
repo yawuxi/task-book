@@ -13,6 +13,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { closeModal } from "../ModalTextWindow/ModalTextWindow"
 import { uuidv4 } from "@firebase/util";
 import { Category } from "../../../types/Category";
+import { useSnackbar } from "notistack";
 // components
 // styles
 import './CreateTask.scss'
@@ -32,12 +33,12 @@ const CreateTask: React.FC = () => {
   const { dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const { enqueueSnackbar } = useSnackbar();
 
   // destructuring
   const {
     modals: {
       createTask: { TOGGLE_CREATE_TASK },
-      modalTextWindow: { TOGGLE_TEXT_MODAL }
     },
   } = ACTION_TYPES
 
@@ -92,6 +93,10 @@ const CreateTask: React.FC = () => {
                 }
                 ),
               })
+                .then(() => enqueueSnackbar('Задачу успішно додано!', {
+                  autoHideDuration: 3000,
+                  variant: "success"
+                }))
             }
           }
         >

@@ -18,6 +18,12 @@ const initialState: iInitialState = {
     },
     createTask: { isOpen: false, },
   },
+  userMethods: {
+    signUp: () => { },
+    signIn: () => { },
+    signOut: () => { },
+  },
+  errors: {},
 }
 
 export const TaskBookContext = createContext<any>(null)
@@ -40,6 +46,12 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       createTask: { TOGGLE_CREATE_TASK, },
     },
     activePointOffset: { CHANGE_POINT_OFFSET, },
+    userMethods: {
+      SET_SIGN_IN,
+      SET_SIGN_UP,
+      SET_SIGN_OUT
+    },
+    errors: { SET_ERROR, },
   } = ACTION_TYPES
 
   const {
@@ -80,6 +92,16 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // active point offset
     case CHANGE_POINT_OFFSET:
       return { ...state, activePointOffset: payload }
+    // methods
+    case SET_SIGN_IN:
+      return { ...state, userMethods: { ...state.userMethods, signIn: payload } }
+    case SET_SIGN_UP:
+      return { ...state, userMethods: { ...state.userMethods, signUp: payload } }
+    case SET_SIGN_OUT:
+      return { ...state, userMethods: { ...state.userMethods, signOut: payload } }
+    // errors
+    case SET_ERROR:
+      return { ...state, errors: { err: payload } }
   }
 }
 

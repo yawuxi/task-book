@@ -10,14 +10,17 @@ import { useDocumentData } from "react-firebase-hooks/firestore"
 import { auth, firestoreDB } from "../../firebase"
 import { doc, updateDoc } from 'firebase/firestore'
 import dayjs from "dayjs"
+import { useSnackbar } from "notistack"
 // components
 // styles
 import './TaskItem.scss'
 
 const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
+  // hooks
   const { dispatch } = useContext(TaskBookContext)
   const [user] = useAuthState(auth)
   const [userData] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const { enqueueSnackbar } = useSnackbar();
 
   // destructuring
   const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL } } } = ACTION_TYPES
@@ -69,6 +72,10 @@ const TaskItem: React.FC<iTaskItem> = ({ task, id, isCompleted }) => {
         }
       })
     })
+      .then(() => enqueueSnackbar('Задачу успішно видалено!', {
+        autoHideDuration: 3000,
+        variant: "success"
+      }))
   }
 
   // editing task

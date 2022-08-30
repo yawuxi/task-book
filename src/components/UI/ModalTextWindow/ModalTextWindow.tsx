@@ -13,6 +13,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { iTaskItem } from "../../../types/TaskItem"
 import { uuidv4 } from "@firebase/util"
+import { useSnackbar } from "notistack"
 // components
 // styles
 import './ModalTextWindow.scss'
@@ -30,13 +31,15 @@ export function closeModal(
 }
 
 const ModalTextWindow: React.FC = () => {
+  // hooks
   const { state, dispatch } = useContext(TaskBookContext)
-  const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL } } } = ACTION_TYPES
   const [user] = useAuthState(auth)
   const [userData] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
+  const { enqueueSnackbar } = useSnackbar();
 
   // destructuring
   const { modals: { modalTextWindow: { additionalData } } } = state
+  const { modals: { modalTextWindow: { TOGGLE_TEXT_MODAL } } } = ACTION_TYPES
 
   return (
     <div className="modal-text-window" onClick={e => closeModal(e, dispatch, TOGGLE_TEXT_MODAL)}>
@@ -65,11 +68,6 @@ const ModalTextWindow: React.FC = () => {
                   })
                 })
                 break;
-              case 'createTask':
-                updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                  taskItemTemplates: arrayUnion({ templateName: values.term })
-                })
-                break;
               case 'editingTask':
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   pages: userData?.pages.map((category: Category) => {
@@ -83,6 +81,10 @@ const ModalTextWindow: React.FC = () => {
                     }
                   })
                 })
+                  .then(() => enqueueSnackbar('Задачу успішно відредаговано!', {
+                    autoHideDuration: 3000,
+                    variant: "info"
+                  }))
                 break;
             }
           }}

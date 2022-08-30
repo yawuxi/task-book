@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 // additional functional
 import { TaskBookProvider } from './shared/context';
 import { BrowserRouter } from "react-router-dom";
+import { SnackbarProvider } from 'notistack';
 // components
 import App from './App';
 // styles
@@ -16,7 +17,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <TaskBookProvider>
-        <App />
+        <SnackbarProvider maxSnack={3}>
+          <App />
+        </SnackbarProvider>
       </TaskBookProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -13,4 +13,10 @@ export interface iInitialState {
     },
     createTask: { isOpen: boolean },
   },
+  userMethods: {
+    signUp: () => void,
+    signIn: () => void,
+    signOut: () => void,
+  },
+  errors: {},
 }

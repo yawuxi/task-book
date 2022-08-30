@@ -10,15 +10,16 @@ import { auth, firestoreDB, storage } from "../../firebase"
 import { updateDoc, setDoc, doc, getDoc } from "firebase/firestore"
 import { ref } from "firebase/storage"
 import { uuidv4 } from "@firebase/util"
+import { useSnackbar } from "notistack"
 // components
 import TodayInfo from "../../components/TodayInfo/TodayInfo"
 import TodayFact from "../../components/TodayFact/TodayFact"
-import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import Loading from "../../components/UI/Loading/Loading"
 // styles
 import './UserPage.scss'
 
 const UserPage: React.FC = () => {
+  // hooks
   const [profilePicture, setProfilePicture] = useState<any>(null)
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
@@ -33,6 +34,7 @@ const UserPage: React.FC = () => {
     profilePictureLoading,
     profilePictureDownloadError,
   ] = useDownloadURL(ref(storage, `user-images/${user?.uid}/user-profile-picture`));
+  const { enqueueSnackbar } = useSnackbar();
 
   // effects
   useEffect(() => {
@@ -225,21 +227,22 @@ const UserPage: React.FC = () => {
             }}
             validationSchema={
               Yup.object().shape({
-                name: Yup.string().min(3, "Мінімальна довжина імені 3 символи!"),
+                name: Yup.string().min(3, "Мінімальна довжина імені 3 символи!").required('Введіть ваше ім`я або нікнейм'),
                 email: Yup.string().email('Введіть правильний email'),
               })
             }
             onSubmit={values => {
               const { email, name } = values
-              if (email === '' && name === '') {
-                alert('Введіть дані')
-              }
 
               // update username in firestore
               if (email === '' && name !== '') {
                 updateDoc(doc(firestoreDB, 'users', user!.uid), {
                   displayName: values.name
                 })
+                  .then(() => enqueueSnackbar('Налаштування збережено!', {
+                    autoHideDuration: 3000,
+                    variant: "success"
+                  }))
               }
             }}
           >
@@ -260,13 +263,12 @@ const UserPage: React.FC = () => {
             )}
           </Formik>
         </div>
-        <button onClick={onFirestoreReset}>Скинути вашу базу даних</button>
-        <button onClick={onFirestoreFakeData}>Завантажити фейкові дані у вашу базу даних</button>
+        {/* <button onClick={onFirestoreReset}>Скинути вашу базу даних</button>
+        <button onClick={onFirestoreFakeData}>Завантажити фейкові дані у вашу базу даних</button> */}
       </div>
       <div className="main__right">
         <TodayInfo />
         <TodayFact />
-        {/* <ProgressChart /> */}
       </div>
     </div>
   )

@@ -20,4 +20,12 @@ export const ACTION_TYPES = {
   activePointOffset: {
     CHANGE_POINT_OFFSET: 'CHANGE_POINT_OFFSET',
   },
+  userMethods: {
+    SET_SIGN_UP: 'SET_SIGN_UP',
+    SET_SIGN_IN: 'SET_SIGN_IN',
+    SET_SIGN_OUT: 'SET_SIGN_OUT',
+  },
+  errors: {
+    SET_ERROR: 'SET_ERROR',
+  },
 }

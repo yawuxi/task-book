@@ -9,6 +9,7 @@ import { auth } from "./firebase"
 import Header from "./components/Header/Header"
 import Sidebar from "./components/Sidebar/Sidebar"
 import AppRouter from "./AppRouter"
+import FirebaseConfig from "./firebase"
 // modal imports
 import CreateTask from "./components/UI/CreateTask/CreateTask"
 import ModalTextWindow from "./components/UI/ModalTextWindow/ModalTextWindow"
@@ -33,6 +34,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app" data-theme={state.theme} style={authenticationLoadingAppStyles}>
+      <FirebaseConfig />
       {user ? (
         <>
           <Sidebar />

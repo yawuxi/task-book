@@ -3,7 +3,6 @@ import React, { useContext } from "react"
 // additional functional
 import { TaskBookContext } from "../../../shared/context"
 import { ACTION_TYPES } from "../../../shared/actionTypes"
-import { signOutUser } from "../../../firebase"
 import { Link, useLocation } from "react-router-dom"
 // components
 import { CurrentTheme } from "../../Header/Header"
@@ -16,7 +15,7 @@ const ToggleMenu: React.FC = () => {
 
   // destructuring
   const { theme: { SET_THEME } } = ACTION_TYPES
-  const { header: { toggleMenu } } = state
+  const { header: { toggleMenu }, userMethods: { signOut } } = state
 
   // opening ToggleMenu modal when isOpen === true and close when isOpen === false
   const classes = toggleMenu ? 'toggle-menu user-component' : 'toggle-menu toggle-menu--hidden user-component';
@@ -57,7 +56,7 @@ const ToggleMenu: React.FC = () => {
             <p>Темний режим</p>
           </button>
         </li>
-        <li className="toggle-menu__item" onClick={signOutUser}>
+        <li className="toggle-menu__item" onClick={signOut}>
           <button type="button">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M11.25 2.25H14.25C14.6478 2.25 15.0294 2.40804 15.3107 2.68934C15.592 2.97064 15.75 3.35218 15.75 3.75V14.25C15.75 14.6478 15.592 15.0294 15.3107 15.3107C15.0294 15.592 14.6478 15.75 14.25 15.75H11.25" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
