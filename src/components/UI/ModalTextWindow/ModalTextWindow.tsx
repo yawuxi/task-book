@@ -87,7 +87,7 @@ const ModalTextWindow: React.FC = () => {
             }
           }}
         >
-          {({ errors, touched }) => (
+          {({ values, handleSubmit, errors, touched }) => (
             <Form>
               <Field
                 className="modal-field-styles"
@@ -96,7 +96,11 @@ const ModalTextWindow: React.FC = () => {
                 placeholder={additionalData.placeholder}
               />
               {errors.term && touched.term ? <div className="form-error">{errors.term}</div> : null}
-              <button className="button" type="submit">
+              <button
+                onClick={e => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_TEXT_MODAL, values.term) }}
+                className="button"
+                type="button"
+              >
                 Додати
               </button>
             </Form>
