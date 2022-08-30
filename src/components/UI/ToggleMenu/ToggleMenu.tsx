@@ -1,17 +1,20 @@
 // react
 import React, { useContext } from "react"
 // additional functional
-import { TaskBookContext } from "../../shared/context"
-import { ACTION_TYPES } from "../../shared/actionTypes"
-import { signOutUser } from "../../firebase"
+import { TaskBookContext } from "../../../shared/context"
+import { ACTION_TYPES } from "../../../shared/actionTypes"
+import { signOutUser } from "../../../firebase"
 import { Link, useLocation } from "react-router-dom"
 // components
-import { CurrentTheme } from "../Header/Header"
+import { CurrentTheme } from "../../Header/Header"
 // styles
 import './ToggleMenu.scss'
 
 const ToggleMenu: React.FC = () => {
+  // hooks
   const { state, dispatch } = useContext(TaskBookContext)
+
+  // destructuring
   const { theme: { SET_THEME } } = ACTION_TYPES
   const { header: { toggleMenu } } = state
 
@@ -23,7 +26,7 @@ const ToggleMenu: React.FC = () => {
 
   // changing first navgation menu element
   const location = useLocation()
-  const isOnMainPage = location.pathname !== '/' ?
+  const isOnMainPage = location.pathname === '/user-page' ?
     (
       <Link to="/">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

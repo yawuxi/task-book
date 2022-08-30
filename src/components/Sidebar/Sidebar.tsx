@@ -107,7 +107,12 @@ const Sidebar: React.FC = () => {
               :
               userData?.pages.map((category: Category) => {
                 return (
-                  <li key={category.title} className="sidebar__item" ref={navMenuElement}>
+                  <li
+                    key={category.title}
+                    className="sidebar__item"
+                    ref={navMenuElement}
+                    onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}
+                  >
                     <Link to={category.path}>
                       {setIconByTitle(category.title)}
                       {category.title}

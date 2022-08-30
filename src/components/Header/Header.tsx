@@ -11,7 +11,7 @@ import { auth, firestoreDB, storage } from "../../firebase"
 import { doc } from "firebase/firestore"
 import { ref } from "firebase/storage"
 // components
-import ToggleMenu from "../ToggleMenu/ToggleMenu"
+import ToggleMenu from "../UI/ToggleMenu/ToggleMenu"
 import Loading from "../UI/Loading/Loading"
 // styles
 import './Header.scss'
