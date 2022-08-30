@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
     modals: {
       modalTextWindow: { TOGGLE_TEXT_MODAL }
     },
-    sidebar: { TOGGLE_BURGER_MENU },
+    sidebar: { TOGGLE_BURGER_MENU, CLOSE_BURGER_MENU },
     activePointOffset: { CHANGE_POINT_OFFSET }
   } = ACTION_TYPES
 
@@ -111,7 +111,7 @@ const Sidebar: React.FC = () => {
                     key={category.title}
                     className="sidebar__item"
                     ref={navMenuElement}
-                    onClick={() => dispatch({ type: TOGGLE_BURGER_MENU })}
+                    onClick={() => dispatch({ type: CLOSE_BURGER_MENU })}
                   >
                     <Link to={category.path}>
                       {setIconByTitle(category.title)}

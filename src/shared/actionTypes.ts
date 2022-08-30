@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
   },
   sidebar: {
     TOGGLE_BURGER_MENU: 'TOGGLE_BURGER_MENU',
+    CLOSE_BURGER_MENU: 'CLOSE_BURGER_MENU',
   },
   modals: {
     modalTextWindow: {

@@ -31,6 +31,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     header: { TOGGLE_MENU, },
     sidebar: {
       TOGGLE_BURGER_MENU,
+      CLOSE_BURGER_MENU,
     },
     modals: {
       modalTextWindow: {
@@ -72,6 +73,8 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
     // menus
     case TOGGLE_BURGER_MENU:
       return { ...state, sidebar: { ...sidebar, burgerMenu: !sidebar.burgerMenu } }
+    case CLOSE_BURGER_MENU:
+      return { ...state, sidebar: { ...sidebar, burgerMenu: false } }
     case TOGGLE_MENU:
       return { ...state, header: { toggleMenu: !state.header.toggleMenu } }
     // active point offset
