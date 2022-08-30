@@ -266,7 +266,7 @@ const UserPage: React.FC = () => {
       <div className="main__right">
         <TodayInfo />
         <TodayFact />
-        <ProgressChart />
+        {/* <ProgressChart /> */}
       </div>
     </div>
   )

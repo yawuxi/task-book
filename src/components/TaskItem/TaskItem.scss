@@ -25,7 +25,21 @@
       margin-bottom: 0.625rem;
     }
 
-    &:hover {
+    @media (min-width: 998.99px) {
+      &:hover {
+        .task-list__item-controls {
+          display: flex;
+        }
+
+        .task-list__checkbox {
+          & + label::before {
+            display: block;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 998.99px) {
       .task-list__item-controls {
         display: flex;
       }
