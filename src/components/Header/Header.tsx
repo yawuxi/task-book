@@ -66,7 +66,7 @@ const Header: React.FC = () => {
             :
             profilePictureLoading
               ?
-              <Loading styles={{ width: '100px', height: '100px' }} />
+              <Loading styles={{ maxHeight: '32px' }} />
               :
               <img src={profilePictureLink} alt="profile" />
         }

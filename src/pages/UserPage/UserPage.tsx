@@ -211,7 +211,7 @@ const UserPage: React.FC = () => {
               </svg>
 
                 :
-                profilePictureLoading || profilePictrueUploading
+                profilePictrueUploading || profilePictureLoading
                   ?
                   <Loading styles={{ width: '100px', height: '100px' }} />
                   :
