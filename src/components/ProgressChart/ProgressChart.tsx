@@ -1,5 +1,5 @@
 // react
-import React, { useState } from "react"
+import React from "react"
 // additional functional
 import { Line } from 'react-chartjs-2'
 import {
@@ -64,13 +64,13 @@ const ProgressChart: React.FC = () => {
 
   userData?.pages.map((category: Category) => {
     if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
-      category.tasksList.map((item: iTaskItem) => {
-        console.log(calcDateDiff(item.dateCreated, item.dateFinished));
 
+      category.tasksList.map((item: iTaskItem) => {
         if (calcDateDiff(item.dateCreated, item.dateFinished) < 7) {
           chartData[calcDateDiff(item.dateCreated, item.dateFinished)] += 1
         }
       })
+
     }
   })
 

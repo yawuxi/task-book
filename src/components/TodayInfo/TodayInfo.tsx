@@ -52,4 +52,4 @@ const TodayInfo: React.FC = () => {
   )
 }
 
-export default TodayInfo
+export default React.memo(TodayInfo)

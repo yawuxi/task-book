@@ -8,7 +8,7 @@ import './TodayFact.scss'
 
 /**
  * TODO: feature: get fact from API, update every 24hrs
- * TODO: Wrap into React.memo, memoizate this component
+ * //TODO: Wrap into React.memo, memoizate this component
 */
 
 const TodayFact: React.FC = () => {
@@ -22,4 +22,4 @@ const TodayFact: React.FC = () => {
   )
 }
 
-export default TodayFact
+export default React.memo(TodayFact)
