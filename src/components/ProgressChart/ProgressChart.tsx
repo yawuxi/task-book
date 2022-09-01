@@ -17,8 +17,8 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { auth, firestoreDB } from "../../firebase";
 import { doc } from "firebase/firestore";
 import { WEEK_DAYS } from "../../utils/consts";
-import { Category } from "../../types/Category";
 import { iTaskItem } from "../../types/TaskItem";
+import { selectCurrentCategory } from "../../utils/selectCurrentCategory";
 import dayjs from "dayjs";
 // components
 // styles
@@ -62,17 +62,13 @@ const ProgressChart: React.FC = () => {
 
   let chartData: Array<number> = [0, 0, 0, 0, 0, 0, 0];
 
-  userData?.pages.map((category: Category) => {
-    if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
-
-      category.tasksList.map((item: iTaskItem) => {
-        if (calcDateDiff(item.dateCreated, item.dateFinished) < 7) {
-          chartData[calcDateDiff(item.dateCreated, item.dateFinished)] += 1
-        }
-      })
-
-    }
-  })
+  if (!userDataLoading) {
+    selectCurrentCategory(userData!).tasksList.map((item: iTaskItem) => {
+      if (calcDateDiff(item.dateCreated, item.dateFinished) < 7) {
+        chartData[calcDateDiff(item.dateCreated, item.dateFinished)] += 1
+      }
+    })
+  }
 
   return (
     <div className="progress-chart user-component">

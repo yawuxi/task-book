@@ -53,7 +53,7 @@ const CreateTask: React.FC = () => {
         <Formik
           initialValues={{
             task: '',
-            category: '',
+            category: 'Дім',
             date: '',
             // priority: '',
             actionType: '',
@@ -113,9 +113,9 @@ const CreateTask: React.FC = () => {
                 <ul className="create-task-info">
                   <li className="create-task-info__item">
                     <h4 className="create-task__small-title">Категорія</h4>
-                    <Field className="create-task-info__input modal-field-styles" name="category" placeholder="Вибрати" as="select">
+                    <Field className="create-task-info__input modal-field-styles" name="category" placeholder="Вибрати" as="select" value={values.category}>
                       {
-                        userData?.pages.map((category: Category) => {
+                        userData?.pages.map((category: Category, index: number) => {
                           return <option key={category.title} value={category.title}>{category.title}</option>
                         })
                       }
