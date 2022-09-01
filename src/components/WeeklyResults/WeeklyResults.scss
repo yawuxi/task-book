@@ -2,7 +2,7 @@
 
 .weekly-results {
   &__info-title {
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--content-text-color);
     transition: color 0.3s ease-in-out;
@@ -35,12 +35,20 @@
     justify-content: center;
     align-items: center;
 
-    span {
-      font-size: 0.75rem;
+    p {
+      font-size: 1rem;
       font-weight: 400;
       color: var(--content-text-color);
       transition: color 0.3s ease-in-out;
     }
+  }
+
+  &__created {
+    color: var(--black);
+  }
+
+  &__removed {
+    color: var(--delete);
   }
 }
 
