@@ -46,16 +46,19 @@ const FirebaseConfig: React.FC = () => {
         errorMessage = 'Це email вже використовується!'
         break;
       case 'auth/wrong-password':
-        errorMessage = 'Невірний пароль або email!'
+        errorMessage = 'Невірний пароль!'
         break;
       case 'auth/too-many-requests':
         errorMessage = 'Почекайте 10 хвилин!'
         break;
       case 'auth/too-many-requests':
         errorMessage = 'Почекайте 10 хвилин!'
+        break;
+      case 'auth/invalid-email':
+        errorMessage = 'Невірний email!'
         break;
       default:
-        errorCode = errorCode
+        errorMessage = errorCode
         break;
     }
 

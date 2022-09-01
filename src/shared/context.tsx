@@ -4,7 +4,7 @@ import { iInitialState } from "../types/InitialState";
 import { iAction } from "../types/Action";
 
 const initialState: iInitialState = {
-  theme: localStorage.getItem('theme'),
+  theme: 'light',
   sidebar: {
     burgerMenu: false,
   },
@@ -68,6 +68,7 @@ const TaskBookReducer = (state: iInitialState, action: iAction) => {
       return state
     // theme
     case SET_THEME:
+      localStorage.setItem('theme', payload)
       return { ...state, theme: payload }
     // modals
     case TOGGLE_TEXT_MODAL:

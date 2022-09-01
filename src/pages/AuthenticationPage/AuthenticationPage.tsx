@@ -43,7 +43,7 @@ const AuthenticationPage: React.FC = () => {
               }
             }}
           >
-            {({ errors, touched, values, isSubmitting }) => (
+            {({ errors, touched, values, isSubmitting, handleReset }) => (
               (!registration) ?
                 (
                   <Form className="login-page__form shadow br10">
@@ -66,7 +66,7 @@ const AuthenticationPage: React.FC = () => {
                       Ще не маєш акаунту?
                       <span> </span>
                       <button
-                        onClick={() => setRegistration(true)}
+                        onClick={() => { return setRegistration(true), handleReset() }}
                         type="button"
                       >
                         Рєєстрація
@@ -93,7 +93,7 @@ const AuthenticationPage: React.FC = () => {
                     <div className="login-page__registration">
                       Вже маєш акаунту?<span> </span>
                       <button
-                        onClick={() => setRegistration(false)}
+                        onClick={() => { return setRegistration(false), handleReset() }}
                         type="button"
                       >
                         Увійти
