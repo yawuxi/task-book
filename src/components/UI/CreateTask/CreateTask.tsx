@@ -104,6 +104,7 @@ const CreateTask: React.FC = () => {
             <>
               <header>
                 <h3 className="create-task__title h3-title">Добавить новую задачу</h3>
+                <div className="create-task__close-button" onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}></div>
               </header>
               <Form>
                 <h4 className="create-task__small-title">Що потрібно зробити</h4>
@@ -144,13 +145,13 @@ const CreateTask: React.FC = () => {
                 <footer className="create-task__controls">
                   <button
                     type="button"
-                    onClick={(e) => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}
+                    onClick={e => closeModal(e, dispatch, TOGGLE_CREATE_TASK)}
                     className="create-task__cancle button">
                     Відмінити
                   </button>
                   <div>
                     <button
-                      onClick={(e) => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_CREATE_TASK, values.task) }}
+                      onClick={e => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_CREATE_TASK, values.task) }}
                       type="button"
                       className="create-task__add button"
                     >

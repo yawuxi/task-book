@@ -13,8 +13,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { iTaskItem } from "../../../types/TaskItem"
 import { uuidv4 } from "@firebase/util"
-import { useSnackbar } from "notistack"
-// components
+import { OptionsObject, SnackbarKey, SnackbarMessage, useSnackbar } from "notistack"
 // styles
 import './ModalTextWindow.scss'
 
@@ -27,6 +26,61 @@ export function closeModal(
 ): void {
   if (e.currentTarget === e.target && value !== '') {
     dispatch({ type })
+  }
+}
+
+// set submit button text depend from submitFrom string
+function calcSubmitButtonName({ submitFrom }: { submitFrom: string }) {
+  switch (submitFrom) {
+    case 'editingTask':
+      return 'Змінити'
+    default:
+      return 'Додати'
+  }
+}
+
+// onSubmit function
+function onFormSubmit(
+  values: { term: string },
+  additionalData: { [propName: string]: any },
+  user: { uid: string },
+  userData: { [propName: string]: any },
+  snackBarOpenFunction: (message: SnackbarMessage, options?: OptionsObject | undefined) => SnackbarKey,
+) {
+  switch (additionalData.submitFrom) {
+    default:
+      break;
+    case 'sidebar':
+      updateDoc(doc(firestoreDB, 'users', user!.uid), {
+        pages: arrayUnion({
+          title: values.term,
+          path: uuidv4(),
+          createTaskCategories: [],
+          createTaskPriorities: [],
+          taskItemTemplates: [],
+          tasksList: [],
+          tasksRemoved: 0,
+        })
+      })
+      break;
+    case 'editingTask':
+      updateDoc(doc(firestoreDB, 'users', user!.uid), {
+        pages: userData?.pages.map((category: Category) => {
+          if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
+            return {
+              ...category,
+              tasksList: category.tasksList.map((task: iTaskItem) => task.id === additionalData.id ? { ...task, task: values.term } : task),
+            }
+          } else {
+            return category
+          }
+        })
+      })
+        .then(() => snackBarOpenFunction('Задачу успішно відредаговано!', {
+          autoHideDuration: 3000,
+          variant: "info"
+        }))
+      break;
   }
 }
 
@@ -44,6 +98,7 @@ const ModalTextWindow: React.FC = () => {
   return (
     <div className="modal-text-window" onClick={e => closeModal(e, dispatch, TOGGLE_TEXT_MODAL)}>
       <div className="modal-text-window__content user-component">
+        <div className="modal-text-window__close-button" onClick={e => closeModal(e, dispatch, TOGGLE_TEXT_MODAL)}></div>
         <Formik
           initialValues={{
             term: '',
@@ -51,43 +106,7 @@ const ModalTextWindow: React.FC = () => {
           validationSchema={yup.object().shape({
             term: yup.string().min(2, 'Мінімум 2 символа!').required(`${additionalData.placeholder}!`)
           })}
-          onSubmit={values => {
-            switch (additionalData.submitFrom) {
-              default:
-                break;
-              case 'sidebar':
-                updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                  pages: arrayUnion({
-                    title: values.term,
-                    path: uuidv4(),
-                    createTaskCategories: [],
-                    createTaskPriorities: [],
-                    taskItemTemplates: [],
-                    tasksList: [],
-                    tasksRemoved: 0,
-                  })
-                })
-                break;
-              case 'editingTask':
-                updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                  pages: userData?.pages.map((category: Category) => {
-                    if (`/${category.path}` === window.location.pathname || category.path === window.location.pathname) {
-                      return {
-                        ...category,
-                        tasksList: category.tasksList.map((task: iTaskItem) => task.id === additionalData.id ? { ...task, task: values.term } : task),
-                      }
-                    } else {
-                      return category
-                    }
-                  })
-                })
-                  .then(() => enqueueSnackbar('Задачу успішно відредаговано!', {
-                    autoHideDuration: 3000,
-                    variant: "info"
-                  }))
-                break;
-            }
-          }}
+          onSubmit={values => onFormSubmit(values, additionalData, user!, userData!, enqueueSnackbar)}
         >
           {({ values, handleSubmit, errors, touched }) => (
             <Form>
@@ -103,7 +122,7 @@ const ModalTextWindow: React.FC = () => {
                 className="button"
                 type="button"
               >
-                Додати
+                {calcSubmitButtonName(additionalData)}
               </button>
             </Form>
           )}
