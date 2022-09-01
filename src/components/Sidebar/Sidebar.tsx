@@ -141,7 +141,7 @@ const Sidebar: React.FC = () => {
           Додати
         </button>
       </nav>
-      <nav className="sidebar__bottom">
+      {/* <nav className="sidebar__bottom">
         <h2 className="sidebar__title">Дані</h2>
         <ul className="sidebar__list">
           <li className="sidebar__item">
@@ -164,7 +164,7 @@ const Sidebar: React.FC = () => {
             </a>
           </li>
         </ul>
-      </nav>
+      </nav> */}
       <button className="sidebar__log-out" type="button" onClick={state.userMethods.signOut}>
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M11.25 2.25H14.25C14.6478 2.25 15.0294 2.40804 15.3107 2.68934C15.592 2.97064 15.75 3.35218 15.75 3.75V14.25C15.75 14.6478 15.592 15.0294 15.3107 15.3107C15.0294 15.592 14.6478 15.75 14.25 15.75H11.25" stroke="#282846" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

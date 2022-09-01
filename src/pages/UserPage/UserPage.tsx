@@ -108,7 +108,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                   {
                     task: 'testTask2',
@@ -118,7 +118,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                   {
                     task: 'testTask3',
@@ -128,7 +128,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                 ],
                 tasksRemoved: 0,
@@ -155,7 +155,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                   {
                     task: 'testTask2',
@@ -165,7 +165,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                   {
                     task: 'testTask3',
@@ -175,7 +175,7 @@ const UserPage: React.FC = () => {
                     dateCreated: '2022-08-28',
                     dateFinished: '',
                     isCompleted: false,
-                    priority: 'Ну таке',
+                    // priority: 'Ну таке',
                   },
                 ],
                 tasksRemoved: 0,

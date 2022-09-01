@@ -55,7 +55,7 @@ const CreateTask: React.FC = () => {
             task: '',
             category: '',
             date: '',
-            priority: '',
+            // priority: '',
             actionType: '',
           }}
           validationSchema={
@@ -63,18 +63,18 @@ const CreateTask: React.FC = () => {
               task: yup.string().min(5, 'Мінімальна довжина задачі 5 символів!').required('Напишіть задачу!'),
               category: yup.string().required('Вкажіть категорію!'),
               date: yup.string().required('Вкажіть дату!'),
-              priority: yup.string().required('Вкажіть приіорітет!'),
+              // priority: yup.string().required('Вкажіть приіорітет!'),
             })
           }
           onSubmit={
             (values) => {
               updateDoc(doc(firestoreDB, 'users', user!.uid), {
-                pages: userData?.pages.map((item: Category) => {
-                  if (`/${item.path}` === window.location.pathname || item.path === window.location.pathname) {
+                pages: userData?.pages.map((category: Category) => {
+                  if (values.category === category.title) {
                     return {
-                      ...item,
+                      ...category,
                       tasksList: [
-                        ...item.tasksList,
+                        ...category.tasksList,
                         {
                           task: values.task,
                           id: uuidv4(),
@@ -83,12 +83,12 @@ const CreateTask: React.FC = () => {
                           dateCreated: dayjs().format('YYYY-MM-DD'),
                           dateFinished: '',
                           isComleted: false,
-                          priority: values.priority,
+                          // priority: values.priority,
                         }
                       ]
                     }
                   } else {
-                    return item
+                    return category
                   }
                 }
                 ),
@@ -114,9 +114,11 @@ const CreateTask: React.FC = () => {
                   <li className="create-task-info__item">
                     <h4 className="create-task__small-title">Категорія</h4>
                     <Field className="create-task-info__input modal-field-styles" name="category" placeholder="Вибрати" as="select">
-                      <option value=""></option>
-                      <option value="Без категорії">Без категорії</option>
-                      <option value="Спорт">Спорт</option>
+                      {
+                        userData?.pages.map((category: Category) => {
+                          return <option key={category.title} value={category.title}>{category.title}</option>
+                        })
+                      }
                     </Field>
                     {errors.category && touched.category ? <div className="form-error">{errors.category}</div> : null}
                   </li>
@@ -130,17 +132,15 @@ const CreateTask: React.FC = () => {
                       placeholder="тут буде календар" />
                     {errors.date && touched.date ? <div className="form-error">{errors.date}</div> : null}
                   </li>
-                  <li className="create-task-info__item">
+                  {/* <li className="create-task-info__item">
                     <h4 className="create-task__small-title">Приорітет задачі</h4>
                     <Field className="create-task-info__input modal-field-styles" name="priority" placeholder="Вибрати" as="select">
-                      <option value=""></option>
-                      <option value="Без пріорітету">Без пріорітету</option>
                       <option value="Дуже важливо">Дуже важливо</option>
                       <option value="Важливо">Важливо</option>
                       <option value="Ну таке">Ну таке</option>
                     </Field>
                     {errors.priority && touched.priority ? <div className="form-error">{errors.priority}</div> : null}
-                  </li>
+                  </li> */}
                 </ul>
                 <footer className="create-task__controls">
                   <button
@@ -151,7 +151,7 @@ const CreateTask: React.FC = () => {
                   </button>
                   <div>
                     <button
-                      onClick={e => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_CREATE_TASK, values.task) }}
+                      onClick={e => { return handleSubmit(), closeModal(e, dispatch, TOGGLE_CREATE_TASK, values.task && values.category && values.date) }}
                       type="button"
                       className="create-task__add button"
                     >

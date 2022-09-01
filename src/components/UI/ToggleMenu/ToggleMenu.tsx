@@ -22,6 +22,7 @@ const ToggleMenu: React.FC = () => {
 
   // changing theme dark/light
   const payloadValue = state.theme === 'light' ? 'dark' : 'light'
+  const themeText = state.theme === 'light' ? 'Темний режим' : 'Світлий режим'
 
   // changing first navgation menu element
   const location = useLocation()
@@ -53,7 +54,7 @@ const ToggleMenu: React.FC = () => {
         <li className="toggle-menu__item">
           <button onClick={() => dispatch({ type: SET_THEME, payload: payloadValue })}>
             <CurrentTheme theme={state.theme} />
-            <p>Темний режим</p>
+            <p>{themeText}</p>
           </button>
         </li>
         <li className="toggle-menu__item" onClick={signOut}>
