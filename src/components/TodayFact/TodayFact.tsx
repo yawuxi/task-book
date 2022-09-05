@@ -1,8 +1,9 @@
 // react
-import React from "react"
-
+import React, { useCallback, useEffect, useState } from "react"
 // additional functional
+import useHttp from "../../hooks/http.hook"
 // components
+import Loading from "../UI/Loading/Loading"
 // styles
 import './TodayFact.scss'
 
@@ -12,11 +13,22 @@ import './TodayFact.scss'
 */
 
 const TodayFact: React.FC = () => {
+  // hooks
+  const [quote, setQuote] = useState<string>('')
+  const { request, loading, error } = useHttp()
+
+  useEffect(() => {
+    request('https://favqs.com/api/qotd')
+      .then(res => setQuote(res.quote.body))
+  }, [])
+
   return (
     <div className="today-fact user-component">
       <h3 className="today-fact__title h3-title">Факт дня</h3>
       <p className="today-fact__text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis exercitationem esse reprehenderit repellat voluptatibus quis itaque rem et ducimus! Sequi magnam eaque nostrum cumque libero ipsam labore. Laudantium rem, aspernatur quia, id dolore nihil vero fugiat fuga tempore beatae necessitatibus?
+        {
+          loading ? <Loading /> : quote
+        }
       </p>
     </div>
   )
