@@ -20,7 +20,7 @@ import './UserPage.scss'
 
 const UserPage: React.FC = () => {
   // hooks
-  const [profilePicture, setProfilePicture] = useState<any>(null)
+  const [profilePicture, setProfilePicture] = useState<File | null>(null)
   const [user] = useAuthState(auth)
   const [userData, userDataLoading, userDataError] = useDocumentData(doc(firestoreDB, 'users', user!.uid))
   const [
